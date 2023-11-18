@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
+import { useGameContext } from './GameContext';
 
 function PlayerList({ numberOfPlayers, onNameChange }) {
     function clamp(number, min, max) {
         return Math.min(Math.max(number, min), max);
     }
 
-    numberOfPlayers = clamp(numberOfPlayers, 1, 8)
+    const { MIN_PLAYERS, MAX_PLAYERS } = useGameContext() ?? { MIN_PLAYERS: 0, MAX_PLAYERS: 0 };
+
+    numberOfPlayers = clamp(numberOfPlayers, MIN_PLAYERS, MAX_PLAYERS)
 
     const playersIndex = Array.from({ length: numberOfPlayers }, (_, index) => index);
-    const [playerNames, setPlayerNames] = useState(Array(numberOfPlayers).fill(''));
+    const [playerNames, setPlayerNames] = useState(Array(MAX_PLAYERS).fill(''));
 
     const handleInputChange = (index, text) => {
         const updatedPlayerNames = [...playerNames];
         updatedPlayerNames[index] = text;
+        setPlayerNames(updatedPlayerNames);
         onNameChange(updatedPlayerNames);
     };
 
-    let defalutColors = ["紅", "橙", "黃", "綠", "藍", "紫", "黑", "白"];
+    let defalutColors = ["黑", "紅", "橙", "黃", "綠", "藍", "紫", "白"];
 
     return (
         <div>
@@ -24,7 +28,7 @@ function PlayerList({ numberOfPlayers, onNameChange }) {
             <ul>
                 {playersIndex.map(index => (
                     <li key={index}>
-                        Player {index}: {defalutColors[index]}
+                        Player {index + 1}: {defalutColors[index]}
                         <input
                             type="text"
                             value={playerNames[index]}

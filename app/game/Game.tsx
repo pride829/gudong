@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import GameSetup from './GameSetup';
+import { GameProvider } from './GameContext';
 
 function Game() {
     const [phase, setPhase] = useState('setup');
@@ -18,15 +19,11 @@ function Game() {
 
 
     return (
-        <div>
-            <h1>Game</h1>
-
+        <GameProvider>
             {phase === 'setup' && (
                 <GameSetup onSubmit={handlePlayerSetupSubmit} onNameChange={handleNameChange} />
             )}
-
-            {/* Add more phases as needed */}
-        </div>
+        </GameProvider>
     );
 }
 
