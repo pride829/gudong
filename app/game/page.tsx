@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
 import Game from "./Game"
 
-function Main() {
+function App() {
     return (
         <Game />
     )
 }
 
-export default Main;
+export default App;

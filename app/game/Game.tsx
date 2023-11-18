@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import GameSetup from './GameSetup';
+
 import { GameProvider } from './GameContext';
-import { useGameContext } from './GameContext';
+import GameSetup from './GameSetup';
 
 function Game() {
     const [phase, setPhase] = useState('setup');
-
-    const { } =
-        useGameContext() ?? {
-        };
 
     const handlePlayerSetupSubmit = () => {
         setPhase('playerList');

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useGameContext } from './GameContext';
 
 function PlayerList({ numberOfPlayers }) {
-    const { playerNames, setPlayerNames } =
+    const { playerNames, setPlayerNames = () => { } } =
         useGameContext() ?? { MIN_PLAYERS: 0, MAX_PLAYERS: 0, playerNames: [], setPlayerNames: undefined };
 
     const handleInputChange = (index, text) => {
