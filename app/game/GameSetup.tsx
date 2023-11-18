@@ -33,10 +33,8 @@ function GameSetup({ onSubmit }) {
         } else {
             if (selectedFirstPlayer === -1) {
                 let randomNumber = Math.floor(Math.random() * (numberOfPlayers - 0))
-                console.log(randomNumber)
                 setPlayerNow(randomNumber)
             }
-            console.log(selectedFirstPlayer)
             onSubmit();
         }
     };
