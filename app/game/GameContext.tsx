@@ -1,34 +1,25 @@
 import React, { createContext, useContext, useState } from 'react';
 
+function generateNumbersUpToN(n: number) {
+    const numbers: number[] = [];
+    for (let i = 0; i <= n; i++) {
+        numbers.push(i);
+    }
+    return numbers;
+}
+
 interface GameContextProps {
-    MIN_PLAYERS: number;
-    MAX_PLAYERS: number;
-    playerNames: string[];
-    setPlayerNames: React.Dispatch<React.SetStateAction<string[]>>;
-    numberOfPlayers: number;
-    setNumberOfPlayers: React.Dispatch<React.SetStateAction<number>>;
-    playerNow: number;
-    setPlayerNow: React.Dispatch<React.SetStateAction<number>>;
+    ANIMALS: string[];
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
 
 export const GameProvider = ({ children }) => {
-    const MIN_PLAYERS = 6;
-    const MAX_PLAYERS = 8;
-    const [playerNames, setPlayerNames] = useState(Array(MAX_PLAYERS).fill('TESTNAME'));
-    const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
-    const [playerNow, setPlayerNow] = useState(0);
+    const ANIMALS = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
+    const [animalOrders, setAnimalOrders] = useState(generateNumbersUpToN(12));
 
     const contextValue: GameContextProps = {
-        MIN_PLAYERS,
-        MAX_PLAYERS,
-        playerNames,
-        setPlayerNames,
-        numberOfPlayers,
-        setNumberOfPlayers,
-        playerNow,
-        setPlayerNow,
+        ANIMALS,
     };
 
     return (

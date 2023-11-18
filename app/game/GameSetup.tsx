@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PlayerList from './PlayerList';
-import { useGameContext } from './GameContext';
+import { useGameMetaContext } from './GameMetaContext';
 
 function GameSetup({ onSubmit }) {
-    const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, setPlayerNow } =
-        useGameContext() ?? {
+    const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, setPlayerNow = () => { } } =
+        useGameMetaContext() ?? {
             MIN_PLAYERS: 0,
             MAX_PLAYERS: 0,
             numberOfPlayers: 0,
@@ -34,7 +34,7 @@ function GameSetup({ onSubmit }) {
             if (selectedFirstPlayer === -1) {
                 let randomNumber = Math.floor(Math.random() * (numberOfPlayers - 0))
                 console.log(randomNumber)
-                setSelectedFirstPlayer(randomNumber)
+                setPlayerNow(randomNumber)
             }
             console.log(selectedFirstPlayer)
             onSubmit();

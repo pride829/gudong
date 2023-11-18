@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useGameContext } from './GameContext';
+import { useGameMetaContext } from './GameMetaContext';
 
 function PlayerList({ numberOfPlayers, selectedFirstPlayer, onFirstPlayerSelection }) {
     const { playerNames, setPlayerNames = () => { } } =
-        useGameContext() ?? { MIN_PLAYERS: 0, MAX_PLAYERS: 0, playerNames: [], setPlayerNames: undefined };
+        useGameMetaContext() ?? { MIN_PLAYERS: 0, MAX_PLAYERS: 0, playerNames: [], setPlayerNames: undefined };
 
     const handleInputChange = (index, text) => {
         const updatedPlayerNames = [...playerNames];
