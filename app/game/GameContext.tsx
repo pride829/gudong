@@ -7,6 +7,8 @@ interface GameContextProps {
     setPlayerNames: React.Dispatch<React.SetStateAction<string[]>>;
     numberOfPlayers: number;
     setNumberOfPlayers: React.Dispatch<React.SetStateAction<number>>;
+    playerNow: number;
+    setPlayerNow: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -14,8 +16,9 @@ export const GameContext = createContext<GameContextProps | undefined>(undefined
 export const GameProvider = ({ children }) => {
     const MIN_PLAYERS = 6;
     const MAX_PLAYERS = 8;
-    const [playerNames, setPlayerNames] = useState(Array(MAX_PLAYERS).fill(''));
+    const [playerNames, setPlayerNames] = useState(Array(MAX_PLAYERS).fill('TESTNAME'));
     const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
+    const [playerNow, setPlayerNow] = useState(0);
 
     const contextValue: GameContextProps = {
         MIN_PLAYERS,
@@ -24,8 +27,9 @@ export const GameProvider = ({ children }) => {
         setPlayerNames,
         numberOfPlayers,
         setNumberOfPlayers,
+        playerNow,
+        setPlayerNow,
     };
-
 
     return (
         <GameContext.Provider value={contextValue}>
