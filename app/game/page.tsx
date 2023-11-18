@@ -10,13 +10,27 @@ function PlayerList({ numberOfPlayers }) {
     numberOfPlayers = clamp(numberOfPlayers, 1, 8)
 
     const players = Array.from({ length: numberOfPlayers }, (_, index) => index + 1);
+    const [playerNames, setPlayerNames] = useState(Array(numberOfPlayers).fill(''));
+
+    const handleNameChange = (index, newName) => {
+        setPlayerNames(prevNames => {
+            const newPlayerNames = [...prevNames];
+            newPlayerNames[index] = newName;
+            return newPlayerNames;
+        });
+    };
+
+    let defalutColors = ["紅", "橙", "黃", "綠", "藍", "紫", "黑", "白"];
 
     return (
         <div>
             <h2>Player List:</h2>
             <ul>
                 {players.map(player => (
-                    <li key={player}>Player {player}</li>
+                    <li key={player}>
+                        Player {player}: {defalutColors[player - 1]}
+                        <input type="text" value={playerNames[player - 1]} onChange={(e) => handleNameChange(player - 1, e.target.value)} />
+                    </li>
                 ))}
             </ul>
         </div>
