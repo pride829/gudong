@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import PlayerList from './PlayerList';
 import { useGameContext } from './GameContext';
 
-function GameSetup({ onSubmit, onNameChange }) {
-    const { MIN_PLAYERS, MAX_PLAYERS } = useGameContext() ?? { MIN_PLAYERS: 0, MAX_PLAYERS: 0 };
-    const [numberOfPlayers, setNumberOfPlayers] = useState(MIN_PLAYERS);
+function GameSetup(onSubmit) {
+    const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers } =
+        useGameContext() ?? {
+            MIN_PLAYERS: 0,
+            MAX_PLAYERS: 0,
+            numberOfPlayers: 0,
+            setNumberOfPlayers: undefined
+        };
 
     const playerOptions = Array.from({ length: MAX_PLAYERS - MIN_PLAYERS + 1 }, (_, index) => MIN_PLAYERS + index);
 
@@ -23,16 +28,16 @@ function GameSetup({ onSubmit, onNameChange }) {
             <h2>Game Setup</h2>
             <form onSubmit={handleFormSubmit}>
                 Enter the number of players:
-                <select id="playerCount" onChange={handleInputChange}>
+                <select id="playerCount" value={numberOfPlayers} onChange={handleInputChange}>
                     {playerOptions.map((count) => (
                         <option key={count} value={count}>
                             {count}
                         </option>
                     ))}
                 </select>
-                <PlayerList numberOfPlayers={numberOfPlayers} onNameChange={onNameChange} />
+                <PlayerList numberOfPlayers={numberOfPlayers} />
             </form>
-        </div>
+        </div >
     );
 }
 
