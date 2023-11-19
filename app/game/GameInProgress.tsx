@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import TurnStart from './TurnStart';
+import GameInTurn from './GameInTurn';
 import GameStart from './GameStart';
 
 function GameInProgress() {
 
     const [phase, setPhase] = useState('gameStart');
-    const [turn, setTurn] = useState(1);
 
     const handleGameStartFinish = () => {
         setPhase('turnStart')
+    };
+
+    const handleGameInTurnFinish = () => {
+        setPhase('gameEnd')
     };
 
     return (
@@ -17,7 +20,10 @@ function GameInProgress() {
                 <GameStart onGameStartFinish={handleGameStartFinish} />
             )}
             {phase === 'turnStart' && (
-                <TurnStart />
+                <GameInTurn onGameInTurnFinish={handleGameInTurnFinish} />
+            )}
+            {phase === 'gameEnd' && (
+                <div></div>
             )}
         </>
     );

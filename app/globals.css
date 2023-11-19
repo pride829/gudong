@@ -1,0 +1,10 @@
+.parallel-words {
+    display: flex;
+    justify-content: space-between;
+}
+
+.word {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+}
