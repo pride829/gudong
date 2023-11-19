@@ -16,7 +16,7 @@ export const GameMetaContext = createContext<GameMetaContextProps | undefined>(u
 export const GameMetaProvider = ({ children }) => {
     const MIN_PLAYERS = 6;
     const MAX_PLAYERS = 8;
-    const [playerNames, setPlayerNames] = useState(Array(MAX_PLAYERS).fill('TESTNAME'));
+    const [playerNames, setPlayerNames] = useState(["黑", "紅", "橙", "黃", "綠", "藍", "紫", "白"]);
     const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
     const [playerNow, setPlayerNow] = useState(0);
 
@@ -27,7 +27,7 @@ export const GameMetaProvider = ({ children }) => {
         setPlayerNames,
         numberOfPlayers,
         setNumberOfPlayers,
-        playerNow,
+        playerNow, // 這不應該算在meta context
         setPlayerNow,
     };
 
