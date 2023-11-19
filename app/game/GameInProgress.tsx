@@ -1,27 +1,21 @@
 import React, { useState } from 'react';
-import { useGameMetaContext } from './GameMetaContext';
-import { useGameContext } from './GameContext';
 import TurnStart from './TurnStart';
+import GameStart from './GameStart';
 
 function GameInProgress() {
-    const { numberOfPlayers, playerNames, playerNow, setPlayerNow = () => { } } =
-        useGameMetaContext() ?? {
-            numberOfPlayers: 0,
-            playerNames: [],
-            playerNow: 0,
-            setPlayerNow: undefined,
-        };
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { } } =
-        useGameContext() ?? {
-            ANIMALS: [],
-            animalOrders: [],
-            setAnimalOrders: undefined
-        };
-    const [phase, setPhase] = useState('turnStart');
+
+    const [phase, setPhase] = useState('gameStart');
     const [turn, setTurn] = useState(1);
+
+    const handleGameStartFinish = () => {
+        setPhase('turnStart')
+    };
 
     return (
         <>
+            {phase === 'gameStart' && (
+                <GameStart onGameStartFinish={handleGameStartFinish} />
+            )}
             {phase === 'turnStart' && (
                 <TurnStart />
             )}

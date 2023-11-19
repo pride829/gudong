@@ -1,0 +1,5 @@
+角色是一個function 由param決定現在要做什麼
+是否被偷襲是紀錄在角色的state
+查驗是一個moving 偷襲也是
+
+記得 引入function as a param 需要 {}

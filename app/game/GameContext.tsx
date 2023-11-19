@@ -34,6 +34,9 @@ interface GameContextProps {
     animalOrders: number[],
     setAnimalOrders: React.Dispatch<React.SetStateAction<number[]>>,
     animalReals: boolean[][],
+    characters: number[],
+    setCharacters: React.Dispatch<React.SetStateAction<number[]>>,
+    CHARACTERLIST: string[],
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -47,12 +50,19 @@ export const GameProvider = ({ children }) => {
         [false, false, true, true],
     ];
     const [animalReals, setAnimalReals] = useState(shuffleArray2D(initialBooleanArray));
+    const [characters, setCharacters] = useState<number[]>([]); // character[0] === '黃煙煙' 代表玩家0的角色是黃煙煙
+
+    // static character list
+    const CHARACTERLIST = ['黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙']
 
     const contextValue: GameContextProps = {
         ANIMALS,
         animalOrders,
         setAnimalOrders,
         animalReals,
+        characters,
+        setCharacters,
+        CHARACTERLIST
     };
 
     useEffect(() => {
