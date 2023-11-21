@@ -30,8 +30,6 @@ function PlayerIdent({ }) {
         return <div>{content}</div>
     }
 
-
-    console.log(characters)
     return (
         <div>
             <Ident characterName={CHARACTERLIST[characters[playerNow]]} />

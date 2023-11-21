@@ -15,14 +15,14 @@ function PlayerMoving({ }) {
     };
 
     return (
-        <>
+        <div>
             {phase === 'playerIdent' && (
                 <div>
                     <PlayerIdent />
                 </div>
             )}
 
-        </>
+        </div >
     )
 }
 

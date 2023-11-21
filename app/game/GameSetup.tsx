@@ -42,7 +42,7 @@ function GameSetup({ onSubmit }) {
     const playerOptions = Array.from({ length: MAX_PLAYERS - MIN_PLAYERS + 1 }, (_, index) => MIN_PLAYERS + index);
 
     return (
-        <>
+        <div>
             <h2>Game Setup</h2>
             <form onSubmit={handleFormSubmit}>
                 Enter the number of players:
@@ -56,7 +56,7 @@ function GameSetup({ onSubmit }) {
                 <PlayerList numberOfPlayers={numberOfPlayers} selectedFirstPlayer={selectedFirstPlayer} onFirstPlayerSelection={handleFirstPlayerSelection} />
                 <button type="submit">Submit</button>
             </form>
-        </>
+        </div >
     );
 }
 

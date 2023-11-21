@@ -15,7 +15,7 @@ function GameInProgress() {
     };
 
     return (
-        <>
+        <div>
             {phase === 'gameStart' && (
                 <GameStart onGameStartFinish={handleGameStartFinish} />
             )}
@@ -25,7 +25,7 @@ function GameInProgress() {
             {phase === 'gameEnd' && (
                 <div></div>
             )}
-        </>
+        </div >
     );
 }
 

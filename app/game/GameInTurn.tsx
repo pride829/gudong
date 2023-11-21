@@ -18,7 +18,7 @@ function GameInTurn({ onGameInTurnFinish }) {
     const turnInChinese = ['一', '二', '三']
 
     return (
-        <>
+        <div>
             {phase === 'turnStart' && (
                 <TurnStart
                     turnNumber={gameTurn}
@@ -30,7 +30,7 @@ function GameInTurn({ onGameInTurnFinish }) {
                     <Player />
                 </div>
             )}
-        </>
+        </div >
     )
 }
 

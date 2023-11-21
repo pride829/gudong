@@ -17,7 +17,7 @@ function CharacterSelecting({ playerIndex, playerNames, characterList, onCharact
 
     return (
         <form onSubmit={handleCharacterSubmit}>
-            <>請 {playerNames[playerIndex]} 玩家選擇角色</>
+            <div>請 {playerNames[playerIndex]} 玩家選擇角色</div>
             {characterList.map((c, characterIndex) => (
                 <ul key={characterIndex}>
                     <label>
@@ -80,13 +80,13 @@ function GameStart({ onGameStartFinish }) {
     }
 
     return (
-        <>
+        <div>
             <CharacterSelecting
                 playerIndex={playerIndex}
                 playerNames={playerNames}
                 characterList={CHARACTERLIST}
                 onCharacterSubmit={handleCharacterSubmit} />
-        </>
+        </div >
     );
 }
 

@@ -13,16 +13,18 @@ function Game() {
     };
 
     return (
-        <GameMetaProvider>
-            {phase === 'setup' && (
-                <GameSetup onSubmit={handlePlayerSetupSubmit} />
-            )}
-            <GameProvider>
-                {phase === 'inprogress' && (
-                    <GameInProgress />
+        <div>
+            <GameMetaProvider>
+                {phase === 'setup' && (
+                    <GameSetup onSubmit={handlePlayerSetupSubmit} />
                 )}
-            </GameProvider>
-        </GameMetaProvider>
+                <GameProvider>
+                    {phase === 'inprogress' && (
+                        <GameInProgress />
+                    )}
+                </GameProvider>
+            </GameMetaProvider>
+        </div>
     );
 }
 

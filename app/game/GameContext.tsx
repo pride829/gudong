@@ -34,9 +34,7 @@ function sortGroups(array, groupSize) {
     for (let i = 0; i < array.length; i += groupSize) {
         const group: number[] = array.slice(i, i + groupSize);
         group.sort((a, b) => a - b)
-        //console.log(group)
         result.push(...group)
-        //console.log(result)
     }
     return result
 }

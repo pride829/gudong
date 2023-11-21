@@ -15,7 +15,7 @@ function Player({ }) {
     };
 
     return (
-        <>
+        <div>
             請 {playerNames[playerNow]} 進行回合
             {phase === 'playerConfirm' && (
                 <div>
@@ -29,7 +29,7 @@ function Player({ }) {
                 </div>
             )}
 
-        </>
+        </div >
     )
 }
 

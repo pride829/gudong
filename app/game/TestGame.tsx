@@ -8,11 +8,13 @@ import GameInTurn from './GameInTurn';
 function TestGame() {
 
     return (
-        <GameMetaProvider>
-            <GameProvider>
-                <GameInTurn onGameInTurnFinish={() => { }} />
-            </GameProvider>
-        </GameMetaProvider>
+        <div>
+            <GameMetaProvider>
+                <GameProvider>
+                    <GameInTurn onGameInTurnFinish={() => { }} />
+                </GameProvider>
+            </GameMetaProvider>
+        </div>
     );
 }
 
