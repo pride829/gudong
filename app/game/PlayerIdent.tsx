@@ -8,12 +8,12 @@ function PlayerIdent({ }) {
         useGameMetaContext() ?? {
             playerNow: 0,
             playerNames: [],
-            characters: [],
         }
 
-    const { characters } =
+    const { characters, CHARACTERLIST } =
         useGameContext() ?? {
             characters: [],
+            CHARACTERLIST: [],
         }
 
     const Ident = ({ characterName }) => {
@@ -26,15 +26,17 @@ function PlayerIdent({ }) {
             content = <IdentTreasure identTime={1} identTruly={true}></IdentTreasure>
         } else if (characterName === "黃煙煙") {
             content = <IdentTreasure identTime={1} identTruly={false}></IdentTreasure>
-        }
-
-        return <div>content</div>
+        } // TODO: Add all characters
+        return <div>{content}</div>
     }
 
+
+    console.log(characters)
     return (
-        <>
-            <Ident characterName={characters[playerNow]} />
-        </>
+        <div>
+            <Ident characterName={CHARACTERLIST[characters[playerNow]]} />
+        </div>
+
     )
 }
 

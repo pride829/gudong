@@ -59,8 +59,6 @@ function GameStart({ onGameStartFinish }) {
     const [playerIndex, setPlayerIndex] = useState(0);
 
     const handleCharacterSubmit = (playerIndex, characterIndex) => {
-        console.log(playerIndex, characterIndex)
-        console.log(characters)
         // Update the characters array with the selected character
         setCharacters((prevCharacters) => [...prevCharacters, characterIndex]);
         setPlayerIndex(playerIndex + 1);

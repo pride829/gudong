@@ -9,6 +9,8 @@ interface GameMetaContextProps {
     setNumberOfPlayers: React.Dispatch<React.SetStateAction<number>>;
     playerNow: number;
     setPlayerNow: React.Dispatch<React.SetStateAction<number>>;
+    gameTurn: number;
+    setGameTurn: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const GameMetaContext = createContext<GameMetaContextProps | undefined>(undefined);
@@ -19,6 +21,7 @@ export const GameMetaProvider = ({ children }) => {
     const [playerNames, setPlayerNames] = useState(["黑", "紅", "橙", "黃", "綠", "藍", "紫", "白"]);
     const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
     const [playerNow, setPlayerNow] = useState(0);
+    const [gameTurn, setGameTurn] = useState(0);
 
     const contextValue: GameMetaContextProps = {
         MIN_PLAYERS,
@@ -29,6 +32,8 @@ export const GameMetaProvider = ({ children }) => {
         setNumberOfPlayers,
         playerNow, // 這不應該算在meta context
         setPlayerNow,
+        gameTurn,
+        setGameTurn,
     };
 
     return (
