@@ -60,10 +60,12 @@ export const GameProvider = ({ children }) => {
         [false, false, true, true],
     ];
     const [animalReals, setAnimalReals] = useState(shuffleArray2D(initialBooleanArray));
-    const [characters, setCharacters] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // character[0] === '黃煙煙' 代表玩家0的角色是黃煙煙
+    const [characters, setCharacters] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
+    // 
+
 
     // static character list
-    const CHARACTERLIST = ['黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙', '黃煙煙']
+    const CHARACTERLIST = ['許願', '方震', '姬雲浮', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠']
 
     const contextValue: GameContextProps = {
         ANIMALS,

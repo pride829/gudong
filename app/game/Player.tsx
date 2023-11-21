@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
-import PlayerIdent from './PlayerIdent';
+import PlayerMoving from './PlayerMoving';
 
 function Player({ }) {
     const { playerNow, playerNames } =
@@ -12,6 +12,7 @@ function Player({ }) {
 
     const handlePlayerConfirmFinish = () => {
         setPhase('playerMoving')
+        console.log(PlayerMoving)
     };
 
     return (
@@ -25,7 +26,7 @@ function Player({ }) {
             )}
             {phase === 'playerMoving' && (
                 <div>
-                    <PlayerIdent />
+                    <PlayerMoving />
                 </div>
             )}
 

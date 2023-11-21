@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import PlayerIdent from './PlayerIdent';
+import PlayerPower from './PlayerPower';
 
 function PlayerMoving({ }) {
     const { playerNow, playerNames } =
@@ -8,17 +9,24 @@ function PlayerMoving({ }) {
             playerNow: 0,
             playerNames: []
         }
-    const [phase, setPhase] = useState('playerIdent');
+    const [phase, setPhase] = useState('playerPower');
 
     const handlePlayerConfirmFinish = () => {
-        setPhase('playerMoving')
+        setPhase('playerPower')
     };
 
     return (
         <div>
+            ffff
             {phase === 'playerIdent' && (
-                <div>
+                <div>sdfsdfsdf
                     <PlayerIdent />
+                </div>
+            )}
+            {phase === 'playerPower' && (
+                <div>4dssdf
+                    sdfsdfweg
+                    <PlayerPower />
                 </div>
             )}
 
