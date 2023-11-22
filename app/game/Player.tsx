@@ -12,7 +12,6 @@ function Player({ }) {
 
     const handlePlayerConfirmFinish = () => {
         setPhase('playerMoving')
-        console.log(PlayerMoving)
     };
 
     return (

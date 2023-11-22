@@ -26,9 +26,14 @@ function PlayerIdent({ }) {
             content = <IdentTreasure identTime={1} identTruly={true}></IdentTreasure>
         } else if (characterName === "黃煙煙") {
             content = <IdentTreasure identTime={1} identTruly={false}></IdentTreasure>
-        } // TODO: Add all characters
+        } else if (characterName === "藥不然") {
+            content = <IdentTreasure identTime={1} identTruly={true}></IdentTreasure>
+        }
+
+        // TODO: Add all characters
         return <div>{content}</div>
     }
+
 
     return (
         <div>
