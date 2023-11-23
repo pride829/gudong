@@ -6,6 +6,7 @@ import IdentTreasure from './IdentTreasure';
 function PlayerPower({ }) {
 
     const [clickedGankingButton, setClickedGankingButton] = useState(-1);
+    const [plyaerPowerConfirm, setPlayerPowerConfirm] = useState(false)
 
     const { playerNow, playerNames } =
         useGameMetaContext() ?? {
@@ -37,6 +38,7 @@ function PlayerPower({ }) {
         const handleGankingButtonClick = (value) => {
             setClickedGankingButton(value)
             onPlayerGanked(value)
+            handlePowerDone()
         }
 
         const renderedGankingButttons = Array.from(
@@ -56,6 +58,11 @@ function PlayerPower({ }) {
         )
     }
 
+    const handleClickcedGankingPassButton = (index) => {
+        setClickedGankingButton(index)
+        handlePowerDone()
+    }
+
     const PowerGank = () => {
         // TODO: 無法偷襲老朝奉
         return (
@@ -63,35 +70,41 @@ function PlayerPower({ }) {
                 <div>
                     請選擇要偷襲的對象：
                     <GankedButtonList onPlayerGanked={handlePlayerGanked}></GankedButtonList>
-                </div>
-                <div>
-
+                    <button
+                        key={99}
+                        onClick={() => handleClickcedGankingPassButton(99)}
+                        disabled={(clickedGankingButton !== -1)}>
+                        {clickedGankingButton === -1 || clickedGankingButton != 99 ? '跳過，不進行偷襲' : ("您已經選擇跳過")}
+                    </button>
                 </div>
             </div>
         )
+    }
+
+    const handlePowerDone = () => {
+        setPlayerPowerConfirm(true)
     }
 
     const Power = ({ characterName }) => {
         let content
         if (characterName === "藥不然") {
             content = <PowerGank></PowerGank>
-        } else if (characterName === "姬雲浮") {
-            content = <IdentTreasure identTime={1} identTruly={true}></IdentTreasure>
-        } else if (characterName === "方震") {
-            content = <IdentTreasure identTime={1} identTruly={true}></IdentTreasure>
-        } else if (characterName === "黃煙煙") {
-            content = <IdentTreasure identTime={1} identTruly={false}></IdentTreasure>
-        } // TODO: Add all characters
+        }
+        // TODO: Add all characters
         return <div>{content}</div>
     }
 
     useEffect(() => {
-        console.log(beingGankedTime)
     })
 
     return (
         <div>
-            <Power characterName={CHARACTERLIST[characters[playerNow]]} />
+            <div>
+                <Power characterName={CHARACTERLIST[characters[playerNow]]} />
+            </div>
+            <div>
+                <button disabled={!plyaerPowerConfirm}>確認</button>
+            </div>
         </div>
 
     )

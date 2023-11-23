@@ -4,14 +4,10 @@ import PlayerIdent from './PlayerIdent';
 import PlayerPower from './PlayerPower';
 
 function PlayerMoving({ }) {
-    const { playerNow, playerNames } =
-        useGameMetaContext() ?? {
-            playerNow: 0,
-            playerNames: []
-        }
-    const [phase, setPhase] = useState('playerPower');
 
-    const handlePlayerConfirmFinish = () => {
+    const [phase, setPhase] = useState('playerIdent');
+
+    const handlePlayerIdentFinish = () => {
         setPhase('playerPower')
     };
 
@@ -19,7 +15,7 @@ function PlayerMoving({ }) {
         <div>
             {phase === 'playerIdent' && (
                 <div>
-                    <PlayerIdent />
+                    <PlayerIdent onPlayerIdentFinish={handlePlayerIdentFinish} />
                 </div>
             )}
             {phase === 'playerPower' && (

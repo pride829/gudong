@@ -49,6 +49,8 @@ interface GameContextProps {
     CHARACTERLIST: string[],
     beingGankedTime: number[],
     setBeingGankedTime: React.Dispatch<React.SetStateAction<number[]>>,
+    dummy: number,
+    setDummy: React.Dispatch<React.SetStateAction<number>>,
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -64,6 +66,7 @@ export const GameProvider = ({ children }) => {
     const [animalReals, setAnimalReals] = useState(shuffleArray2D(initialBooleanArray));
     const [characters, setCharacters] = useState<number[]>([6, 0, 0, 0, 0, 0, 0, 0]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
     const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
+    const [dummy, setDummy] = useState<number>(0)
 
     // static character list
     const CHARACTERLIST = ['許願', '方震', '姬雲浮', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠']
@@ -78,6 +81,8 @@ export const GameProvider = ({ children }) => {
         CHARACTERLIST,
         beingGankedTime,
         setBeingGankedTime,
+        dummy,
+        setDummy
     };
 
 
