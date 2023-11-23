@@ -51,6 +51,10 @@ interface GameContextProps {
     setBeingGankedTime: React.Dispatch<React.SetStateAction<number[]>>,
     dummy: number,
     setDummy: React.Dispatch<React.SetStateAction<number>>,
+    civHuangBlockedTurn: number,
+    civMuBlockedTurn: number,
+    animalBlocked: boolean[],
+    setAnimalBlocked: React.Dispatch<React.SetStateAction<boolean[]>>,
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -64,9 +68,16 @@ export const GameProvider = ({ children }) => {
         [false, false, true, true],
     ];
     const [animalReals, setAnimalReals] = useState(shuffleArray2D(initialBooleanArray));
-    const [characters, setCharacters] = useState<number[]>([6, 0, 0, 0, 0, 0, 0, 0]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
+    const [characters, setCharacters] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
     const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
     const [dummy, setDummy] = useState<number>(0)
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+    const [civHuangBlockedTurn, setCivHuangBlockedTurn] = useState(getRandomInt(0, 3))
+    const [civMuBlockedTurn, setCivMuBlockedTurn] = useState(getRandomInt(0, 3))
+    const [animalBlocked, setAnimalBlocked] = useState([false, false, false, true, false, false, false, false])
 
     // static character list
     const CHARACTERLIST = ['許願', '方震', '姬雲浮', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠']
@@ -82,7 +93,11 @@ export const GameProvider = ({ children }) => {
         beingGankedTime,
         setBeingGankedTime,
         dummy,
-        setDummy
+        setDummy,
+        civHuangBlockedTurn,
+        civMuBlockedTurn,
+        animalBlocked,
+        setAnimalBlocked
     };
 
 
