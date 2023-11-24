@@ -4,6 +4,7 @@ import { GameMetaProvider } from './GameMetaContext';
 import { GameProvider } from './GameContext';
 import GameInProgress from './GameInProgress';
 import GameInTurn from './GameInTurn';
+import VotePeople from './VotePeople';
 
 function TestGame() {
 
@@ -11,7 +12,7 @@ function TestGame() {
         <div>
             <GameMetaProvider>
                 <GameProvider>
-                    <GameInTurn onGameInTurnFinish={() => { }} />
+                    <VotePeople onVotePeopleEnd={() => { console.log("onVotePeopleEnd") }}></VotePeople>
                 </GameProvider>
             </GameMetaProvider>
         </div>
