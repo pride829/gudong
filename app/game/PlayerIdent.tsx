@@ -5,7 +5,7 @@ import IdentTreasure from './IdentTreasure';
 import IdentPeople from './IdentPeople';
 import FactionInfo from './FactionInfo';
 
-function PlayerIdent({ onPlayerIdentFinish }) {
+function PlayerIdent({ onPlayerIdentFinish, onPlayerBeingSkip }) {
     const { playerNow, playerNames } =
         useGameMetaContext() ?? {
             playerNow: 0,
@@ -31,11 +31,11 @@ function PlayerIdent({ onPlayerIdentFinish }) {
             <div>
                 {
                     CHARACTERLIST[characters[playerNow]] != "方震" &&
-                    <IdentTreasure onFinished={handleIdentDone} />
+                    <IdentTreasure onFinished={handleIdentDone} onPlayerBeingSkip={onPlayerBeingSkip} />
                 }
                 {
                     CHARACTERLIST[characters[playerNow]] === "方震" &&
-                    <IdentPeople onFinished={handleIdentDone} />
+                    <IdentPeople onFinished={handleIdentDone} onPlayerBeingSkip={onPlayerBeingSkip} />
                 }
             </div>
             <div>

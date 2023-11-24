@@ -73,8 +73,8 @@ export const GameProvider = ({ children }) => {
     ];
     const [animalReals, setAnimalReals] = useState(shuffleArray2D(initialBooleanArray));
     const [animalRealAltered, setAnimalRealAltered] = useState([true, false, false])
-    const [characters, setCharacters] = useState<number[]>([6, 5, 6, 0, 0, 0, 0, 0]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
-    const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
+    const [characters, setCharacters] = useState<number[]>([7, 0, 1, 2, 5, 0, 0, 0]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
+    const [beingGankedTime, setBeingGankedTime] = useState<number[]>([1, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
     const [dummy, setDummy] = useState<number>(0)
     const [identedPeople, setIdentedPeople] = useState<number[]>([])
 

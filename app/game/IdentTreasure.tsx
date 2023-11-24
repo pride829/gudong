@@ -5,7 +5,7 @@ import { resourceUsage } from 'process';
 import { render } from 'react-dom';
 import { fail } from 'assert';
 
-function IdentTreasure({ onFinished }) {
+function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     const { playerNow, playerNames, gameTurn } =
         useGameMetaContext() ?? {
             playerNow: 0,
@@ -82,10 +82,12 @@ function IdentTreasure({ onFinished }) {
         if (beingGankedTime[playerNow] > 0) {
             setBeingGanked(true)
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
+            setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setBeingGankedTime((prevBeingGankedTime) => {
                 prevBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
                 return prevBeingGankedTime
             })
+
         } else if (CHARACTERLIST[characters[playerNow]] === "黃煙煙" && civHuangBlockedTurn === gameTurn ||
             CHARACTERLIST[characters[playerNow]] === "木戶加奈" && civMuBlockedTurn === gameTurn
         ) {
@@ -157,16 +159,11 @@ function IdentTreasure({ onFinished }) {
     }
 
     useEffect(() => {
-        // This effect will run when beingGanked state changes
-        //console.log('Being Ganked:', beingGanked);
-        //console.log('Being Ganked Time:', beingGankedTime);
-        //console.log('Civ Huang Blocked Turn', civHuangBlockedTurn)
-        //console.log('Civ Mu Blocked Turn', civMuBlockedTurn)
-        //console.log('animal blocked', animalBlocked)
-        console.log(animalReals)
-        //console.log(animalReals[gameTurn])
-        //console.log(animalOrders)
-        //console.log(animalRealAltered[gameTurn])
+        //console.log(failIdentedAnimals)
+        console.log(identedAnimals)
+        if (beingGanked) {
+            onPlayerBeingSkip()
+        }
         if (beingGanked || identTimeUse >= identTime) {
             onFinished()
         }

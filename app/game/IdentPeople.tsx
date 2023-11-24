@@ -5,7 +5,7 @@ import { resourceUsage } from 'process';
 import { render } from 'react-dom';
 import { fail } from 'assert';
 
-function IdentPeople({ onFinished }) {
+function IdentPeople({ onFinished, onPlayerBeingSkip }) {
     const { playerNow, playerNames, gameTurn, numberOfPlayers } =
         useGameMetaContext() ?? {
             playerNow: 0,
@@ -125,6 +125,9 @@ function IdentPeople({ onFinished }) {
     }
 
     useEffect(() => {
+        if (beingGanked) {
+            onPlayerBeingSkip()
+        }
         if (beingGanked || identTimeUse >= 1) {
             onFinished()
         }
