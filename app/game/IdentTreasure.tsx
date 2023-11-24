@@ -160,7 +160,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
 
     useEffect(() => {
         //console.log(failIdentedAnimals)
-        console.log(identedAnimals)
+        //console.log(identedAnimals)
         if (beingGanked) {
             onPlayerBeingSkip()
         }

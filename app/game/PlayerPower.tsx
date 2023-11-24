@@ -8,21 +8,27 @@ function PlayerPower({ }) {
     const getCharacterName = (index) => { return CHARACTERLIST[characters[index]] }
 
     const [clickedGankingButton, setClickedGankingButton] = useState(-1);
+    const [clikcedBlockingButton, setClickedBlockingButton] = useState(-1);
     const [plyaerPowerConfirm, setPlayerPowerConfirm] = useState(false)
 
     const { playerNow, playerNames, numberOfPlayers, gameTurn } =
         useGameMetaContext() ?? {
             playerNow: 0,
             playerNames: [],
-            numberOfPlayers: 0
+            numberOfPlayers: 0,
+            gameTurn: 0
         }
 
-    const { characters, CHARACTERLIST, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, setAnimalBlocked, animalOrders } =
+    const { characters, CHARACTERLIST, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders } =
         useGameContext() ?? {
             characters: [],
             CHARACTERLIST: [],
             beingGankedTime: [],
-            setBeingGankedTime: () => { }
+            setBeingGankedTime: () => { },
+            ANIMALS: [],
+            animalOrders: [],
+            animalBlocked: [],
+            setAnimalBlocked: () => { },
         }
 
     function findXu(): number {
@@ -123,53 +129,78 @@ function PlayerPower({ }) {
         )
     }
 
+    const handleAnimalBlocked = (index) => {
+
+        setAnimalBlocked((prevAnimalBlocked) => {
+            prevAnimalBlocked[animalOrders[index + gameTurn * 4]] = true
+            return prevAnimalBlocked
+        })
+
+    }
+
+    function BlockButtonList({ }) {
+
+        const handleBlockingButtonClick = (value) => {
+            setClickedBlockingButton(value)
+            handleAnimalBlocked(value)
+            handlePowerDone()
+        }
+
+        const renderedBlockingButttons = Array.from(
+            { length: 4 }
+            , (_, index) => (
+                <button
+                    key={index}
+                    onClick={() => handleBlockingButtonClick(index)}
+                    disabled={
+                        (clikcedBlockingButton !== -1)
+                    }>
+                    {clikcedBlockingButton === -1 || clikcedBlockingButton != index ?
+                        ANIMALS[animalOrders[index + gameTurn * 4]] : ("已經封鎖 " + ANIMALS[animalOrders[index + gameTurn * 4]])}
+                </button>
+            ));
+        return (
+            <div>
+                {renderedBlockingButttons}
+            </div>
+        )
+    }
+
+    const handleClickcedBlockingPassButton = (index) => {
+        setClickedBlockingButton(index)
+        handlePowerDone()
+    }
+
     const PowerBlock = () => {
         return (
             <div>
                 <div>
-                    請選擇要偷襲的對象：
-                    <GankedButtonList onPlayerGanked={handlePlayerGanked}></GankedButtonList>
+                    請選擇要封鎖的獸首：
+                    <BlockButtonList></BlockButtonList>
                     <button
                         key={99}
-                        onClick={() => handleClickcedGankingPassButton(99)}
-                        disabled={(clickedGankingButton !== -1)}>
-                        {clickedGankingButton === -1 || clickedGankingButton != 99 ? '跳過，不進行偷襲' : ("您已經選擇跳過")}
+                        onClick={() => handleClickcedBlockingPassButton(99)}
+                        disabled={(clikcedBlockingButton !== -1)}>
+                        {clikcedBlockingButton === -1 || clikcedBlockingButton != 99 ? '跳過，不進行封鎖' : ("您已經選擇跳過")}
                     </button>
                 </div>
             </div>
         )
     }
 
-    const handleBlockOneAnimal = (animalIndex) => {
-
-    }
-
-    function BlockOneAnimal({ index }) { // 這裡要加{}!!!
-
-    }
-
     const handlePowerDone = () => {
         setPlayerPowerConfirm(true)
     }
 
-    const Power = ({ characterName }) => {
-        let content
-        if (characterName === "藥不然") {
-            content = <PowerGank></PowerGank>
-        }
-        // TODO: Add all characters
-        return <div>{content}</div>
-    }
-
     useEffect(() => {
-        console.log(beingGankedTime)
+        //console.log(animalBlocked)
     })
 
     return (
         <div>
             <div>
                 {getCharacterName(playerNow) === "藥不然" && <PowerGank></PowerGank>}
-                {getCharacterName(playerNow) === "鄭國渠" && <div></div>}
+                {getCharacterName(playerNow) === "鄭國渠" && <PowerBlock></PowerBlock>}
             </div>
             <div>
                 <button disabled={!plyaerPowerConfirm}>確認</button>
