@@ -16,7 +16,6 @@ function TurnStart({ turnNumber, onTurnStartEnd }) {
             playerNames: []
         }
     const ANIMAL_DISPLAY_IN_ONE_TURN = 4
-    const turnInChinese = ['一', '二', '三']
 
     const renderedElements = Array.from({
         length: ANIMAL_DISPLAY_IN_ONE_TURN
@@ -32,7 +31,7 @@ function TurnStart({ turnNumber, onTurnStartEnd }) {
 
     return (
         <div>
-            <div>第{turnInChinese[turnNumber]}回合</div>
+
             <div className="parallel-words">
                 {renderedElements}
             </div>

@@ -44,7 +44,6 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         animalBlocked: [],
         animalRealAltered: [],
     }
-        ;
 
     const [identTimeUse, setIdentTimeUse] = useState(0)
     const [identedAnimals, setIdentedAnimals] = useState<number[]>([])

@@ -59,6 +59,8 @@ interface GameContextProps {
     setAnimalRealAltered: React.Dispatch<React.SetStateAction<boolean[]>>,
     identedPeople: number[],
     setIdentedPeople: React.Dispatch<React.SetStateAction<number[]>>,
+    votedAnimals: boolean[],
+    setVotedAnimals: React.Dispatch<React.SetStateAction<boolean[]>>,
 
 }
 
@@ -85,7 +87,7 @@ export const GameProvider = ({ children }) => {
     const [civHuangBlockedTurn, setCivHuangBlockedTurn] = useState(getRandomInt(0, 3))
     const [civMuBlockedTurn, setCivMuBlockedTurn] = useState(getRandomInt(0, 3))
     const [animalBlocked, setAnimalBlocked] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
-
+    const [votedAnimals, setVotedAnimals] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
 
 
     // static character list
@@ -111,6 +113,8 @@ export const GameProvider = ({ children }) => {
         setAnimalRealAltered,
         identedPeople,
         setIdentedPeople,
+        votedAnimals,
+        setVotedAnimals,
     };
 
 
