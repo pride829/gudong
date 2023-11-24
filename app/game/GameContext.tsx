@@ -57,6 +57,8 @@ interface GameContextProps {
     setAnimalBlocked: React.Dispatch<React.SetStateAction<boolean[]>>,
     animalRealAltered: boolean[],
     setAnimalRealAltered: React.Dispatch<React.SetStateAction<boolean[]>>,
+    identedPeople: number[],
+    setIdentedPeople: React.Dispatch<React.SetStateAction<number[]>>,
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -71,9 +73,10 @@ export const GameProvider = ({ children }) => {
     ];
     const [animalReals, setAnimalReals] = useState(shuffleArray2D(initialBooleanArray));
     const [animalRealAltered, setAnimalRealAltered] = useState([true, false, false])
-    const [characters, setCharacters] = useState<number[]>([4, 0, 0, 0, 0, 0, 0, 0]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
+    const [characters, setCharacters] = useState<number[]>([6, 5, 6, 0, 0, 0, 0, 0]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
     const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
     const [dummy, setDummy] = useState<number>(0)
+    const [identedPeople, setIdentedPeople] = useState<number[]>([])
 
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
@@ -103,7 +106,9 @@ export const GameProvider = ({ children }) => {
         animalBlocked,
         setAnimalBlocked,
         animalRealAltered,
-        setAnimalRealAltered
+        setAnimalRealAltered,
+        identedPeople,
+        setIdentedPeople,
     };
 
 

@@ -2,6 +2,8 @@ import React, { useState, memo } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 import IdentTreasure from './IdentTreasure';
+import IdentPeople from './IdentPeople';
+import FactionInfo from './FactionInfo';
 
 function PlayerIdent({ onPlayerIdentFinish }) {
     const { playerNow, playerNames } =
@@ -27,7 +29,18 @@ function PlayerIdent({ onPlayerIdentFinish }) {
     return (
         <div>
             <div>
-                <IdentTreasure onFinished={handleIdentDone} />
+                {
+                    CHARACTERLIST[characters[playerNow]] != "方震" &&
+                    <IdentTreasure onFinished={handleIdentDone} />
+                }
+                {
+                    CHARACTERLIST[characters[playerNow]] === "方震" &&
+                    <IdentPeople onFinished={handleIdentDone} />
+                }
+            </div>
+            <div>
+                <div>陣營資訊</div>
+                <FactionInfo></FactionInfo>
             </div>
             <div>
                 <button disabled={identDone === false} onClick={onPlayerIdentFinish}>確認</button>
