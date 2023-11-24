@@ -27,7 +27,7 @@ function GameInTurn({ onGameInTurnFinish }) {
             {phase === 'turnGoing' && (
                 <div>
                     <div>第{turnInChinese[gameTurn]}回合</div>
-                    <Player />
+                    <Player onPlayerFinish={() => { }} />
                 </div>
             )}
         </div >

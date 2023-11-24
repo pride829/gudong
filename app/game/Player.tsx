@@ -1,18 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import PlayerMoving from './PlayerMoving';
+import PlayerPass from './PlayerPass';
 
-function Player({ }) {
-    const { playerNow, playerNames } =
+function Player({ onPlayerFinish }) {
+    const { playerNow, playerNames, setPlayerNow, playerPlayed, setPlayerPlayed } =
         useGameMetaContext() ?? {
             playerNow: 0,
-            playerNames: []
+            setPlayerNow: () => { },
+            playerNames: [],
+            playerPlayed: 0,
+            setPlayerPlayed: () => { },
+
         }
     const [phase, setPhase] = useState('playerConfirm');
 
     const handlePlayerConfirmFinish = () => {
         setPhase('playerMoving')
     };
+    const handlePlayerMovingFinish = () => {
+        setPhase('playerPass')
+    }
+    const handlePlayerPassFinish = (index) => {
+        if (index != -1) {
+            setPlayerNow(index);
+            setPhase('playerConfirm')
+        } else {
+            setPlayerPlayed([playerNow])
+            onPlayerFinish()
+        }
+    }
+
+    useEffect(() => {
+
+        console.log(playerPlayed)
+    })
 
     return (
         <div>
@@ -25,7 +47,12 @@ function Player({ }) {
             )}
             {phase === 'playerMoving' && (
                 <div>
-                    <PlayerMoving />
+                    <PlayerMoving onPlayerMovingEnd={handlePlayerMovingFinish} />
+                </div>
+            )}
+            {phase === 'playerPass' && (
+                <div>
+                    <PlayerPass onPlayerPassFinish={handlePlayerPassFinish}></PlayerPass>
                 </div>
             )}
 

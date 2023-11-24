@@ -59,7 +59,6 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
 
 
     const handleIdentOnePeople = (peopleIndex: number) => {
-        console.log(peopleIndex)
 
         // TODO: 增加被偷襲和封鎖等
         if (beingGankedTime[playerNow] > 0) {

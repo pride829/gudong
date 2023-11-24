@@ -3,7 +3,8 @@ import { useGameMetaContext } from './GameMetaContext';
 import PlayerIdent from './PlayerIdent';
 import PlayerPower from './PlayerPower';
 
-function PlayerMoving({ }) {
+function PlayerMoving({ onPlayerMovingEnd }) {
+
 
     const [phase, setPhase] = useState('playerIdent');
     const [skipPower, setSkipPower] = useState(false);
@@ -12,7 +13,7 @@ function PlayerMoving({ }) {
         if (!skipPower) {
             setPhase('playerPower')
         } else {
-            setPhase('playerPass')
+            onPlayerMovingEnd()
         }
     };
 
@@ -29,15 +30,9 @@ function PlayerMoving({ }) {
             )}
             {phase === 'playerPower' && (
                 <div>
-                    <PlayerPower />
+                    <PlayerPower onPlayerPowerFinish={onPlayerMovingEnd} />
                 </div>
             )}
-            {phase === 'playerPass' && (
-                <div>
-                    playerPass
-                </div>
-            )}
-
         </div >
     )
 }

@@ -3,7 +3,7 @@ import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 import IdentTreasure from './IdentTreasure';
 
-function PlayerPower({ }) {
+function PlayerPower({ onPlayerPowerFinish }) {
 
     const getCharacterName = (index) => { return CHARACTERLIST[characters[index]] }
 
@@ -211,6 +211,13 @@ function PlayerPower({ }) {
         )
     }
 
+    const PowerNothing = () => {
+        return (
+            <div>
+                您沒有其他特殊能力。
+            </div>
+        )
+    }
     const handlePowerDone = () => {
         setPlayerPowerConfirm(true)
     }
@@ -223,7 +230,6 @@ function PlayerPower({ }) {
             prevAnimalReals[gameTurn] = alterSwitch
             return prevAnimalReals
         })
-        console.log(animalRealAltered)
         //console.log(animalBlocked)
     })
 
@@ -233,9 +239,13 @@ function PlayerPower({ }) {
                 {getCharacterName(playerNow) === "藥不然" && <PowerGank></PowerGank>}
                 {getCharacterName(playerNow) === "鄭國渠" && <PowerBlock></PowerBlock>}
                 {getCharacterName(playerNow) === "老朝奉" && <PowerAlter></PowerAlter>}
+                {getCharacterName(playerNow) !== "老朝奉" &&
+                    getCharacterName(playerNow) !== "鄭國渠" &&
+                    getCharacterName(playerNow) !== "藥不然" &&
+                    <PowerNothing></PowerNothing>}
             </div>
             <div>
-                <button disabled={!plyaerPowerConfirm}>確認</button>
+                <button disabled={!plyaerPowerConfirm} onClick={onPlayerPowerFinish}>確認</button>
             </div>
         </div>
 

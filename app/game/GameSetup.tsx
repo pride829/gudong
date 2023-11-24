@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PlayerList from './PlayerList';
 import { useGameMetaContext } from './GameMetaContext';
 
 function GameSetup({ onSubmit }) {
-    const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, setPlayerNow = () => { } } =
+    const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, playerNow, setPlayerNow = () => { }, playerPlayed, setPlayerPlayed } =
         useGameMetaContext() ?? {
             MIN_PLAYERS: 0,
             MAX_PLAYERS: 0,
             numberOfPlayers: 0,
             setNumberOfPlayers: undefined,
             playerNames: [],
+            playerNow: 0,
             setPlayerNow: undefined,
+            playerPlayed: [],
+            setPlayerPlayed: () => { },
         };
     const [selectedFirstPlayer, setSelectedFirstPlayer] = useState(-1);
 
@@ -34,13 +37,22 @@ function GameSetup({ onSubmit }) {
             if (selectedFirstPlayer === -1) {
                 let randomNumber = Math.floor(Math.random() * (numberOfPlayers - 0))
                 setPlayerNow(randomNumber)
+                setPlayerPlayed([randomNumber])
+                onSubmit();
+            } else {
+                setPlayerNow(selectedFirstPlayer)
+                setPlayerPlayed([selectedFirstPlayer])
+                onSubmit();
             }
-            onSubmit();
+
         }
     };
 
     const playerOptions = Array.from({ length: MAX_PLAYERS - MIN_PLAYERS + 1 }, (_, index) => MIN_PLAYERS + index);
 
+    useEffect(() => {
+        //console.log(playerNow)
+    })
     return (
         <div>
             <h2>Game Setup</h2>

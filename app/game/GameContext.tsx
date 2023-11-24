@@ -59,6 +59,7 @@ interface GameContextProps {
     setAnimalRealAltered: React.Dispatch<React.SetStateAction<boolean[]>>,
     identedPeople: number[],
     setIdentedPeople: React.Dispatch<React.SetStateAction<number[]>>,
+
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -84,6 +85,7 @@ export const GameProvider = ({ children }) => {
     const [civHuangBlockedTurn, setCivHuangBlockedTurn] = useState(getRandomInt(0, 3))
     const [civMuBlockedTurn, setCivMuBlockedTurn] = useState(getRandomInt(0, 3))
     const [animalBlocked, setAnimalBlocked] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
+
 
 
     // static character list
