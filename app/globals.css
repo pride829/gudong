@@ -8,3 +8,52 @@
     padding: 10px;
     margin: 5px;
 }
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+/* Style for the switch track */
+.toggle-switch .switch-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Style for the switch thumb */
+.toggle-switch .switch-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 26px;
+    height: 26px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+/* Style for the switch when it's checked */
+.toggle-switch input:checked+.switch-track {
+    background-color: #66bb6a;
+    /* Green color when checked */
+}
+
+.toggle-switch input:checked+.switch-track .switch-thumb {
+    transform: translateX(26px);
+    /* Move the thumb to the right when checked */
+}

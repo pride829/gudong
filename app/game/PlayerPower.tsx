@@ -10,6 +10,7 @@ function PlayerPower({ }) {
     const [clickedGankingButton, setClickedGankingButton] = useState(-1);
     const [clikcedBlockingButton, setClickedBlockingButton] = useState(-1);
     const [plyaerPowerConfirm, setPlayerPowerConfirm] = useState(false)
+    const [alterSwitch, setAlterSwitch] = useState(false);
 
     const { playerNow, playerNames, numberOfPlayers, gameTurn } =
         useGameMetaContext() ?? {
@@ -19,7 +20,7 @@ function PlayerPower({ }) {
             gameTurn: 0
         }
 
-    const { characters, CHARACTERLIST, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders } =
+    const { characters, CHARACTERLIST, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
         useGameContext() ?? {
             characters: [],
             CHARACTERLIST: [],
@@ -29,6 +30,8 @@ function PlayerPower({ }) {
             animalOrders: [],
             animalBlocked: [],
             setAnimalBlocked: () => { },
+            animalRealAltered: [],
+            setAnimalRealAltered: () => { },
         }
 
     function findXu(): number {
@@ -188,11 +191,39 @@ function PlayerPower({ }) {
         )
     }
 
+
+    const handlePowerAlterChange = () => {
+        setAlterSwitch(!alterSwitch);
+    }
+
+    const PowerAlter = () => {
+        return (
+            <div>
+                老朝奉，是否改變除了姬雲浮以外的許願陣營玩家之後的鑑定結果？
+                <label className="toggle-switch">
+                    <input type="checkbox" onChange={handlePowerAlterChange} checked={alterSwitch}></input>
+                    <div className="switch-track">
+                        <div className="switch-thumb"></div>
+                    </div>
+
+                </label>
+            </div>
+        )
+    }
+
     const handlePowerDone = () => {
         setPlayerPowerConfirm(true)
     }
 
     useEffect(() => {
+        if (getCharacterName(playerNow) != "藥不然" && getCharacterName(playerNow) != "鄭國渠") {
+            handlePowerDone();
+        }
+        setAnimalRealAltered((prevAnimalReals) => {
+            prevAnimalReals[gameTurn] = alterSwitch
+            return prevAnimalReals
+        })
+        console.log(animalRealAltered)
         //console.log(animalBlocked)
     })
 
@@ -201,6 +232,7 @@ function PlayerPower({ }) {
             <div>
                 {getCharacterName(playerNow) === "藥不然" && <PowerGank></PowerGank>}
                 {getCharacterName(playerNow) === "鄭國渠" && <PowerBlock></PowerBlock>}
+                {getCharacterName(playerNow) === "老朝奉" && <PowerAlter></PowerAlter>}
             </div>
             <div>
                 <button disabled={!plyaerPowerConfirm}>確認</button>
