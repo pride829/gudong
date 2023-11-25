@@ -7,7 +7,7 @@ import TestGame from './TestGame';
 function App() {
     return (
         <div>
-            <TestGame />
+            <Game />
         </div>
     )
 }

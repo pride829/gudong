@@ -33,7 +33,7 @@ function Player({ onPlayerFinish }) {
 
     useEffect(() => {
 
-        console.log(playerPlayed)
+        //console.log(playerPlayed)
     })
 
     return (

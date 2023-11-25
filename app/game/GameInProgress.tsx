@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import GameInTurn from './GameInTurn';
 import GameStart from './GameStart';
+import GameEnd from './GameEnd';
+import TurnVoting from './TurnVoting';
+import VotePeople from './VotePeople';
 
 function GameInProgress() {
 
@@ -11,8 +14,12 @@ function GameInProgress() {
     };
 
     const handleGameInTurnFinish = () => {
-        setPhase('gameEnd')
+        setPhase('votePeople')
     };
+
+    const handleVotePeopleFinish = () => {
+        setPhase('gameEnd')
+    }
 
     return (
         <div>
@@ -22,8 +29,11 @@ function GameInProgress() {
             {phase === 'turnStart' && (
                 <GameInTurn onGameInTurnFinish={handleGameInTurnFinish} />
             )}
+            {phase === 'votePeople' && (
+                <VotePeople onVotePeopleEnd={handleVotePeopleFinish} />
+            )}
             {phase === 'gameEnd' && (
-                <div></div>
+                <GameEnd></GameEnd>
             )}
         </div >
     );

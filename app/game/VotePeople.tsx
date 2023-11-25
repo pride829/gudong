@@ -66,8 +66,8 @@ function VotePeople({ onVotePeopleEnd }) {
 
 
     const handlePeopleVotingSubmit = () => {
-        console.log("index", playerIndex)
-        console.log("peopleChose", peopleChose)
+        //console.log("index", playerIndex)
+        //console.log("peopleChose", peopleChose)
 
 
         if (CHARACTERLIST[characters[playerIndex]] === "老朝奉") {
@@ -77,7 +77,7 @@ function VotePeople({ onVotePeopleEnd }) {
         } else if (CHARACTERLIST[characters[playerIndex]] === "鄭國渠") {
             // pass
         } else {
-            console.log("Added!")
+            //console.log("Added!")
             setBossVoted(
                 (prevBossVoted) => {
                     const tempBossVoted = [...prevBossVoted]

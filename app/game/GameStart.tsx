@@ -13,6 +13,7 @@ function CharacterSelecting({ playerIndex, playerNames, characterList, onCharact
     const handleCharacterSubmit = (event) => {
         event.preventDefault();
         onCharacterSubmit(playerIndex, characterChose);
+        setCharacterChose(0)
     }
 
     return (

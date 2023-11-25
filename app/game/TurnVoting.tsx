@@ -63,8 +63,8 @@ function TurnVoting({ onTurnVotingEnd }) {
     };
 
     useEffect(() => {
-        console.log(votedAnimals)
-        console.log(animalReals)
+        //console.log(votedAnimals)
+        //console.log(animalReals)
     })
 
     function DisplayAnimalReal({ isDisplayed, isHidden, isReal }) {

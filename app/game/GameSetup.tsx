@@ -39,6 +39,7 @@ function GameSetup({ onSubmit }) {
                 setPlayerNow(randomNumber)
                 setPlayerPlayed([randomNumber])
                 onSubmit();
+
             } else {
                 setPlayerNow(selectedFirstPlayer)
                 setPlayerPlayed([selectedFirstPlayer])
@@ -51,7 +52,7 @@ function GameSetup({ onSubmit }) {
     const playerOptions = Array.from({ length: MAX_PLAYERS - MIN_PLAYERS + 1 }, (_, index) => MIN_PLAYERS + index);
 
     useEffect(() => {
-        //console.log(playerNow)
+        console.log("Game set up!")
     })
     return (
         <div>

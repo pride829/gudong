@@ -5,7 +5,7 @@ import { useGameMetaContext } from './GameMetaContext';
 import TurnVoting from './TurnVoting';
 
 function GameInTurn({ onGameInTurnFinish }) {
-    const [phase, setPhase] = useState('turnVoting');
+    const [phase, setPhase] = useState('turnStart');
 
     const { gameTurn, setGameTurn } =
         useGameMetaContext() ?? {

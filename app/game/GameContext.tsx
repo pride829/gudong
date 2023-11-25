@@ -71,6 +71,8 @@ interface GameContextProps {
     setXuVoted: React.Dispatch<React.SetStateAction<number>>,
     funVoted: number,
     setFunVoted: React.Dispatch<React.SetStateAction<number>>,
+    gameLog: string,
+    setGameLog: React.Dispatch<React.SetStateAction<string>>,
 
 }
 
@@ -86,7 +88,7 @@ export const GameProvider = ({ children }) => {
     ];
     const [animalReals, setAnimalReals] = useState(initialBooleanArray);
     const [animalRealAltered, setAnimalRealAltered] = useState([false, false, false])
-    const [characters, setCharacters] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
+    const [characters, setCharacters] = useState<number[]>([]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
     const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
     const [dummy, setDummy] = useState<number>(0)
     const [identedPeople, setIdentedPeople] = useState<number[]>([])
@@ -97,10 +99,11 @@ export const GameProvider = ({ children }) => {
     const [civHuangBlockedTurn, setCivHuangBlockedTurn] = useState(getRandomInt(0, 3))
     const [civMuBlockedTurn, setCivMuBlockedTurn] = useState(getRandomInt(0, 3))
     const [animalBlocked, setAnimalBlocked] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
-    const [votedAnimals, setVotedAnimals] = useState([false, true, false, false, false, false, false, false, false, false, true, false])
-    const [bossVoted, setBossVoted] = useState([0, 0, 0, 0, 0, 3, 0, 0])
+    const [votedAnimals, setVotedAnimals] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
+    const [bossVoted, setBossVoted] = useState([0, 0, 0, 0, 0, 0, 0, 0])
     const [xuVoted, setXuVoted] = useState(-1)
     const [funVoted, setFunVoted] = useState(-1)
+    const [gameLog, setGameLog] = useState("")
 
 
     // static character list
@@ -134,6 +137,8 @@ export const GameProvider = ({ children }) => {
         setXuVoted,
         funVoted,
         setFunVoted,
+        gameLog,
+        setGameLog,
     };
 
 
