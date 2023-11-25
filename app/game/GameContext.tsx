@@ -21,11 +21,15 @@ function shuffleArray2D(array: boolean[][]) {
     for (let i = newArray.length - 1; i > 0; i--) {
         for (let j = newArray[i].length - 1; j > 0; j--) {
             const m = Math.floor(Math.random() * (j + 1));
+            //console.log(j, m);
+            //console.log(newArray);
             [newArray[i][j], newArray[i][m]] = [newArray[i][m], newArray[i][j]];
+            //console.log(newArray)
         }
         const n = Math.floor(Math.random() * (i + 1));
         [newArray[i], newArray[n]] = [newArray[n], newArray[i]]
     }
+
     return newArray;
 }
 
@@ -80,7 +84,7 @@ export const GameProvider = ({ children }) => {
         [false, true, true, false],
         [false, false, true, true],
     ];
-    const [animalReals, setAnimalReals] = useState(shuffleArray2D(initialBooleanArray));
+    const [animalReals, setAnimalReals] = useState(initialBooleanArray);
     const [animalRealAltered, setAnimalRealAltered] = useState([false, false, false])
     const [characters, setCharacters] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
     const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
@@ -93,8 +97,8 @@ export const GameProvider = ({ children }) => {
     const [civHuangBlockedTurn, setCivHuangBlockedTurn] = useState(getRandomInt(0, 3))
     const [civMuBlockedTurn, setCivMuBlockedTurn] = useState(getRandomInt(0, 3))
     const [animalBlocked, setAnimalBlocked] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
-    const [votedAnimals, setVotedAnimals] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
-    const [bossVoted, setBossVoted] = useState([0, 0, 0, 0, 0, 0, 0, 0])
+    const [votedAnimals, setVotedAnimals] = useState([false, true, false, false, false, false, false, false, false, false, true, false])
+    const [bossVoted, setBossVoted] = useState([0, 0, 0, 0, 0, 3, 0, 0])
     const [xuVoted, setXuVoted] = useState(-1)
     const [funVoted, setFunVoted] = useState(-1)
 
@@ -136,6 +140,8 @@ export const GameProvider = ({ children }) => {
     useEffect(() => {
         const tempAnimalOrders = shuffleArray(generateNumbersUpToN(12 - 1))
         setAnimalOrders(sortGroups(tempAnimalOrders, 4))
+        const tempAnimalReals = shuffleArray2D(initialBooleanArray)
+        setAnimalReals(tempAnimalReals)
     }, []); // Empty dependency array ensures this runs only once
 
     return (

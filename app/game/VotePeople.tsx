@@ -31,7 +31,6 @@ function VotePeople({ onVotePeopleEnd }) {
             setXuVoted: () => { },
             funVoted: -1,
             setFunVoted: () => { },
-
         };
 
     function PeopleVoting() {

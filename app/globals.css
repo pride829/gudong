@@ -57,3 +57,17 @@
     transform: translateX(26px);
     /* Move the thumb to the right when checked */
 }
+
+.word-with-subscripts {
+    position: relative;
+    display: inline-block;
+}
+
+.under-sub {
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6em;
+    /* Adjust the font size as needed */
+}
