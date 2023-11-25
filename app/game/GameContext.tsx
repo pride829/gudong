@@ -107,7 +107,7 @@ export const GameProvider = ({ children }) => {
 
 
     // static character list
-    const CHARACTERLIST = ['許願', '方震', '姬雲浮', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠']
+    const CHARACTERLIST = ['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '姬雲浮', '鄭國渠']
 
     const contextValue: GameContextProps = {
         ANIMALS,

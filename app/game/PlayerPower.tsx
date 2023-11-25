@@ -83,6 +83,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
     function GankedButtonList({ onPlayerGanked }) {
         //const [clickedButton, setClickedButton] = useState(-1); // 這個不能放裡面!!否則會導致它一直是在1, 我猜是重新render時，GankedButtonList也會重新Render所導致的
 
+        console.log(numberOfPlayers)
         const handleGankingButtonClick = (value) => {
             setClickedGankingButton(value)
             onPlayerGanked(value)
@@ -90,7 +91,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
         }
 
         const renderedGankingButttons = Array.from(
-            playerNames
+            playerNames.slice(0, numberOfPlayers)
             , (name, index) => (
                 <button
                     key={index}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PlayerList from './PlayerList';
 import { useGameMetaContext } from './GameMetaContext';
+import { useGameContext } from './GameContext';
 
 function GameSetup({ onSubmit }) {
     const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, playerNow, setPlayerNow = () => { }, playerPlayed, setPlayerPlayed } =
@@ -15,6 +16,8 @@ function GameSetup({ onSubmit }) {
             playerPlayed: [],
             setPlayerPlayed: () => { },
         };
+    const { gameLog } = useGameContext() ?? { gameLog: "" }
+
     const [selectedFirstPlayer, setSelectedFirstPlayer] = useState(-1);
 
     const handleFirstPlayerSelection = (player) => {
@@ -52,7 +55,7 @@ function GameSetup({ onSubmit }) {
     const playerOptions = Array.from({ length: MAX_PLAYERS - MIN_PLAYERS + 1 }, (_, index) => MIN_PLAYERS + index);
 
     useEffect(() => {
-        console.log("Game set up!")
+
     })
     return (
         <div>

@@ -3,7 +3,7 @@ import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 import { Alexandria } from 'next/font/google';
 
-function CharacterSelecting({ playerIndex, playerNames, characterList, onCharacterSubmit }) {
+function CharacterSelecting({ playerIndex, playerNames, playerNumbers, characterList, onCharacterSubmit }) {
     const [characterChose, setCharacterChose] = useState(0);
 
     const handleCharacterChoosing = (characterIndex) => {
@@ -20,7 +20,7 @@ function CharacterSelecting({ playerIndex, playerNames, characterList, onCharact
         <form onSubmit={handleCharacterSubmit}>
             <div>請 {playerNames[playerIndex]} 玩家選擇角色</div>
             {characterList.map((c, characterIndex) => (
-                <ul key={characterIndex}>
+                <ul key={characterIndex} hidden={characterIndex >= playerNumbers}>
                     <label>
                         <input
                             type="radio"
@@ -39,7 +39,6 @@ function CharacterSelecting({ playerIndex, playerNames, characterList, onCharact
 }
 
 function GameStart({ onGameStartFinish }) {
-    // 之後可以從這裡讀取, 並
     const { numberOfPlayers, playerNames, playerNow, setPlayerNow = () => { } } =
         useGameMetaContext() ?? {
             numberOfPlayers: 0,
@@ -86,6 +85,7 @@ function GameStart({ onGameStartFinish }) {
                 playerIndex={playerIndex}
                 playerNames={playerNames}
                 characterList={CHARACTERLIST}
+                playerNumbers={numberOfPlayers}
                 onCharacterSubmit={handleCharacterSubmit} />
         </div >
     );
