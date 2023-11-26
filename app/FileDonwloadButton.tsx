@@ -1,7 +1,7 @@
 import React from 'react';
 
 function generateFileContent(content: string[]) {
-    return new Blob([content.join("\n")], { type: 'text/plain' });
+    return new Blob([content.join("\n")], { type: 'text/plain;charset=utf-8' });
 }
 
 function FileDownloadButton({ fileContent, fileName }) {

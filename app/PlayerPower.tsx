@@ -236,18 +236,20 @@ function PlayerPower({ onPlayerPowerFinish }) {
         if (getCharacterName(playerNow) != "藥不然" && getCharacterName(playerNow) != "鄭國渠") {
             handlePowerDone();
         }
-        setAnimalRealAltered((prevAnimalReals) => {
-            prevAnimalReals[gameTurn] = alterSwitch
-            return prevAnimalReals
-        })
+        if (getCharacterName(playerNow) === "老朝奉") {
+            setAnimalRealAltered((prevAnimalReals) => {
+                prevAnimalReals[gameTurn] = alterSwitch
+                return prevAnimalReals
+            })
+        }
         //console.log(animalBlocked)
     })
 
     const handlePlayerPowerFinish = () => {
-        if (preAlterSwitch === false && alterSwitch === true) {
+        if (preAlterSwitch === false && alterSwitch === true && CHARACTERLIST[characters[playerNow]] === "老朝奉") {
             addGameLog(playerNames[playerNow] + "發動了老朝奉的能力！")
             setPrevAlterSwitch(true)
-        } else {
+        } else if (CHARACTERLIST[characters[playerNow]] === "老朝奉") {
             addGameLog(playerNames[playerNow] + "並沒有發動老朝奉的能力。")
         }
         onPlayerPowerFinish()

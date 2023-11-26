@@ -13,7 +13,7 @@ function TestGame() {
         <div>
             <GameMetaProvider>
                 <GameProvider>
-                    <GameEnd></GameEnd>
+                    <GameInTurn onGameInTurnFinish={() => { }} />
                 </GameProvider>
             </GameMetaProvider>
         </div>

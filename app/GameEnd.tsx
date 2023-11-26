@@ -198,7 +198,6 @@ function GameEnd() {
         addGameLog(DisplayIsFunFound())
         addGameLog(DisplayIsBossFound())
         addGameLog(WinningMsg())
-
     }
 
     const [isGameLogAdded, setIsGameLogAdded] = useState(false)
@@ -208,7 +207,7 @@ function GameEnd() {
             setIsGameLogAdded(true)
             addGameEndToGameLog()
         }
-    })
+    }, [isGameLogAdded])
 
     const handleDisplayGameLogButtonClicked = () => {
         setDisplayGameLog(!displayGameLog)
