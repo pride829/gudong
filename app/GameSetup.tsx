@@ -59,20 +59,26 @@ function GameSetup({ onSubmit }) {
     })
     return (
         <div>
-            <h2>遊戲設置</h2>
-            <form onSubmit={handleFormSubmit}>
-                請輸入玩家數量：
-                <select id="playerCount" value={numberOfPlayers} onChange={handlePlayerCountChange}>
-                    {playerOptions.map((count) => (
-                        <option key={count} value={count}>
-                            {count}
-                        </option>
-                    ))}
-                </select>
-                <PlayerList numberOfPlayers={numberOfPlayers} selectedFirstPlayer={selectedFirstPlayer} onFirstPlayerSelection={handleFirstPlayerSelection} />
-                <button type="submit">Submit</button>
-            </form>
-        </div >
+            <div>
+                <h2>遊戲設置</h2>
+                <form onSubmit={handleFormSubmit}>
+                    請輸入玩家數量：
+                    <select id="playerCount" value={numberOfPlayers} onChange={handlePlayerCountChange}>
+                        {playerOptions.map((count) => (
+                            <option key={count} value={count}>
+                                {count}
+                            </option>
+                        ))}
+                    </select>
+                    <PlayerList numberOfPlayers={numberOfPlayers} selectedFirstPlayer={selectedFirstPlayer} onFirstPlayerSelection={handleFirstPlayerSelection} />
+                    <button type="submit">Submit</button>
+                </form>
+            </div >
+            <div>
+                <div><i>該程式為粉絲製作的古董局中局桌遊輔助程式，不代表官方立場！</i></div>
+                <div><i>重新整理會導致該場遊戲資料消失，請小心！</i></div>
+            </div>
+        </div>
     );
 }
 

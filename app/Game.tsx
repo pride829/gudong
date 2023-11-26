@@ -38,6 +38,19 @@ function Game() {
     };
 
 
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            const message = '離開後遊戲資料將會消失！確認離開？';
+            event.returnValue = message; // Standard for most browsers
+            return message; // For some older browsers
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
 
     return (
         <div>
