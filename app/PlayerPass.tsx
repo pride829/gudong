@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 import IdentTreasure from './IdentTreasure';
-import { render } from 'react-dom';
 
 function PlayerPass({ onPlayerPassFinish }) {
 

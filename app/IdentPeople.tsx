@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 import { resourceUsage } from 'process';
-import { render } from 'react-dom';
 import { fail } from 'assert';
 
 function IdentPeople({ onFinished, onPlayerBeingSkip }) {
