@@ -71,3 +71,19 @@
     font-size: 0.6em;
     /* Adjust the font size as needed */
 }
+
+.button-container {
+    display: flex;
+    /* Use flexbox to arrange buttons horizontally */
+    gap: 10px;
+    /* Set the gap between buttons to 10 pixels */
+}
+
+/* Additional styling for buttons if needed */
+button {
+    padding: 8px 16px;
+
+    border: none;
+    border-radius: 4px;
+    margin: 10px;
+}

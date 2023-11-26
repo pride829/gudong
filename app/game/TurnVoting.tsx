@@ -26,7 +26,9 @@ function TurnVoting({ onTurnVotingEnd }) {
         animalBlocked,
         animalRealAltered,
         votedAnimals,
-        setVotedAnimals
+        setVotedAnimals,
+        addGameLog
+
     } = useGameContext() ?? {
 
         ANIMALS: [],
@@ -44,6 +46,7 @@ function TurnVoting({ onTurnVotingEnd }) {
         animalRealAltered: [],
         votedAnimals: [],
         setVotedAnimals: () => { },
+        addGameLog: () => { },
     }
 
     const [voteNumber, setVoteNumber] = useState([0, 0, 0, 0])
@@ -139,6 +142,12 @@ function TurnVoting({ onTurnVotingEnd }) {
                 prevVotedAnimals[animalOrders[secondLargestIndex + gameTurn * 4]] = true
                 return prevVotedAnimals
             })
+
+            addGameLog("第" + (gameTurn + 1) + "回合投票")
+            for (let i = 0; i < 4; i++) {
+                addGameLog(ANIMALS[animalOrders[i + gameTurn * 4]] + "獲得了" + voteNumber[i] + "票")
+            }
+            addGameLog(ANIMALS[animalOrders[secondLargestIndex + gameTurn * 4]] + "是" + (animalReals[gameTurn][secondLargestIndex] ? "真" : "假") + "的！")
             setVoteFinished(true)
         }
     }

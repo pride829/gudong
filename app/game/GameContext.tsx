@@ -1,3 +1,4 @@
+import { init } from 'next/dist/compiled/webpack/webpack';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 function generateNumbersUpToN(n: number) {
@@ -14,6 +15,14 @@ function shuffleArray(array: number[]) {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+}
+
+function shuffleArray2DnTimes(array: boolean[][], n: number) {
+    let newArray = array.map(row => [...row]); // Create a deep copy
+    for (let i = 0; i < n; i++) {
+        newArray = shuffleArray2D(newArray)
+    }
+    return newArray
 }
 
 function shuffleArray2D(array: boolean[][]) {
@@ -71,9 +80,9 @@ interface GameContextProps {
     setXuVoted: React.Dispatch<React.SetStateAction<number>>,
     funVoted: number,
     setFunVoted: React.Dispatch<React.SetStateAction<number>>,
-    gameLog: string,
-    setGameLog: React.Dispatch<React.SetStateAction<string>>,
-
+    gameLog: string[],
+    addGameLog: (s: string) => void,
+    setGameLog: React.Dispatch<React.SetStateAction<string[]>>,
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -103,11 +112,15 @@ export const GameProvider = ({ children }) => {
     const [bossVoted, setBossVoted] = useState([0, 0, 0, 0, 0, 0, 0, 0])
     const [xuVoted, setXuVoted] = useState(-1)
     const [funVoted, setFunVoted] = useState(-1)
-    const [gameLog, setGameLog] = useState("")
+    const [gameLog, setGameLog] = useState<string[]>([])
 
+    function addGameLog(s: string) {
+        //console.log(s)
+        setGameLog((prevLog) => { return ([...prevLog, s]) })
+    }
 
     // static character list
-    const CHARACTERLIST = ['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '姬雲浮', '鄭國渠']
+    const CHARACTERLIST = ['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '姬雲浮']
 
     const contextValue: GameContextProps = {
         ANIMALS,
@@ -138,16 +151,18 @@ export const GameProvider = ({ children }) => {
         funVoted,
         setFunVoted,
         gameLog,
+        addGameLog,
         setGameLog,
     };
 
 
     useEffect(() => {
-        const tempAnimalOrders = shuffleArray(generateNumbersUpToN(12 - 1))
+        const tempAnimalOrders = shuffleArray(shuffleArray(shuffleArray(generateNumbersUpToN(12 - 1))))
         setAnimalOrders(sortGroups(tempAnimalOrders, 4))
-        const tempAnimalReals = shuffleArray2D(initialBooleanArray)
+        const tempAnimalReals = shuffleArray2DnTimes(initialBooleanArray, 100)
         setAnimalReals(tempAnimalReals)
     }, []); // Empty dependency array ensures this runs only once
+
 
     return (
         <GameContext.Provider value={contextValue}>

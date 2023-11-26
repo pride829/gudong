@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useGameContext } from './GameContext';
 import { useGameMetaContext } from './GameMetaContext';
+import FileDownloadButton from './FileDonwloadButton';
 
 function GameEnd() {
     const { numberOfPlayers, playerNames, playerNow, setPlayerNow = () => { } } =
@@ -18,7 +19,9 @@ function GameEnd() {
         funVoted,
         setFunVoted,
         animalReals,
-        votedAnimals } =
+        votedAnimals,
+        addGameLog,
+        gameLog } =
         useGameContext() ?? {
             ANIMALS: [],
             animalOrders: [],
@@ -33,7 +36,9 @@ function GameEnd() {
             funVoted: -1,
             setFunVoted: () => { },
             animalReals: [[true]],
-            votedAnimals: []
+            votedAnimals: [],
+            addGameLog: () => { },
+            gameLog: ""
         };
 
     function OneAnimal({ animalText, isReal, isVoted }) {
@@ -169,11 +174,61 @@ function GameEnd() {
         }
     }
 
+    function addTurnAnimalsLog(turnNumber) {
+        addGameLog(Array.from({ length: 4 }, (_, index) => (
+            ANIMALS[animalOrders[index + turnNumber * 4]] +
+            (votedAnimals[animalOrders[index + turnNumber * 4]] ? "(已選)" : "") +
+            "是" +
+            (animalReals[turnNumber][index] ? "真的" : "假的")
+        )).join(" ")
+        )
+    }
+
+    function addAllAnimalsLog() {
+        for (let i = 0; i < 3; i++) {
+            addGameLog("第" + (i + 1) + "回合的鑒定結果：")
+            addTurnAnimalsLog(i);
+        }
+    }
+
+    function addGameEndToGameLog() {
+        addGameLog("投票結束！")
+        addAllAnimalsLog()
+        addGameLog(DisplayIsXuFound())
+        addGameLog(DisplayIsFunFound())
+        addGameLog(DisplayIsBossFound())
+        addGameLog(WinningMsg())
+
+    }
+
+    const [isGameLogAdded, setIsGameLogAdded] = useState(false)
+
     useEffect(() => {
-        //console.log(animalReals)
+        if (!isGameLogAdded && animalOrders.length != 0) {
+            setIsGameLogAdded(true)
+            addGameEndToGameLog()
+        }
     })
 
+    const handleDisplayGameLogButtonClicked = () => {
+        setDisplayGameLog(!displayGameLog)
+    }
+
+    const [displayGameLog, setDisplayGameLog] = useState(false)
+
     //console.log(animalReals)
+    function ShowGameLog() {
+        return (
+            <div>
+                <div><button onClick={handleDisplayGameLogButtonClicked}>查看紀錄</button></div>
+                {displayGameLog && (
+                    <div style={{ height: '200px', overflow: 'auto' }}>
+                        {Array.from(gameLog, (log, i) => { return <div key={i}>{log}</div> })}
+                    </div>
+                )}
+            </div>
+        )
+    }
     return (
         <div>
             <div><WinningMsg></WinningMsg></div>
@@ -188,6 +243,9 @@ function GameEnd() {
                 <div>{DisplayIsXuFound()}</div>
                 <div>{DisplayIsFunFound()}</div>
                 <div>{DisplayIsBossFound()}</div>
+            </div>
+            <div>
+                <FileDownloadButton fileContent={gameLog} fileName="古董局中局遊戲紀錄.txt" /><ShowGameLog></ShowGameLog>
             </div>
         </div>
     )

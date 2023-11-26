@@ -6,6 +6,20 @@ import { Alexandria } from 'next/font/google';
 function CharacterSelecting({ playerIndex, playerNames, playerNumbers, characterList, onCharacterSubmit }) {
     const [characterChose, setCharacterChose] = useState(0);
 
+    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST, gameLog, addGameLog, setGameLog } =
+        useGameContext() ?? {
+            ANIMALS: [],
+            animalOrders: [],
+            setAnimalOrders: undefined,
+            characters: [],
+            setCharacters: undefined,
+            CHARACTERLIST: [],
+            gameLog: "",
+            addGameLog: () => { },
+            setGameLog: () => { }
+        };
+
+
     const handleCharacterChoosing = (characterIndex) => {
         setCharacterChose(characterIndex);
     }
@@ -14,6 +28,7 @@ function CharacterSelecting({ playerIndex, playerNames, playerNumbers, character
         event.preventDefault();
         onCharacterSubmit(playerIndex, characterChose);
         setCharacterChose(0)
+        addGameLog(playerNames[playerIndex] + " 選擇了 " + characterList[characterChose])
     }
 
     return (
@@ -46,14 +61,15 @@ function GameStart({ onGameStartFinish }) {
             playerNow: 0,
             setPlayerNow: undefined,
         };
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST } =
+    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST, setGameLog = () => { } } =
         useGameContext() ?? {
             ANIMALS: [],
             animalOrders: [],
             setAnimalOrders: undefined,
             characters: [],
             setCharacters: undefined,
-            CHARACTERLIST: []
+            CHARACTERLIST: [],
+            setGameLog: () => { }
         };
 
     const [playerIndex, setPlayerIndex] = useState(0);
@@ -71,6 +87,7 @@ function GameStart({ onGameStartFinish }) {
             // TODO: Check if duplicated character exists
             if (hasDuplicates(characters)) {
                 alert("有人選了重複的角色！將重新開始選擇角色");
+                setGameLog([])
                 setPlayerIndex(0);
                 setCharacters([])
             } else {

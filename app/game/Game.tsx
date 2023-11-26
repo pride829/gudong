@@ -21,14 +21,15 @@ function Game() {
             playerPlayed: [],
             setPlayerPlayed: () => { },
         };
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST } =
+    const { gameLog, ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST } =
         useGameContext() ?? {
             ANIMALS: [],
             animalOrders: [],
             setAnimalOrders: undefined,
             characters: [],
             setCharacters: undefined,
-            CHARACTERLIST: []
+            CHARACTERLIST: [],
+            gameLog: ""
         };
 
 
@@ -36,9 +37,7 @@ function Game() {
         setPhase('inprogress');
     };
 
-    useEffect(() => {
-        console.log(numberOfPlayers)
-    })
+
 
     return (
         <div>

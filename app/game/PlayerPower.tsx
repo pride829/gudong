@@ -11,6 +11,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
     const [clikcedBlockingButton, setClickedBlockingButton] = useState(-1);
     const [plyaerPowerConfirm, setPlayerPowerConfirm] = useState(false)
     const [alterSwitch, setAlterSwitch] = useState(false);
+    const [preAlterSwitch, setPrevAlterSwitch] = useState(false);
 
     const { playerNow, playerNames, numberOfPlayers, gameTurn } =
         useGameMetaContext() ?? {
@@ -20,7 +21,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
             gameTurn: 0
         }
 
-    const { characters, CHARACTERLIST, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
+    const { addGameLog, characters, CHARACTERLIST, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
         useGameContext() ?? {
             characters: [],
             CHARACTERLIST: [],
@@ -32,6 +33,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
             setAnimalBlocked: () => { },
             animalRealAltered: [],
             setAnimalRealAltered: () => { },
+            addGameLog: () => { }
         }
 
     function findXu(): number {
@@ -83,10 +85,12 @@ function PlayerPower({ onPlayerPowerFinish }) {
     function GankedButtonList({ onPlayerGanked }) {
         //const [clickedButton, setClickedButton] = useState(-1); // 這個不能放裡面!!否則會導致它一直是在1, 我猜是重新render時，GankedButtonList也會重新Render所導致的
 
-        console.log(numberOfPlayers)
+        //console.log(numberOfPlayers)
         const handleGankingButtonClick = (value) => {
             setClickedGankingButton(value)
             onPlayerGanked(value)
+
+            addGameLog(playerNames[playerNow] + "偷襲了" + playerNames[value] + "！")
             handlePowerDone()
         }
 
@@ -113,6 +117,8 @@ function PlayerPower({ onPlayerPowerFinish }) {
 
     const handleClickcedGankingPassButton = (index) => {
         setClickedGankingButton(index)
+
+        addGameLog(playerNames[playerNow] + "並沒有使用偷襲的能力。")
         handlePowerDone()
     }
 
@@ -140,6 +146,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
             return prevAnimalBlocked
         })
 
+        addGameLog(playerNames[playerNow] + "封鎖了" + ANIMALS[animalOrders[index + gameTurn * 4]] + "！")
     }
 
     function BlockButtonList({ }) {
@@ -172,6 +179,8 @@ function PlayerPower({ onPlayerPowerFinish }) {
 
     const handleClickcedBlockingPassButton = (index) => {
         setClickedBlockingButton(index)
+        addGameLog(playerNames[playerNow] + "並沒有使用封鎖的能力。")
+
         handlePowerDone()
     }
 
@@ -234,6 +243,17 @@ function PlayerPower({ onPlayerPowerFinish }) {
         //console.log(animalBlocked)
     })
 
+    const handlePlayerPowerFinish = () => {
+        if (preAlterSwitch === false && alterSwitch === true) {
+            addGameLog(playerNames[playerNow] + "發動了老朝奉的能力！")
+            setPrevAlterSwitch(true)
+        } else {
+            addGameLog(playerNames[playerNow] + "並沒有發動老朝奉的能力。")
+        }
+        onPlayerPowerFinish()
+
+    }
+
     return (
         <div>
             <div>
@@ -246,7 +266,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
                     <PowerNothing></PowerNothing>}
             </div>
             <div>
-                <button disabled={!plyaerPowerConfirm} onClick={onPlayerPowerFinish}>確認</button>
+                <button disabled={!plyaerPowerConfirm} onClick={handlePlayerPowerFinish}>確認</button>
             </div>
         </div>
 

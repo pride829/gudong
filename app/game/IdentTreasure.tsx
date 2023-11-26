@@ -28,6 +28,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         civMuBlockedTurn,
         animalBlocked,
         animalRealAltered,
+        addGameLog = () => { },
     } = useGameContext() ?? {
 
         ANIMALS: [],
@@ -43,6 +44,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         civMuBlockedTurn: 0,
         animalBlocked: [],
         animalRealAltered: [],
+        addameLog: () => { }
     }
 
     const [identTimeUse, setIdentTimeUse] = useState(0)
@@ -77,7 +79,6 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     const ANIMAL_DISPLAY_IN_ONE_TURN = 4
 
     const handleIdentOneAnimal = (animalIndex: number) => {
-        // TODO: 增加被偷襲和封鎖等
         if (beingGankedTime[playerNow] > 0) {
             setBeingGanked(true)
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
@@ -86,6 +87,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
                 prevBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
                 return prevBeingGankedTime
             })
+            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被偷襲了")
 
         } else if (CHARACTERLIST[characters[playerNow]] === "黃煙煙" && civHuangBlockedTurn === gameTurn ||
             CHARACTERLIST[characters[playerNow]] === "木戶加奈" && civMuBlockedTurn === gameTurn
@@ -93,14 +95,18 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
+            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被系統封了")
         } else if (animalBlocked[animalOrders[animalIndex + gameTurn * ANIMAL_DISPLAY_IN_ONE_TURN]]) {
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
+            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是其被封鎖了")
         } else {
             setIdentedAnimals([...identedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
+            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，結果為" + (getAnimalResult(animalIndex) ? "真" : "假")
+            )
         }
     }
 
@@ -172,10 +178,12 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         <div>
             <div>
                 <div>請選擇想鑑定的獸首</div>
-                <IdentOneAnimal index={0}></IdentOneAnimal>
-                <IdentOneAnimal index={1}></IdentOneAnimal>
-                <IdentOneAnimal index={2}></IdentOneAnimal>
-                <IdentOneAnimal index={3}></IdentOneAnimal>
+                <div className="button-container">
+                    <IdentOneAnimal index={0}></IdentOneAnimal>
+                    <IdentOneAnimal index={1}></IdentOneAnimal>
+                    <IdentOneAnimal index={2}></IdentOneAnimal>
+                    <IdentOneAnimal index={3}></IdentOneAnimal>
+                </div>
             </div>
             <BeingGankedResult></BeingGankedResult>
             <div>

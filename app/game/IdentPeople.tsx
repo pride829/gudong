@@ -31,6 +31,7 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         animalRealAltered,
         identedPeople,
         setIdentedPeople,
+        addGameLog,
     } = useGameContext() ?? {
 
         ANIMALS: [],
@@ -47,7 +48,8 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         animalBlocked: [],
         animalRealAltered: [],
         identedPeople: [0],
-        setIdentedPeople: () => { }
+        setIdentedPeople: () => { },
+        addGameLog: () => { }
     }
         ;
 
@@ -67,7 +69,10 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
                 prevBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
                 return prevBeingGankedTime
             })
+            addGameLog(playerNames[playerNow] + "試著鑒定" + playerNames[peopleIndex] + "，但是被偷襲了")
         } else if (identTimeUse < 1) {
+            addGameLog(playerNames[playerNow] + "鑒定了" + playerNames[peopleIndex] + "，並發現其為" +
+                IdentPeopleResult(peopleIndex))
             setIdentedPeople([...identedPeople, peopleIndex])
             setIdentTimeUse(identTimeUse + 1)
         }

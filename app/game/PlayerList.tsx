@@ -16,7 +16,7 @@ function PlayerList({ numberOfPlayers, selectedFirstPlayer, onFirstPlayerSelecti
 
     return (
         <div>
-            <h2>Player List:</h2>
+            <h2>玩家名稱：</h2>
             <ul>
                 <label>
                     <input
@@ -31,7 +31,7 @@ function PlayerList({ numberOfPlayers, selectedFirstPlayer, onFirstPlayerSelecti
                 {playersIndex.map(index => (
                     <li key={index}>
                         <label>
-                            玩家 {index + 1}: {defalutColors[index]}
+                            玩家 {index + 1}:
                             <input
                                 type="radio"
                                 name="firstPlayer"

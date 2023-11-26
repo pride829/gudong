@@ -11,7 +11,7 @@ function VotePeople({ onVotePeopleEnd }) {
             playerNow: 0,
             setPlayerNow: undefined,
         };
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST,
+    const { addGameLog, ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST,
         bossVoted,
         setBossVoted,
         xuVoted,
@@ -31,6 +31,7 @@ function VotePeople({ onVotePeopleEnd }) {
             setXuVoted: () => { },
             funVoted: -1,
             setFunVoted: () => { },
+            addGameLog: () => { },
         };
 
     function PeopleVoting() {
@@ -71,13 +72,16 @@ function VotePeople({ onVotePeopleEnd }) {
 
 
         if (CHARACTERLIST[characters[playerIndex]] === "老朝奉") {
+            addGameLog(playerNames[playerIndex] + "將心目中的許願人選投給了" + playerNames[peopleChose])
             setXuVoted(peopleChose)
         } else if (CHARACTERLIST[characters[playerIndex]] === "藥不然") {
+            addGameLog(playerNames[playerIndex] + "將心目中的方震人選投給了" + playerNames[peopleChose])
             setFunVoted(peopleChose)
         } else if (CHARACTERLIST[characters[playerIndex]] === "鄭國渠") {
             // pass
         } else {
             //console.log("Added!")
+            addGameLog(playerNames[playerIndex] + "將心目中的老朝奉人選投給了" + playerNames[peopleChose])
             setBossVoted(
                 (prevBossVoted) => {
                     const tempBossVoted = [...prevBossVoted]

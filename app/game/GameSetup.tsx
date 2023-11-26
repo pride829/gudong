@@ -59,9 +59,9 @@ function GameSetup({ onSubmit }) {
     })
     return (
         <div>
-            <h2>Game Setup</h2>
+            <h2>遊戲設置</h2>
             <form onSubmit={handleFormSubmit}>
-                Enter the number of players:
+                請輸入玩家數量：
                 <select id="playerCount" value={numberOfPlayers} onChange={handlePlayerCountChange}>
                     {playerOptions.map((count) => (
                         <option key={count} value={count}>
