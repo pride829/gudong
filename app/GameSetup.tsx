@@ -78,6 +78,14 @@ function GameSetup({ onSubmit }) {
 
     })
 
+    const GithubLink = () => {
+        return (
+            <div>
+                <a href="https://github.com/pride829/gudong">Github</a>
+            </div>
+        );
+    };
+
 
     return (
         <div>
@@ -126,6 +134,7 @@ function GameSetup({ onSubmit }) {
                 <div><i>該程式為粉絲製作的古董局中局桌遊輔助程式，不代表官方立場！</i></div>
                 <div><i>重新整理會導致該場遊戲資料消失，請小心！</i></div>
                 <div><i>程式仍然處於早期測試階段，可能會出現導致遊戲錯誤的Bug！</i></div>
+                <div><GithubLink /></div>
             </div>
         </div >
     );

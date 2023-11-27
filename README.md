@@ -1,3 +1,7 @@
+This is a fan-created boardgame app that is used to play [古董局中局](https://www.google.com/search?q=%E5%8F%A4%E8%91%A3%E5%B1%80%E4%B8%AD%E5%B1%80+%E6%A1%8C%E9%81%8A).
+
+I know that the code is a mess so any pull request is welcome.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
