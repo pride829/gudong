@@ -119,7 +119,7 @@ export const GameProvider = ({ children }) => {
     const [gameLog, setGameLog] = useState<string[]>([])
 
     function addGameLog(s: string) {
-        console.log(s)
+        //console.log(s)
         setGameLog((prevLog) => { return ([...prevLog, s]) })
     }
 

@@ -242,8 +242,8 @@ function PlayerPower({ onPlayerPowerFinish }) {
                 return prevAnimalReals
             })
         }
-        console.log("封鎖", animalBlocked)
-        console.log("animalOrders", animalOrders)
+        //console.log("封鎖", animalBlocked)
+        //console.log("animalOrders", animalOrders)
     })
 
     const handlePlayerPowerFinish = () => {
