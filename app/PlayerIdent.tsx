@@ -44,7 +44,7 @@ function PlayerIdent({ onPlayerIdentFinish, onPlayerBeingSkip }) {
                 }
             </div>
             <div>
-                <div>陣營資訊</div>
+                <div><span style={{ fontSize: "150%", backgroundColor: "white" }} >陣營資訊：</span></div>
                 <FactionInfo></FactionInfo>
             </div>
             <div>

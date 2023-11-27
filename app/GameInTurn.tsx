@@ -39,7 +39,7 @@ function GameInTurn({ onGameInTurnFinish }) {
 
     return (
         <div>
-            <div>第{turnInChinese[gameTurn]}回合</div>
+            <div><span style={{ fontSize: "150%", backgroundColor: "lightgray" }} >第{turnInChinese[gameTurn]}回合</span></div>
             {phase === 'turnStart' && (
                 <TurnStart
                     turnNumber={gameTurn}

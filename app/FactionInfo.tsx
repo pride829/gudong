@@ -18,6 +18,9 @@ function FactionInfo() {
             characterList: [],
         }
 
+    const { getPlayerTextBackground, getPlayerTextStyle } =
+        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object };
+
     const getCharacterName = (index) => { return characterList[characters[index]] }
 
     function findBigBrother(): number {
@@ -42,17 +45,32 @@ function FactionInfo() {
 
         return (
             <div>
-                <div>{playerNames[findBigBrother()] + "(老朝奉)"}</div>
-                <div>{playerNames[findSecondBrother()] + "(藥不然)"}</div>
+                <div>
+                    <span style={{ fontSize: "100%", ...getPlayerTextStyle(findBigBrother()), ...getPlayerTextBackground(findBigBrother()) }}>
+                        {playerNames[findBigBrother()]}: (老朝奉)
+                    </span>
+                </div>
+                <div>
+                    <span style={{ fontSize: "100%", ...getPlayerTextStyle(findSecondBrother()), ...getPlayerTextBackground(findSecondBrother()) }}>
+                        {playerNames[findSecondBrother()]}: (藥不然)
+                    </span>
+                </div>
             </div>
         )
     }
 
     return (
         <div>
-            {getCharacterName(playerNow) === "老朝奉" || getCharacterName(playerNow) === "藥不然" ?
-                <FactionBadInfo></FactionBadInfo>
-                : "不適用"}
+            {(getCharacterName(playerNow) === "老朝奉" || getCharacterName(playerNow) === "藥不然") &&
+                <FactionBadInfo></FactionBadInfo>}
+            {(getCharacterName(playerNow) === "鄭國渠") &&
+                "鄭國渠並不會和隊友相認。"
+            }
+            {(getCharacterName(playerNow) !== "老朝奉" &&
+                getCharacterName(playerNow) !== "藥不然" &&
+                getCharacterName(playerNow) !== "鄭國渠") &&
+                "不適用。"
+            }
         </div>
     )
 }

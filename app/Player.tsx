@@ -45,8 +45,9 @@ function Player({ onPlayerFinish }) {
             </span>    進行回合
             {phase === 'playerConfirm' && (
                 <div>
-                    <div>請 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span>
-                        確認現在是自己的回合</div>
+                    <div>請{" "}
+                        <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span>
+                        {" "}確認現在是自己的回合</div>
                     <button onClick={handlePlayerConfirmFinish}>確認</button>
                 </div>
             )}

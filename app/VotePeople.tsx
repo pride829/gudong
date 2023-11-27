@@ -131,8 +131,9 @@ function VotePeople({ onVotePeopleEnd }) {
                     {playerNames[playerIndex]}
                 </span>
                 ，{msg()}
-                <div style={{ fontSize: '50 %' }}>
-                    <i>鄭國渠也能投票，但不會有效果</i>
+                <div style={{ fontSize: '25 %', color: 'gray' }}>
+                    <p><i>鄭國渠也能投票，但不會有效果</i></p>
+                    <p><i>無論鑒寶階段幾分，都會進入鑒人環節</i></p>
                 </div>
             </div>)
     }
@@ -149,7 +150,7 @@ function VotePeople({ onVotePeopleEnd }) {
     )
 
     return (<div>
-        鑒人
+        <span style={{ fontSize: "150%", backgroundColor: "lightgray" }}>鑒人</span>
         <PeopleVotingMsg></PeopleVotingMsg>
         <PeopleVoting ></PeopleVoting>
     </div>)

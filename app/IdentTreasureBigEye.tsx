@@ -112,17 +112,24 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
 
     function SuccessIdentResult({ item }) {
         return (
-            <div className="ident-result">
-                鑑別的結果
-                {CHINESE[item]}
-                是
-                {getChineseResult(item) ? "真" : "假"} 的</div>
+            <div>
+                <span className="ident-result">
+                    鑑別的結果
+                    {" "}{CHINESE[item]}{" "}
+                    是
+                    {getChineseResult(item) ? "真" : "假"}的
+                </span>
+            </div>
         ) // HISTORY_PUSH
     }
 
     function FailIdentResult({ item }) {
         return (
-            < p className="ident-result"> 無法辨別 {CHINESE[item]} 的真偽！</p >
+            <p>
+                <span className="ident-result">
+                    無法辨別 {CHINESE[item]} 的真偽！
+                </span>
+            </p>
         ) // HISTORY_PUSH
     }
 
