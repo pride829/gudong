@@ -82,8 +82,12 @@
 /* Additional styling for buttons if needed */
 button {
     padding: 8px 16px;
-
+    font-size: 125%;
     border: none;
     border-radius: 4px;
     margin: 10px;
+}
+
+body {
+    font-size: 125%;
 }
