@@ -64,7 +64,7 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
 
         let chineseIndex = index + turn * 4
 
-        console.log(animalReals)
+        //console.log(animalReals)
 
         setIdentChineseTimeUse(
             (prevIdentChineseTimeUse) => {

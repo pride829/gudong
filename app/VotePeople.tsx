@@ -99,6 +99,7 @@ function VotePeople({ onVotePeopleEnd }) {
             return characterList[characters[playerIndex]]
         }
 
+        /*
         const msg = (name) => {
             if (name === "老朝奉") {
                 return "請找出許願，讓許願陣營無法加2分"
@@ -110,8 +111,13 @@ function VotePeople({ onVotePeopleEnd }) {
                 return "請投出老朝奉的人選，幫許願陣營加1分"
             }
         }
+        */
 
-        return (<div>{getCharacterName()}，{msg(getCharacterName())}</div>)
+        const msg = () => {
+            return "請投出您心目中的人選(鄭國渠也能投)"
+        }
+
+        return (<div>{playerNames[playerIndex]}，{msg()}</div>)
     }
 
     useEffect(() => {
