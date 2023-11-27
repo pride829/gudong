@@ -14,7 +14,12 @@ function TurnStart({ turnNumber, onTurnStartEnd }) {
         useGameMetaContext() ?? {
             playerNow: 0,
             playerNames: []
+
+
         }
+
+    const { getPlayerTextBackground, getPlayerTextStyle } =
+        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object };
     const ANIMAL_DISPLAY_IN_ONE_TURN = 4
 
     const renderedElements = Array.from({
@@ -35,7 +40,8 @@ function TurnStart({ turnNumber, onTurnStartEnd }) {
             <div className="parallel-words">
                 {renderedElements}
             </div>
-            <div>將裝置傳給 {playerNames[playerNow]} 開始回合</div>
+            <div>將裝置傳給 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>
+                {playerNames[playerNow]}</span> 開始回合</div>
             <div><button onClick={onTurnStartEnd}>開始回合</button></div>
         </div>
     )

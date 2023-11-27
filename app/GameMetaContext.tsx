@@ -13,6 +13,8 @@ interface GameMetaContextProps {
     setGameTurn: React.Dispatch<React.SetStateAction<number>>;
     playerPlayed: number[],
     setPlayerPlayed: React.Dispatch<React.SetStateAction<number[]>>,
+    getPlayerTextStyle: (index: number) => object
+    getPlayerTextBackground: (index: number) => object
 }
 
 export const GameMetaContext = createContext<GameMetaContextProps | undefined>(undefined);
@@ -27,6 +29,49 @@ export const GameMetaProvider = ({ children }) => {
 
     const [playerPlayed, setPlayerPlayed] = useState<number[]>([])
 
+    const getPlayerTextStyle = (abs_index: number) => {
+        if (abs_index == 0) {
+            return { color: "black" }
+        } else if (abs_index == 1) {
+            return { color: "black" }
+        } else if (abs_index == 2) {
+            return { color: "black" }
+        } else if (abs_index == 3) {
+            return { color: "black" }
+        } else if (abs_index == 4) {
+            return { color: "black" }
+        } else if (abs_index == 5) {
+            return { color: "black" }
+        } else if (abs_index == 6) {
+            return { color: "black" }
+        } else if (abs_index == 7) {
+            return { color: "white" }
+        }
+        return { color: "black" }
+    }
+
+    const getPlayerTextBackground = (abs_index: number) => {
+        if (abs_index == 0) {
+            return { backgroundColor: "white" }
+        } else if (abs_index == 1) {
+            return { backgroundColor: "orangered" }
+        } else if (abs_index == 2) {
+            return { backgroundColor: "darkorange" }
+        } else if (abs_index == 3) {
+            return { backgroundColor: "gold" }
+        } else if (abs_index == 4) {
+            return { backgroundColor: "Lime" }
+        } else if (abs_index == 5) {
+            return { backgroundColor: "DeepSkyBlue" }
+        } else if (abs_index == 6) {
+            return { backgroundColor: "violet" }
+        } else if (abs_index == 7) {
+            return { backgroundColor: "black" }
+        }
+        return { color: "black" }
+    }
+
+
     const contextValue: GameMetaContextProps = {
         MIN_PLAYERS,
         MAX_PLAYERS,
@@ -40,6 +85,8 @@ export const GameMetaProvider = ({ children }) => {
         setGameTurn,
         playerPlayed,
         setPlayerPlayed,
+        getPlayerTextStyle,
+        getPlayerTextBackground,
     };
 
     return (

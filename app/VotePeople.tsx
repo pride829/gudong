@@ -4,6 +4,11 @@ import { useGameMetaContext } from './GameMetaContext';
 
 function VotePeople({ onVotePeopleEnd }) {
 
+    const { getPlayerTextBackground, getPlayerTextStyle } =
+        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object };
+
+
+
     const { numberOfPlayers, playerNames, playerNow, setPlayerNow = () => { } } =
         useGameMetaContext() ?? {
             numberOfPlayers: 0,
@@ -57,7 +62,7 @@ function VotePeople({ onVotePeopleEnd }) {
                         </label >
                     </ul>
                 ))}
-                <button type="submit">Submit</button>
+                <button type="submit">確認</button>
             </form>
         );
     }
@@ -114,10 +119,20 @@ function VotePeople({ onVotePeopleEnd }) {
         */
 
         const msg = () => {
-            return "請投出您心目中的人選(鄭國渠也能投)"
+            return "請投出您心目中的人選"
         }
 
-        return (<div>{playerNames[playerIndex]}，{msg()}</div>)
+        return (
+            <div>
+                玩家
+                <span style={{ ...getPlayerTextStyle(playerIndex), ...getPlayerTextBackground(playerIndex) }}>
+                    {playerNames[playerIndex]}
+                </span>
+                ，{msg()}
+                <div style={{ fontSize: '50 %' }}>
+                    <i>鄭國渠也能投票，但不會有效果</i>
+                </div>
+            </div>)
     }
 
     useEffect(() => {

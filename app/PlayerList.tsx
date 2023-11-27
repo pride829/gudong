@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
+import { isObject } from 'util';
 
 function PlayerList({ numberOfPlayers, selectedFirstPlayer, onFirstPlayerSelection }) {
-    const { playerNames, setPlayerNames = () => { } } =
-        useGameMetaContext() ?? { MIN_PLAYERS: 0, MAX_PLAYERS: 0, playerNames: [], setPlayerNames: undefined };
+    const { getPlayerTextBackground, getPlayerTextStyle, playerNames, setPlayerNames = () => { } } =
+        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object, MIN_PLAYERS: 0, MAX_PLAYERS: 0, playerNames: [], setPlayerNames: undefined };
 
     const handleInputChange = (index, text) => {
         const updatedPlayerNames = [...playerNames];
@@ -30,8 +31,11 @@ function PlayerList({ numberOfPlayers, selectedFirstPlayer, onFirstPlayerSelecti
                 </label >
                 {playersIndex.map(index => (
                     <li key={index}>
+
                         <label>
-                            玩家 {index + 1}:
+                            <span style={{ ...getPlayerTextStyle(index), ...getPlayerTextBackground(index) }}>
+                                玩家 {index + 1}:
+                            </span>
                             <input
                                 type="radio"
                                 name="firstPlayer"
@@ -44,6 +48,7 @@ function PlayerList({ numberOfPlayers, selectedFirstPlayer, onFirstPlayerSelecti
                                 value={playerNames[index]}
                                 onChange={(e) => handleInputChange(index, e.target.value)} />
                         </label>
+
                     </li>
                 ))}
             </ul>

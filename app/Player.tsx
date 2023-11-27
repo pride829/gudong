@@ -13,6 +13,9 @@ function Player({ onPlayerFinish }) {
             setPlayerPlayed: () => { },
 
         }
+    const { getPlayerTextBackground, getPlayerTextStyle } =
+        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object };
+
     const [phase, setPhase] = useState('playerConfirm');
 
     const handlePlayerConfirmFinish = () => {
@@ -38,10 +41,12 @@ function Player({ onPlayerFinish }) {
 
     return (
         <div>
-            請 {playerNames[playerNow]} 進行回合
+            請 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}
+            </span>    進行回合
             {phase === 'playerConfirm' && (
                 <div>
-                    <div>請 {playerNames[playerNow]} 確認現在是自己的回合</div>
+                    <div>請 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span>
+                        確認現在是自己的回合</div>
                     <button onClick={handlePlayerConfirmFinish}>確認</button>
                 </div>
             )}

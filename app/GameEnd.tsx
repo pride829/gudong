@@ -220,11 +220,13 @@ function GameEnd() {
         return (
             <div>
                 <div><button onClick={handleDisplayGameLogButtonClicked}>查看紀錄</button></div>
-                {displayGameLog && (
-                    <div style={{ height: '200px', overflow: 'auto' }}>
-                        {Array.from(gameLog, (log, i) => { return <div key={i}>{log}</div> })}
-                    </div>
-                )}
+                <div style={{ backgroundColor: "lightgray" }}>
+                    {displayGameLog && (
+                        <div style={{ height: '200px', overflow: 'auto' }}>
+                            {Array.from(gameLog, (log, i) => { return <div key={i}>{log}</div> })}
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }

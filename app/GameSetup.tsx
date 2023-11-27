@@ -4,7 +4,7 @@ import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 
 function GameSetup({ onSubmit }) {
-    const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, playerNow, setPlayerNow = () => { }, playerPlayed, setPlayerPlayed } =
+    const { getPlayerTextStyle, MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, playerNow, setPlayerNow = () => { }, playerPlayed, setPlayerPlayed } =
         useGameMetaContext() ?? {
             MIN_PLAYERS: 0,
             MAX_PLAYERS: 0,
@@ -15,6 +15,7 @@ function GameSetup({ onSubmit }) {
             setPlayerNow: undefined,
             playerPlayed: [],
             setPlayerPlayed: () => { },
+            getPlayerTextStyle: () => { }
         };
 
     const { setCharacterList } = useGameContext() ?? {
@@ -43,7 +44,7 @@ function GameSetup({ onSubmit }) {
         const isFormValid = Object.values(playerNames).slice(0, numberOfPlayers).every((value) => value !== '');
 
         if (!isFormValid) {
-            alert("Please fill in all fields");
+            alert("請填入所有玩家名稱");
         } else {
             if (isBigEyeOn) {
                 onBigEyeIsIn()
@@ -92,7 +93,7 @@ function GameSetup({ onSubmit }) {
                         ))}
                     </select>
                     <PlayerList numberOfPlayers={numberOfPlayers} selectedFirstPlayer={selectedFirstPlayer} onFirstPlayerSelection={handleFirstPlayerSelection} />
-                    <button type="submit">Submit</button>
+                    <button type="submit">確定</button><i>不論首家是誰，都是由第一家先選角色</i>
                 </form>
             </div >
             <div>
@@ -106,7 +107,7 @@ function GameSetup({ onSubmit }) {
                     </label>
                     <button onClick={() => { setIsBigEyeRuleDisplay(!isBigEyeRuleDisplay) }}>查看規則</button>
                     {isBigEyeRuleDisplay && (
-                        <div style={{ height: '400px', overflow: 'auto' }}>
+                        <div style={{ backgroundColor: "gray", height: '500px', overflow: 'auto' }}>
                             <p>大眼賊屬於許願方陣營</p>
                             <p>大眼賊會取代姬雲浮的角色</p>
                             <p>大眼賊無法查驗當回合的獸首，取而代之的是他可以查驗<i>上一回合</i>和<i>下一回合</i>的獸首各一個</p>
@@ -125,7 +126,7 @@ function GameSetup({ onSubmit }) {
                 <div><i>重新整理會導致該場遊戲資料消失，請小心！</i></div>
                 <div><i>程式仍然處於早期測試階段，可能會出現導致遊戲錯誤的Bug！</i></div>
             </div>
-        </div>
+        </div >
     );
 }
 

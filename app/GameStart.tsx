@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
-import { Alexandria } from 'next/font/google';
+
 
 function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharacterSubmit }) {
     const [characterChose, setCharacterChose] = useState(0);
+
+    const { getPlayerTextBackground, getPlayerTextStyle } =
+        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object };
 
     const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, gameLog, addGameLog, setGameLog } =
         useGameContext() ?? {
@@ -33,7 +36,7 @@ function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharact
 
     return (
         <form onSubmit={handleCharacterSubmit}>
-            <div>請 {playerNames[playerIndex]} 玩家選擇角色</div>
+            <div>請 <span style={{ ...getPlayerTextStyle(playerIndex), ...getPlayerTextBackground(playerIndex) }}>{playerNames[playerIndex]}</span> 玩家選擇角色</div>
             {characterList.map((c, characterIndex) => (
                 <ul key={characterIndex} hidden={characterIndex >= playerNumbers}>
                     <label>
@@ -48,7 +51,7 @@ function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharact
                     </label >
                 </ul>
             ))}
-            <button type="submit">Submit</button>
+            <button type="submit">確認</button>
         </form>
     );
 }
