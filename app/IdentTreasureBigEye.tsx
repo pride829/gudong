@@ -78,8 +78,9 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
             setFailIdentedChinese([...failIdentedChinese, chineseIndex])
             setIdentedChineseOrder([...identedChineseOrder, chineseIndex])
             setBeingGankedTime((prevBeingGankedTime) => {
-                prevBeingGankedTime[playerNow] -= 1
-                return prevBeingGankedTime
+                const tempBeingGankedTime = [...prevBeingGankedTime]
+                tempBeingGankedTime[playerNow] -= 1
+                return tempBeingGankedTime
             })
             addGameLog(playerNames[playerNow] + "鑒定了" + CHINESE[index + turn * 4] + "，但是被偷襲了")
         } else if (animalBlocked[animalOrders[index + turn * 4]]) {

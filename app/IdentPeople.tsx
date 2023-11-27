@@ -65,11 +65,13 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         if (beingGankedTime[playerNow] > 0) {
             setBeingGanked(true)
             setBeingGankedTime((prevBeingGankedTime) => {
-                prevBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
-                return prevBeingGankedTime
+                const tempBeingGankedTime = [...prevBeingGankedTime]
+                tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
+                return tempBeingGankedTime
             })
             addGameLog(playerNames[playerNow] + "試著鑒定" + playerNames[peopleIndex] + "，但是被偷襲了")
         } else if (identTimeUse < 1) {
+            //console.log(beingGankedTime)
             addGameLog(playerNames[playerNow] + "鑒定了" + playerNames[peopleIndex] + "，並發現其為" +
                 IdentPeopleResult(peopleIndex))
             if (characterList[characters[peopleIndex]] === "大眼賊") {

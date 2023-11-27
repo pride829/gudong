@@ -83,8 +83,9 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setBeingGankedTime((prevBeingGankedTime) => {
-                prevBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
-                return prevBeingGankedTime
+                const tempBeingGankedTime = [...prevBeingGankedTime]
+                tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
+                return tempBeingGankedTime
             })
             addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被偷襲了")
 
