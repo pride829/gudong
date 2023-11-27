@@ -49,16 +49,18 @@ function VotePeople({ onVotePeopleEnd }) {
             <form onSubmit={handlePeopleVotingSubmit}>
                 {playerNames.map((c, characterIndex) => (
                     <ul key={characterIndex}>
-                        <label>
-                            <input
-                                type="radio"
-                                name="characterChoosing"
-                                value={characterIndex}
-                                checked={peopleChose === characterIndex}
-                                disabled={characterIndex === playerIndex}
-                                onChange={handleCharacterChoosing}
-                            />
-                            {c}
+                        <label style={{ fontSize: "150%", ...getPlayerTextStyle(characterIndex), ...getPlayerTextBackground(characterIndex) }}>
+                            <span hidden={characterIndex === playerIndex}>
+                                <input
+                                    type="radio"
+                                    name="characterChoosing"
+                                    value={characterIndex}
+                                    checked={peopleChose === characterIndex}
+
+                                    onChange={handleCharacterChoosing}
+                                />
+                                {c}
+                            </span>
                         </label >
                     </ul>
                 ))}
@@ -125,7 +127,7 @@ function VotePeople({ onVotePeopleEnd }) {
         return (
             <div>
                 玩家
-                <span style={{ ...getPlayerTextStyle(playerIndex), ...getPlayerTextBackground(playerIndex) }}>
+                <span style={{ fontSize: "150%", ...getPlayerTextStyle(playerIndex), ...getPlayerTextBackground(playerIndex) }}>
                     {playerNames[playerIndex]}
                 </span>
                 ，{msg()}

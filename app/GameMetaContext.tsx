@@ -31,7 +31,7 @@ export const GameMetaProvider = ({ children }) => {
 
     const getPlayerTextStyle = (abs_index: number) => {
         if (abs_index == 0) {
-            return { color: "black" }
+            return { color: "white" }
         } else if (abs_index == 1) {
             return { color: "black" }
         } else if (abs_index == 2) {
@@ -45,14 +45,14 @@ export const GameMetaProvider = ({ children }) => {
         } else if (abs_index == 6) {
             return { color: "black" }
         } else if (abs_index == 7) {
-            return { color: "white" }
+            return { color: "black" }
         }
         return { color: "black" }
     }
 
     const getPlayerTextBackground = (abs_index: number) => {
         if (abs_index == 0) {
-            return { backgroundColor: "white" }
+            return { backgroundColor: "black" }
         } else if (abs_index == 1) {
             return { backgroundColor: "orangered" }
         } else if (abs_index == 2) {
@@ -66,7 +66,7 @@ export const GameMetaProvider = ({ children }) => {
         } else if (abs_index == 6) {
             return { backgroundColor: "violet" }
         } else if (abs_index == 7) {
-            return { backgroundColor: "black" }
+            return { backgroundColor: "lightgray" }
         }
         return { color: "black" }
     }
