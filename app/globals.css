@@ -79,6 +79,10 @@
     /* Set the gap between buttons to 10 pixels */
 }
 
+.ident-result {
+    background-color: darkgray;
+}
+
 /* Additional styling for buttons if needed */
 button {
     padding: 8px 16px;

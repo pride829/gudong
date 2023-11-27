@@ -149,17 +149,18 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
 
     function SuccessIdentResult({ item }) {
         return (
-            <div>
+            <div className="ident-result">
                 鑑別的結果
                 {ANIMALS[animalOrders[item + gameTurn * ANIMAL_DISPLAY_IN_ONE_TURN]]}
                 是
-                {getAnimalResult(item) ? "真" : "假"} 的</div>
+                {getAnimalResult(item) ? "真" : "假"} 的
+            </div>
         ) // HISTORY_PUSH
     }
 
     function FailIdentResult({ item }) {
         return (
-            < p > 無法辨別 {ANIMALS[animalOrders[item + gameTurn * ANIMAL_DISPLAY_IN_ONE_TURN]]} 的真偽！</p >
+            <div className="ident-result"> 無法辨別 {ANIMALS[animalOrders[item + gameTurn * ANIMAL_DISPLAY_IN_ONE_TURN]]} 的真偽！</div>
         ) // HISTORY_PUSH
     }
 
