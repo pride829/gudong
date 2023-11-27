@@ -93,11 +93,12 @@ function GameSetup({ onSubmit }) {
                         ))}
                     </select>
                     <PlayerList numberOfPlayers={numberOfPlayers} selectedFirstPlayer={selectedFirstPlayer} onFirstPlayerSelection={handleFirstPlayerSelection} />
-                    <button type="submit">確定</button><i>不論首家是誰，都是由第一家先選角色</i>
+                    <button type="submit">確定</button>
+                    <div style={{ color: "gray" }}><i>不論首家是誰，都是由第一家先選角色</i></div>
                 </form>
             </div >
             <div>
-                <li>
+                <li hidden={numberOfPlayers < 8}>
                     啟用粉絲角色：大眼賊
                     <label className="toggle-switch">
                         <input type="checkbox" onChange={handleIsBigEyeOnChange} checked={isBigEyeOn}></input>
