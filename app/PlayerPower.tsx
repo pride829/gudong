@@ -55,6 +55,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
     }
 
     const handlePlayerGanked = (index) => {
+
         let numberOfBeingGanked = 1
         if (characterList[characters[index]] === "姬雲浮") {
             numberOfBeingGanked = 99
@@ -87,6 +88,14 @@ function PlayerPower({ onPlayerPowerFinish }) {
 
         //console.log(numberOfPlayers)
         const handleGankingButtonClick = (value) => {
+            if (value === findBigBrother()) {
+                const isConfirmed = window.confirm(
+                    "你確定要偷襲" + playerNames[value] + "嗎？他是你隊友！"
+                )
+
+                if (!isConfirmed) return;
+            }
+
             setClickedGankingButton(value)
             onPlayerGanked(value)
 
@@ -102,8 +111,8 @@ function PlayerPower({ onPlayerPowerFinish }) {
                     onClick={() => handleGankingButtonClick(index)}
                     disabled={
                         (clickedGankingButton !== -1) ||
-                        index === playerNow ||
-                        index === findBigBrother()
+                        index === playerNow
+
                     }>
                     {clickedGankingButton === -1 || clickedGankingButton != index ? name : ("已經偷襲 " + name)}
                 </button>
