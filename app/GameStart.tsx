@@ -3,17 +3,17 @@ import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 import { Alexandria } from 'next/font/google';
 
-function CharacterSelecting({ playerIndex, playerNames, playerNumbers, characterList, onCharacterSubmit }) {
+function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharacterSubmit }) {
     const [characterChose, setCharacterChose] = useState(0);
 
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST, gameLog, addGameLog, setGameLog } =
+    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, gameLog, addGameLog, setGameLog } =
         useGameContext() ?? {
             ANIMALS: [],
             animalOrders: [],
             setAnimalOrders: undefined,
             characters: [],
             setCharacters: undefined,
-            CHARACTERLIST: [],
+            characterList: [],
             gameLog: "",
             addGameLog: () => { },
             setGameLog: () => { }
@@ -61,14 +61,14 @@ function GameStart({ onGameStartFinish }) {
             playerNow: 0,
             setPlayerNow: undefined,
         };
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST, setGameLog = () => { } } =
+    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, setGameLog = () => { } } =
         useGameContext() ?? {
             ANIMALS: [],
             animalOrders: [],
             setAnimalOrders: undefined,
             characters: [],
             setCharacters: undefined,
-            CHARACTERLIST: [],
+            characterList: [],
             setGameLog: () => { }
         };
 
@@ -101,7 +101,6 @@ function GameStart({ onGameStartFinish }) {
             <CharacterSelecting
                 playerIndex={playerIndex}
                 playerNames={playerNames}
-                characterList={CHARACTERLIST}
                 playerNumbers={numberOfPlayers}
                 onCharacterSubmit={handleCharacterSubmit} />
         </div >

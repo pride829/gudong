@@ -3,6 +3,7 @@
 import React from 'react';
 import Game from "./Game"
 import TestGame from './TestGame';
+import PlayerIdent from './PlayerIdent';
 
 function App() {
     return (

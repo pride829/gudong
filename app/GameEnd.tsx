@@ -11,7 +11,7 @@ function GameEnd() {
             playerNow: 0,
             setPlayerNow: undefined,
         };
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST,
+    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList,
         bossVoted,
         setBossVoted,
         xuVoted,
@@ -28,7 +28,7 @@ function GameEnd() {
             setAnimalOrders: undefined,
             characters: [],
             setCharacters: undefined,
-            CHARACTERLIST: [],
+            characterList: [],
             bossVoted: [],
             setBossVoted: () => { },
             xuVoted: -1,
@@ -84,7 +84,7 @@ function GameEnd() {
         return score
     }
 
-    const getCharacterName = (index) => { return CHARACTERLIST[characters[index]] }
+    const getCharacterName = (index) => { return characterList[characters[index]] }
 
     function findCharacter(characterName): number {
         for (let i = 0; i < numberOfPlayers; i++) {

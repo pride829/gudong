@@ -19,7 +19,7 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         setAnimalOrders = () => { },
         characters,
         setCharacters = () => { },
-        CHARACTERLIST,
+        characterList,
         beingGankedTime,
         setBeingGankedTime = () => { },
         dummy,
@@ -39,7 +39,7 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         setAnimalOrders: undefined,
         characters: [],
         setCharacters: undefined,
-        CHARACTERLIST: [],
+        characterList: [],
         beingGankedTime: [],
         setBeingGankedTime: undefined,
         civHuangBlockedTurn: 0,
@@ -72,6 +72,14 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         } else if (identTimeUse < 1) {
             addGameLog(playerNames[playerNow] + "鑒定了" + playerNames[peopleIndex] + "，並發現其為" +
                 IdentPeopleResult(peopleIndex))
+            if (characterList[characters[peopleIndex]] === "大眼賊") {
+                setBeingGankedTime((prevBeingGankedTime) => {
+                    const tempBeingGankedTime = [...prevBeingGankedTime]
+                    tempBeingGankedTime[peopleIndex] += 1
+                    return tempBeingGankedTime
+                })
+                addGameLog(playerNames[playerNow] + "的鑒定間接導致了" + playerNames[peopleIndex] + "被偷襲！")
+            }
             setIdentedPeople([...identedPeople, peopleIndex])
             setIdentTimeUse(identTimeUse + 1)
         }
@@ -113,7 +121,7 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
     }
 
     function IdentPeopleResult(index) {
-        const characterName = CHARACTERLIST[characters[index]]
+        const characterName = characterList[characters[index]]
 
         return (
             (characterName === "老朝奉" ||

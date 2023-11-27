@@ -15,10 +15,10 @@ function PlayerPass({ onPlayerPassFinish }) {
             setPlayerPlayed: () => { }
         }
 
-    const { characters, CHARACTERLIST, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
+    const { characters, characterList, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
         useGameContext() ?? {
             characters: [],
-            CHARACTERLIST: [],
+            characterList: [],
             beingGankedTime: [],
             setBeingGankedTime: () => { },
             ANIMALS: [],

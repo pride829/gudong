@@ -21,14 +21,14 @@ function Game() {
             playerPlayed: [],
             setPlayerPlayed: () => { },
         };
-    const { gameLog, ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, CHARACTERLIST } =
+    const { gameLog, ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList } =
         useGameContext() ?? {
             ANIMALS: [],
             animalOrders: [],
             setAnimalOrders: undefined,
             characters: [],
             setCharacters: undefined,
-            CHARACTERLIST: [],
+            characterList: [],
             gameLog: ""
         };
 
@@ -55,10 +55,10 @@ function Game() {
     return (
         <div>
             <GameMetaProvider>
-                {phase === 'setup' && (
-                    <GameSetup onSubmit={handlePlayerSetupSubmit} />
-                )}
                 <GameProvider>
+                    {phase === 'setup' && (
+                        <GameSetup onSubmit={handlePlayerSetupSubmit} />
+                    )}
                     {phase === 'inprogress' && (
                         <GameInProgress />
                     )}

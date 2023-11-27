@@ -18,7 +18,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         setAnimalOrders = () => { },
         characters,
         setCharacters = () => { },
-        CHARACTERLIST,
+        characterList,
         beingGankedTime,
         setBeingGankedTime = () => { },
         dummy,
@@ -36,7 +36,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         setAnimalOrders: undefined,
         characters: [],
         setCharacters: undefined,
-        CHARACTERLIST: [],
+        characterList: [],
         beingGankedTime: [],
         setBeingGankedTime: undefined,
         civHuangBlockedTurn: 0,
@@ -60,7 +60,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         }
     };
     const [identTime, setIdentTime] = useState(
-        getInitialIdentTime(CHARACTERLIST[characters[playerNow]])
+        getInitialIdentTime(characterList[characters[playerNow]])
     )
 
     const getInitialIdentTruly = (contextValue) => {
@@ -71,7 +71,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         }
     };
     const [identTruly, setIdentTruly] = useState(
-        getInitialIdentTruly(CHARACTERLIST[characters[playerNow]])
+        getInitialIdentTruly(characterList[characters[playerNow]])
     )
 
 
@@ -88,8 +88,8 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             })
             addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被偷襲了")
 
-        } else if (CHARACTERLIST[characters[playerNow]] === "黃煙煙" && civHuangBlockedTurn === gameTurn ||
-            CHARACTERLIST[characters[playerNow]] === "木戶加奈" && civMuBlockedTurn === gameTurn
+        } else if (characterList[characters[playerNow]] === "黃煙煙" && civHuangBlockedTurn === gameTurn ||
+            characterList[characters[playerNow]] === "木戶加奈" && civMuBlockedTurn === gameTurn
         ) {
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])

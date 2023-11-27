@@ -5,7 +5,7 @@ import IdentTreasure from './IdentTreasure';
 
 function PlayerPower({ onPlayerPowerFinish }) {
 
-    const getCharacterName = (index) => { return CHARACTERLIST[characters[index]] }
+    const getCharacterName = (index) => { return characterList[characters[index]] }
 
     const [clickedGankingButton, setClickedGankingButton] = useState(-1);
     const [clikcedBlockingButton, setClickedBlockingButton] = useState(-1);
@@ -21,10 +21,10 @@ function PlayerPower({ onPlayerPowerFinish }) {
             gameTurn: 0
         }
 
-    const { addGameLog, characters, CHARACTERLIST, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
+    const { addGameLog, characters, characterList, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
         useGameContext() ?? {
             characters: [],
-            CHARACTERLIST: [],
+            characterList: [],
             beingGankedTime: [],
             setBeingGankedTime: () => { },
             ANIMALS: [],
@@ -56,7 +56,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
 
     const handlePlayerGanked = (index) => {
         let numberOfBeingGanked = 1
-        if (CHARACTERLIST[characters[index]] === "姬雲浮") {
+        if (characterList[characters[index]] === "姬雲浮") {
             numberOfBeingGanked = 99
         }
 
@@ -68,7 +68,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
             }
         )
 
-        if (CHARACTERLIST[characters[index]] != "方震") {
+        if (characterList[characters[index]] != "方震") {
             return
         }
 
@@ -242,14 +242,15 @@ function PlayerPower({ onPlayerPowerFinish }) {
                 return prevAnimalReals
             })
         }
-        //console.log(animalBlocked)
+        console.log("封鎖", animalBlocked)
+        console.log("animalOrders", animalOrders)
     })
 
     const handlePlayerPowerFinish = () => {
-        if (preAlterSwitch === false && alterSwitch === true && CHARACTERLIST[characters[playerNow]] === "老朝奉") {
+        if (preAlterSwitch === false && alterSwitch === true && characterList[characters[playerNow]] === "老朝奉") {
             addGameLog(playerNames[playerNow] + "發動了老朝奉的能力！")
             setPrevAlterSwitch(true)
-        } else if (CHARACTERLIST[characters[playerNow]] === "老朝奉") {
+        } else if (characterList[characters[playerNow]] === "老朝奉") {
             addGameLog(playerNames[playerNow] + "並沒有發動老朝奉的能力。")
         }
         onPlayerPowerFinish()

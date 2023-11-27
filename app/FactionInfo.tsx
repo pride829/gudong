@@ -12,13 +12,13 @@ function FactionInfo() {
             numberOfPlayers: 0
         }
 
-    const { characters, CHARACTERLIST } =
+    const { characters, characterList } =
         useGameContext() ?? {
             characters: [],
-            CHARACTERLIST: [],
+            characterList: [],
         }
 
-    const getCharacterName = (index) => { return CHARACTERLIST[characters[index]] }
+    const getCharacterName = (index) => { return characterList[characters[index]] }
 
     function findBigBrother(): number {
         for (let i = 0; i < numberOfPlayers; i++) {

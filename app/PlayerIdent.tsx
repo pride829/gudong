@@ -4,6 +4,7 @@ import { useGameContext } from './GameContext';
 import IdentTreasure from './IdentTreasure';
 import IdentPeople from './IdentPeople';
 import FactionInfo from './FactionInfo';
+import IdentTreasureBigEye from './IdentTreasureBigEye';
 
 function PlayerIdent({ onPlayerIdentFinish, onPlayerBeingSkip }) {
     const { playerNow, playerNames } =
@@ -12,10 +13,10 @@ function PlayerIdent({ onPlayerIdentFinish, onPlayerBeingSkip }) {
             playerNames: [],
         }
 
-    const { characters, CHARACTERLIST } =
+    const { characters, characterList } =
         useGameContext() ?? {
             characters: [],
-            CHARACTERLIST: [],
+            characterList: [],
         }
 
     const [identDone, setIdentDone] = useState(false)
@@ -30,11 +31,15 @@ function PlayerIdent({ onPlayerIdentFinish, onPlayerBeingSkip }) {
         <div>
             <div>
                 {
-                    CHARACTERLIST[characters[playerNow]] != "方震" &&
+                    characterList[characters[playerNow]] != "方震" && characterList[characters[playerNow]] != "大眼賊" &&
                     <IdentTreasure onFinished={handleIdentDone} onPlayerBeingSkip={onPlayerBeingSkip} />
                 }
                 {
-                    CHARACTERLIST[characters[playerNow]] === "方震" &&
+                    characterList[characters[playerNow]] === "大眼賊" &&
+                    <IdentTreasureBigEye onFinished={handleIdentDone} onPlayerBeingSkip={onPlayerBeingSkip}></IdentTreasureBigEye>
+                }
+                {
+                    characterList[characters[playerNow]] === "方震" &&
                     <IdentPeople onFinished={handleIdentDone} onPlayerBeingSkip={onPlayerBeingSkip} />
                 }
             </div>

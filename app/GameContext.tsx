@@ -54,12 +54,14 @@ function sortGroups(array, groupSize) {
 
 interface GameContextProps {
     ANIMALS: string[];
+    CHINESE: string[];
     animalOrders: number[],
     setAnimalOrders: React.Dispatch<React.SetStateAction<number[]>>,
     animalReals: boolean[][],
     characters: number[],
     setCharacters: React.Dispatch<React.SetStateAction<number[]>>,
-    CHARACTERLIST: string[],
+    characterList: string[],
+    setCharacterList: React.Dispatch<React.SetStateAction<string[]>>,
     beingGankedTime: number[],
     setBeingGankedTime: React.Dispatch<React.SetStateAction<number[]>>,
     dummy: number,
@@ -89,6 +91,7 @@ export const GameContext = createContext<GameContextProps | undefined>(undefined
 
 export const GameProvider = ({ children }) => {
     const ANIMALS = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
+    const CHINESE = ['甲', '乙', '丙', '丁', '戊', '已', '庚', '辛', '申', '酉', '戌', '亥'];
     const [animalOrders, setAnimalOrders] = useState<number[]>([]);
     const initialBooleanArray = [
         [true, true, false, false],
@@ -97,7 +100,7 @@ export const GameProvider = ({ children }) => {
     ];
     const [animalReals, setAnimalReals] = useState(initialBooleanArray);
     const [animalRealAltered, setAnimalRealAltered] = useState([false, false, false])
-    //const [characters, setCharacters] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7]); // CHARACTERLIST[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
+    //const [characters, setCharacters] = useState<number[]>([1, 2, 7, 3, 4, 5, 6, 0]); // characterList[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
     const [characters, setCharacters] = useState<number[]>([])
     const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
     const [dummy, setDummy] = useState<number>(0)
@@ -116,13 +119,13 @@ export const GameProvider = ({ children }) => {
     const [gameLog, setGameLog] = useState<string[]>([])
 
     function addGameLog(s: string) {
-        //console.log(s)
+        console.log(s)
         setGameLog((prevLog) => { return ([...prevLog, s]) })
     }
 
     // static character list
-    const CHARACTERLIST = ['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '姬雲浮']
-
+    const [characterList, setCharacterList] = useState(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '大眼賊'])
+    //  const [characterList, setCharacterList] = useState(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '姬雲浮'])
     const contextValue: GameContextProps = {
         ANIMALS,
         animalOrders,
@@ -130,7 +133,8 @@ export const GameProvider = ({ children }) => {
         animalReals,
         characters,
         setCharacters,
-        CHARACTERLIST,
+        characterList,
+        setCharacterList,
         beingGankedTime,
         setBeingGankedTime,
         dummy,
@@ -154,6 +158,7 @@ export const GameProvider = ({ children }) => {
         gameLog,
         addGameLog,
         setGameLog,
+        CHINESE,
     };
 
 
