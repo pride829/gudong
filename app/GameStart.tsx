@@ -6,8 +6,8 @@ import { useGameContext } from './GameContext';
 function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharacterSubmit }) {
     const [characterChose, setCharacterChose] = useState(0);
 
-    const { getPlayerTextBackground, getPlayerTextStyle } =
-        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object };
+    const { playerNow, getPlayerTextBackground, getPlayerTextStyle } =
+        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object, playerNow: 0 };
 
     const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, gameLog, addGameLog, setGameLog } =
         useGameContext() ?? {
@@ -36,7 +36,10 @@ function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharact
 
     return (
         <form onSubmit={handleCharacterSubmit}>
-            <div>請 <span style={{ ...getPlayerTextStyle(playerIndex), ...getPlayerTextBackground(playerIndex) }}>{playerNames[playerIndex]}</span> 玩家選擇角色</div>
+            <div>首家是 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span></div>
+            <div><h2>
+                請 <span style={{ ...getPlayerTextStyle(playerIndex), ...getPlayerTextBackground(playerIndex) }}>{playerNames[playerIndex]}</span> 玩家選擇角色
+            </h2></div>
             {characterList.map((c, characterIndex) => (
                 <ul key={characterIndex} hidden={characterIndex >= playerNumbers}>
                     <label>

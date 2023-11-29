@@ -43,6 +43,7 @@ function VotePeople({ onVotePeopleEnd }) {
 
         const handleCharacterChoosing = (event) => {
             setPeopleChose(parseInt(event.target.value))
+            setIsVottingTeammate(false)
         }
 
         return (
@@ -56,7 +57,6 @@ function VotePeople({ onVotePeopleEnd }) {
                                     name="characterChoosing"
                                     value={characterIndex}
                                     checked={peopleChose === characterIndex}
-
                                     onChange={handleCharacterChoosing}
                                 />
                                 {c}
@@ -64,18 +64,28 @@ function VotePeople({ onVotePeopleEnd }) {
                         </label >
                     </ul>
                 ))}
-                <button type="submit">確認</button>
+                <button type="submit" disabled={isVottingTeammate}>確認</button>
             </form>
         );
     }
 
     const [playerIndex, setPlayerIndex] = useState(0);
     const [peopleChose, setPeopleChose] = useState((playerIndex + 1) % numberOfPlayers);
+    const [isVottingTeammate, setIsVottingTeammate] = useState(false)
+    const [triedVottingTeammate, setTriedVottingTeammate] = useState(false)
 
 
     const handlePeopleVotingSubmit = () => {
         //console.log("index", playerIndex)
         //console.log("peopleChose", peopleChose)
+
+        if (characterList[characters[playerIndex]] === "老朝奉" && characterList[characters[peopleChose]] === "藥不然" ||
+            characterList[characters[playerIndex]] === "藥不然" && characterList[characters[peopleChose]] === "老朝奉") {
+            setIsVottingTeammate(true);
+            setTriedVottingTeammate(true)
+            return;
+        }
+
 
 
         if (characterList[characters[playerIndex]] === "老朝奉") {
@@ -153,6 +163,7 @@ function VotePeople({ onVotePeopleEnd }) {
         <span style={{ fontSize: "150%", backgroundColor: "lightgray" }}>鑒人</span>
         <PeopleVotingMsg></PeopleVotingMsg>
         <PeopleVoting ></PeopleVoting>
+        {isVottingTeammate && <h2>你不能投給{playerNames[peopleChose]}，因為他是你隊友！</h2>}
     </div>)
 }
 export default VotePeople

@@ -192,7 +192,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
                     <IdentOneAnimal index={3}></IdentOneAnimal>
                 </div>
             </div>
-            <h1><span style={{fontSize:"200%"}}><BeingGankedResult></BeingGankedResult></span></h1>
+            <h3><span style={{ fontSize: "200%" }}><BeingGankedResult></BeingGankedResult></span></h3>
             <div>
                 <IdentResult></IdentResult>
             </div>

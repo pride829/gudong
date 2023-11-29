@@ -46,12 +46,12 @@ function FactionInfo() {
         return (
             <div>
                 <div>
-                    <span style={{ fontSize: "100%", ...getPlayerTextStyle(findBigBrother()), ...getPlayerTextBackground(findBigBrother()) }}>
+                    <span style={{ fontSize: "150%", ...getPlayerTextStyle(findBigBrother()), ...getPlayerTextBackground(findBigBrother()) }}>
                         {playerNames[findBigBrother()]}: (老朝奉)
                     </span>
                 </div>
                 <div>
-                    <span style={{ fontSize: "100%", ...getPlayerTextStyle(findSecondBrother()), ...getPlayerTextBackground(findSecondBrother()) }}>
+                    <span style={{ fontSize: "150%", ...getPlayerTextStyle(findSecondBrother()), ...getPlayerTextBackground(findSecondBrother()) }}>
                         {playerNames[findSecondBrother()]}: (藥不然)
                     </span>
                 </div>

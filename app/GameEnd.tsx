@@ -222,7 +222,7 @@ function GameEnd() {
                 <div><button onClick={handleDisplayGameLogButtonClicked}>查看紀錄</button></div>
                 <div style={{ backgroundColor: "lightgray" }}>
                     {displayGameLog && (
-                        <div style={{ height: '200px', overflow: 'auto' }}>
+                        <div style={{ fontSize: '150%', height: '200px', overflow: 'auto' }}>
                             {Array.from(gameLog, (log, i) => { return <div key={i}>{log}</div> })}
                         </div>
                     )}
@@ -232,7 +232,7 @@ function GameEnd() {
     }
     return (
         <div>
-            <div><WinningMsg></WinningMsg></div>
+            <div><h2><WinningMsg></WinningMsg></h2></div>
             <div>
                 <DispalyOneTurnAnimal gameTurn_i={0}></DispalyOneTurnAnimal>
                 <div><DispalyOneTurnAnimal gameTurn_i={1}></DispalyOneTurnAnimal></div>
@@ -240,10 +240,10 @@ function GameEnd() {
             </div>
             <div>　</div>
             <div>
-                <div>{DisplayAnimalScore()}</div>
-                <div>{DisplayIsXuFound()}</div>
-                <div>{DisplayIsFunFound()}</div>
-                <div>{DisplayIsBossFound()}</div>
+                <div><h2>{DisplayAnimalScore()}</h2></div>
+                <div><h2>{DisplayIsXuFound()}</h2></div>
+                <div><h2>{DisplayIsFunFound()}</h2></div>
+                <div><h2>{DisplayIsBossFound()}</h2></div>
             </div>
             <div>
                 <FileDownloadButton fileContent={gameLog} fileName="古董局中局遊戲紀錄.txt" /><ShowGameLog></ShowGameLog>
