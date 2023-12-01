@@ -80,7 +80,7 @@ function GameStart({ onGameStartFinish }) {
 
     const [playerIndex, setPlayerIndex] = useState(playerNow);
 
-const [lastPlayerIndex, setLastPlayerIndex] = useState((playerNow + numberOfPlayers)% numberOfPlayers);
+const [lastPlayerIndex, setLastPlayerIndex] = useState((playerNow + numberOfPlayers - 1)% numberOfPlayers);
 
     const handleCharacterSubmit = (playerIndex, characterIndex) => {
         // Update the characters array with the selected character
