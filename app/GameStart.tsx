@@ -78,23 +78,25 @@ function GameStart({ onGameStartFinish }) {
             setGameLog: () => { }
         };
 
-    const [playerIndex, setPlayerIndex] = useState(0);
+    const [playerIndex, setPlayerIndex] = useState(playerNow);
+
+const [lastPlayerIndex, setLastPlayerIndex] = useState((playerNow + numberOfPlayer)% numberOfPlayer);
 
     const handleCharacterSubmit = (playerIndex, characterIndex) => {
         // Update the characters array with the selected character
         setCharacters((prevCharacters) => [...prevCharacters, characterIndex]);
-        setPlayerIndex(playerIndex + 1);
+        setPlayerIndex((playerIndex + 1) % numberOfPlayers);
 
         function hasDuplicates(array) {
             return new Set(array).size !== array.length;
         }
 
-        if (playerIndex >= numberOfPlayers - 1) { // playerIndex start with 0
+        if (playerIndex == lastPlayerIndex) { // playerIndex start with 0
             // TODO: Check if duplicated character exists
             if (hasDuplicates(characters)) {
                 alert("有人選了重複的角色！將重新開始選擇角色");
                 setGameLog([])
-                setPlayerIndex(0);
+                setPlayerIndex(playerNow);
                 setCharacters([])
             } else {
                 onGameStartFinish();
