@@ -91,7 +91,7 @@ const [lastPlayerIndex, setLastPlayerIndex] = useState((playerNow + numberOfPlay
             return new Set(array).size !== array.length;
         }
 
-        if (playerIndex == lastPlayerIndex) { // playerIndex start with 0
+        if (playerIndex === lastPlayerIndex) { // playerIndex start with 0
             // TODO: Check if duplicated character exists
             if (hasDuplicates(characters)) {
                 alert("有人選了重複的角色！將重新開始選擇角色");
