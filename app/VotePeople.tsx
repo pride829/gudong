@@ -79,6 +79,8 @@ function VotePeople({ onVotePeopleEnd }) {
         //console.log("index", playerIndex)
         //console.log("peopleChose", peopleChose)
 
+        alert("您已經投票！請將裝置給下一位玩家")
+
         if (characterList[characters[playerIndex]] === "老朝奉" && characterList[characters[peopleChose]] === "藥不然" ||
             characterList[characters[playerIndex]] === "藥不然" && characterList[characters[peopleChose]] === "老朝奉") {
             setIsVottingTeammate(true);

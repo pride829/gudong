@@ -48,6 +48,9 @@ function GameSetup({ onSubmit }) {
         } else {
             if (isBigEyeOn) {
                 onBigEyeIsIn()
+            } else if (isLaiOn) {
+
+                setCharacterList(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '藥來'])
             }
             if (selectedFirstPlayer === -1) {
                 let randomNumber = Math.floor(Math.random() * (numberOfPlayers - 0))
@@ -66,12 +69,18 @@ function GameSetup({ onSubmit }) {
 
     const playerOptions = Array.from({ length: MAX_PLAYERS - MIN_PLAYERS + 1 }, (_, index) => MIN_PLAYERS + index);
     const [isBigEyeOn, setIsBigEyeOn] = useState(false)
+    const [isLaiOn, setIsLaiOn] = useState(false)
 
     const handleIsBigEyeOnChange = () => {
         setIsBigEyeOn(!isBigEyeOn)
     }
 
+    const handleIsLaiOnChange = () => {
+        setIsLaiOn(!isLaiOn)
+    }
+
     const [isBigEyeRuleDisplay, setIsBigEyeRuleDisplay] = useState(false)
+    const [isLaiRuleDisplay, setIsLaiRuleDisplay] = useState(false)
 
     useEffect(() => {
 
@@ -105,12 +114,12 @@ function GameSetup({ onSubmit }) {
                     <button type="submit">確定</button>
                     <div style={{ color: "gray" }}><i>不論首家是誰，都是由第一家先選角色</i></div>
                 </form>
-            </div >
+            </div>
             <div>
                 <li hidden={numberOfPlayers < 8}>
                     啟用粉絲角色：大眼賊
                     <label className="toggle-switch">
-                        <input type="checkbox" onChange={handleIsBigEyeOnChange} checked={isBigEyeOn}></input>
+                        <input type="checkbox" disabled={isLaiOn} onChange={handleIsBigEyeOnChange} checked={isBigEyeOn}></input>
                         <div className="switch-track">
                             <div className="switch-thumb"></div>
                         </div>
@@ -128,6 +137,28 @@ function GameSetup({ onSubmit }) {
                             <p>註：老朝奉的能力只會影響<i>當回合</i>的獸首<i>之後</i>的查驗結果</p>
                             <p>註：因此，如果老朝奉在最後一個位置開了技能，也會影響到之後大眼賊的查驗</p>
                             <p>出處：小說《古董局中局2：清明上河圖之謎》</p>
+                        </div>
+                    )}
+                </li>
+            </div>
+            <div>
+                <li hidden={numberOfPlayers < 8}>
+                    啟用粉絲角色：藥來
+                    <label className="toggle-switch">
+                        <input type="checkbox" disabled={isBigEyeOn} onChange={handleIsLaiOnChange} checked={isLaiOn}></input>
+                        <div className="switch-track">
+                            <div className="switch-thumb"></div>
+                        </div>
+                    </label>
+                    <button onClick={() => { setIsLaiRuleDisplay(!isLaiRuleDisplay) }}>查看規則</button>
+                    {isLaiRuleDisplay && (
+                        <div style={{ backgroundColor: "gray", height: '500px', overflow: 'auto' }}>
+                            <p>藥來屬於許願方陣營</p>
+                            <p>藥來會取代姬雲浮的角色</p>
+                            <p>在遊戲的一開始，藥來有二分之一的機率會被老朝奉影響。如果藥來被影響的話，他的查驗結果會必定是錯的，反之，則必定是對的。</p>
+                            <p>無論如何，藥來的查驗結果都不會受到老朝奉的影響</p>
+                            <p>出處：小說《古董局中局1》</p>
+                            <p>角色概念提供：彥瑋@那間桌遊店</p>
                         </div>
                     )}
                 </li>

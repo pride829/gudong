@@ -28,6 +28,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         animalBlocked,
         animalRealAltered,
         addGameLog = () => { },
+        isLaiEffected,
     } = useGameContext() ?? {
 
         ANIMALS: [],
@@ -43,7 +44,8 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         civMuBlockedTurn: 0,
         animalBlocked: [],
         animalRealAltered: [],
-        addameLog: () => { }
+        addameLog: () => { },
+        isLaiEffected: false
     }
 
     const [identTimeUse, setIdentTimeUse] = useState(0)
@@ -51,6 +53,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     const [identedAnimalsOrder, setIdentedAnimalOrder] = useState<number[]>([])
     const [failIdentedAnimals, setFailIdentedAnimals] = useState<number[]>([])
     const [beingGanked, setBeingGanked] = useState(false)
+
 
     const getInitialIdentTime = (contextValue) => {
         if (contextValue === '許願') {
@@ -64,7 +67,8 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     )
 
     const getInitialIdentTruly = (contextValue) => {
-        if (contextValue === '姬雲浮' || contextValue === '老朝奉' || contextValue === '藥不然' || contextValue === '鄭國渠') {
+        if (contextValue === '藥來' ||
+            contextValue === '姬雲浮' || contextValue === '老朝奉' || contextValue === '藥不然' || contextValue === '鄭國渠') {
             return true;
         } else {
             return false;
@@ -105,8 +109,16 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             setIdentedAnimals([...identedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
-            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，結果為" + (getAnimalResult(animalIndex) ? "真" : "假")
-            )
+
+            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] +
+                "，結果為" + (getAnimalResult(animalIndex) ? "真" : "假"))
+            if (characterList[characters[playerNow]] === "藥來") {
+                if (isLaiEffected) {
+                    addGameLog("但是這個結果是錯的。")
+                } else {
+                    addGameLog("這個結果必定是對的。")
+                }
+            }
         }
     }
 
@@ -131,7 +143,12 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
 
     function getAnimalResult(index) {
         const realResult = animalReals[gameTurn][index]
+        if (characterList[characters[playerNow]] === '藥來') {
+            return isLaiEffected ? !realResult : realResult
+        }
+
         return (animalRealAltered[gameTurn] && !identTruly ? !realResult : realResult)
+
     }
 
     function IdentResult() {
