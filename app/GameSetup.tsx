@@ -58,6 +58,13 @@ function GameSetup({ onSubmit }) {
                     return tempCharacterList
                 })
             }
+            if (isDevilSecondBrotherOn) {
+                setCharacterList((prevCharacterList) => {
+                    const tempCharacterList = [...prevCharacterList]
+                    tempCharacterList[5] = "魔藥不然"
+                    return tempCharacterList
+                })
+            }
 
             if (selectedFirstPlayer === -1) {
                 let randomNumber = Math.floor(Math.random() * (numberOfPlayers - 0))
@@ -78,6 +85,7 @@ function GameSetup({ onSubmit }) {
     const [isBigEyeOn, setIsBigEyeOn] = useState(false)
     const [isLaiOn, setIsLaiOn] = useState(false)
     const [isDirectorOn, setIsDirectorOn] = useState(false)
+    const [isDevilSecondBrotherOn, setIsDevilSecondBrotherOn] = useState(false)
 
     const handleIsBigEyeOnChange = () => {
         setIsBigEyeOn(!isBigEyeOn)
@@ -90,9 +98,14 @@ function GameSetup({ onSubmit }) {
     const handleIsDirectorOnChange = () => {
         setIsDirectorOn(!isDirectorOn)
     }
+
+    const handleIsDevilSecondBrotherOn = () => {
+        setIsDevilSecondBrotherOn(!isDevilSecondBrotherOn)
+    }
     const [isBigEyeRuleDisplay, setIsBigEyeRuleDisplay] = useState(false)
     const [isLaiRuleDisplay, setIsLaiRuleDisplay] = useState(false)
     const [isDirectorRuleDisplay, setIsDirectorRuleDisplay] = useState(false)
+    const [isDevilSecondBrotherRuleDisplay, setIsDevilSecondBrotherRuleDisplay] = useState(false)
 
     useEffect(() => {
 
@@ -143,7 +156,7 @@ function GameSetup({ onSubmit }) {
                             <p>大眼賊會取代姬雲浮的角色</p>
                             <p>大眼賊無法查驗當回合的獸首，取而代之的是他可以查驗<i>上一回合</i>和<i>下一回合</i>的獸首各一個</p>
                             <p>在查驗時，大眼賊無法看到獸首的名稱，而是看到<i>編號</i></p>
-                            <p>每個回合的獸首編號依序為「甲，乙，丙，丁」、「戊，己，庚，辛」、「申，酉，戌，亥」</p>
+                            <p>每個回合的獸首編號依序為「子，丑，寅，卯」、「辰，巳，午，未」、「申，酉，戌，亥」</p>
                             <p>大眼賊的查驗<i>會受到老朝奉和鄭國渠的效果影響</i>，他也同樣會被偷襲</p>
                             <p>另外，如果大眼賊被方震查驗，則<i>視作被偷襲</i></p>
                             <p>註：老朝奉的能力只會影響<i>當回合</i>的獸首<i>之後</i>的查驗結果</p>
@@ -179,7 +192,7 @@ function GameSetup({ onSubmit }) {
                 <li>
                     啟用粉絲角色：劉局
                     <label className="toggle-switch">
-                        <input type="checkbox" disabled={isDirectorOn} onChange={handleIsDirectorOnChange} checked={isDirectorOn}></input>
+                        <input type="checkbox" onChange={handleIsDirectorOnChange} checked={isDirectorOn}></input>
                         <div className="switch-track">
                             <div className="switch-thumb"></div>
                         </div>
@@ -192,6 +205,30 @@ function GameSetup({ onSubmit }) {
                             <p>劉局在第二和第三回合無法鑒定寶物。</p>
                             <p>劉局可以得知許願和方震的身份，但無從分辨兩者。</p>
                             <p>出處：小說《古董局中局1》</p>
+                        </div>
+                    )}
+                </li>
+            </div>
+            <div>
+                <li>
+                    啟用粉絲角色：魔藥不然
+                    <label className="toggle-switch">
+                        <input type="checkbox" onChange={handleIsDevilSecondBrotherOn} checked={isDevilSecondBrotherOn}></input>
+                        <div className="switch-track">
+                            <div className="switch-thumb"></div>
+                        </div>
+                    </label>
+                    <button onClick={() => { setIsDevilSecondBrotherRuleDisplay(!isDevilSecondBrotherRuleDisplay) }}>查看規則</button>
+                    {isDevilSecondBrotherRuleDisplay && (
+                        <div style={{ backgroundColor: "gray", height: '500px', overflow: 'auto' }}>
+                            <p>魔藥不然屬於老朝奉方陣營</p>
+                            <p>魔藥不然會取代藥不然的角色</p>
+                            <p>魔藥不然不會偷襲，取而代之的是，他可以投毒</p>
+                            <p>魔藥不然一場遊戲最多可以投毒兩次</p>
+                            <p>被投毒的角色不會察覺自己被投毒，而毒藥會導致他的查驗結果相反</p>
+                            <p>這個效果會和老朝奉的技能效果疊加</p>
+                            <p>方震的查驗結果不會被毒藥影響，但如果方震被投毒，會導致許願連帶被投毒</p>
+                            <p>如果姬雲浮被投毒，則視作被偷襲</p>
                         </div>
                     )}
                 </li>

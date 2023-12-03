@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 import IdentTreasure from './IdentTreasure';
+import { render } from 'react-dom';
 
 function PlayerPower({ onPlayerPowerFinish }) {
 
     const getCharacterName = (index) => { return characterList[characters[index]] }
 
     const [clickedGankingButton, setClickedGankingButton] = useState(-1);
+    const [clickedPoisoningButton, setClickedPoisoningButton] = useState(-1);
     const [clikcedBlockingButton, setClickedBlockingButton] = useState(-1);
     const [plyaerPowerConfirm, setPlayerPowerConfirm] = useState(false)
     const [alterSwitch, setAlterSwitch] = useState(false);
@@ -21,7 +23,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
             gameTurn: 0
         }
 
-    const { addGameLog, characters, characterList, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
+    const { beingPoisonedTime, setBeingPoisonedTime, poisonUsedTime, setPoisonUsedTime, addGameLog, characters, characterList, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
         useGameContext() ?? {
             characters: [],
             characterList: [],
@@ -33,7 +35,10 @@ function PlayerPower({ onPlayerPowerFinish }) {
             setAnimalBlocked: () => { },
             animalRealAltered: [],
             setAnimalRealAltered: () => { },
-            addGameLog: () => { }
+            addGameLog: () => { },
+            setBeingPoisonedTime: () => { },
+            setPoisonUsedTime: () => { },
+            poisonUsedTime: 0
         }
 
     function findXu(): number {
@@ -83,6 +88,41 @@ function PlayerPower({ onPlayerPowerFinish }) {
 
     }
 
+    const handlePlayerPoisoned = (index) => {
+
+        if (characterList[characters[index]] === "姬雲浮") {
+            setBeingGankedTime(
+                (beingGankedTime) => {
+                    const tempBeingGankedTime: number[] = [...beingGankedTime]
+                    tempBeingGankedTime[index] += 99
+                    return tempBeingGankedTime;
+                }
+            )
+            return
+        }
+
+        setBeingPoisonedTime(
+            (beingPoisonedTime) => {
+                const tempBeingPoisonedTime: number[] = [...beingPoisonedTime]
+                tempBeingPoisonedTime[index] += 1
+                return tempBeingPoisonedTime;
+            }
+        )
+
+        if (characterList[characters[index]] != "方震") {
+            return
+        }
+
+        setBeingPoisonedTime(
+            (beingPoisonedTime) => {
+                const tempBeingPoisonedTime: number[] = [...beingPoisonedTime]
+                tempBeingPoisonedTime[findXu()] += 1
+                return tempBeingPoisonedTime;
+            }
+        )
+
+    }
+
     function GankedButtonList({ onPlayerGanked }) {
         //const [clickedButton, setClickedButton] = useState(-1); // 這個不能放裡面!!否則會導致它一直是在1, 我猜是重新render時，GankedButtonList也會重新Render所導致的
 
@@ -92,7 +132,6 @@ function PlayerPower({ onPlayerPowerFinish }) {
                 const isConfirmed = window.confirm(
                     "你確定要偷襲" + playerNames[value] + "嗎？他是你隊友！"
                 )
-
                 if (!isConfirmed) return;
             }
 
@@ -124,10 +163,59 @@ function PlayerPower({ onPlayerPowerFinish }) {
         )
     }
 
+    function PoisonButtonList({ onPlayerPoisoned }) {
+
+        const handlePoisoningButtonClick = (value) => {
+            if (value === findBigBrother()) {
+                const isConfirmed = window.confirm(
+                    "你確定要對" + playerNames[value] + "下藥嗎？他是你隊友！"
+                )
+                if (!isConfirmed) return;
+            }
+
+            setClickedPoisoningButton(value)
+            onPlayerPoisoned(value)
+            setPoisonUsedTime(poisonUsedTime + 1)
+            addGameLog(playerNames[playerNow] + "對" + playerNames[value] + "下藥！")
+            handlePowerDone()
+        }
+
+        const renderedPoisoningButttons = Array.from(
+            playerNames.slice(0, numberOfPlayers)
+            , (name, index) => (
+                <button
+                    key={index}
+                    onClick={() => handlePoisoningButtonClick(index)}
+                    disabled={
+                        (clickedPoisoningButton !== -1) ||
+                        index === playerNow ||
+                        poisonUsedTime >= 2
+                    }>
+                    {clickedPoisoningButton === -1 || clickedPoisoningButton != index ? name : ("已經對 " + name + " 下藥")}
+                </button>
+            ));
+        return (
+            <div>
+                {renderedPoisoningButttons}
+                {poisonUsedTime >= 2 &&
+                    <div>
+                        您的毒藥已用盡！
+                    </div>}
+            </div>
+        )
+    }
+
     const handleClickcedGankingPassButton = (index) => {
         setClickedGankingButton(index)
 
         addGameLog(playerNames[playerNow] + "並沒有使用偷襲的能力。")
+        handlePowerDone()
+    }
+
+    const handleClickcedPoisoningPassButton = (index) => {
+        setClickedPoisoningButton(index)
+
+        addGameLog(playerNames[playerNow] + "並沒有使用下藥的能力。")
         handlePowerDone()
     }
 
@@ -141,7 +229,26 @@ function PlayerPower({ onPlayerPowerFinish }) {
                         key={99}
                         onClick={() => handleClickcedGankingPassButton(99)}
                         disabled={(clickedGankingButton !== -1)}>
-                        {clickedGankingButton === -1 || clickedGankingButton != 99 ? '跳過，不進行偷襲' : ("您已經選擇跳過")}
+                        {clickedGankingButton === -1 || clickedGankingButton != 99 ||
+                            poisonUsedTime >= 2 ? '跳過，不進行偷襲' : ("您已經選擇跳過")}
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
+    const PowerPoison = () => {
+
+        return (
+            <div>
+                <div>
+                    請選擇要投毒的對象：
+                    <PoisonButtonList onPlayerPoisoned={handlePlayerPoisoned}></PoisonButtonList>
+                    <button
+                        key={99}
+                        onClick={() => handleClickcedPoisoningPassButton(99)}
+                        disabled={(clickedPoisoningButton !== -1)}>
+                        {clickedPoisoningButton === -1 || clickedPoisoningButton != 99 || poisonUsedTime >= 2 ? '跳過，不進行下藥' : ("您已經選擇跳過")}
                     </button>
                 </div>
             </div>
@@ -242,7 +349,10 @@ function PlayerPower({ onPlayerPowerFinish }) {
     }
 
     useEffect(() => {
-        if (getCharacterName(playerNow) != "藥不然" && getCharacterName(playerNow) != "鄭國渠") {
+        if (getCharacterName(playerNow) === "魔藥不然" && poisonUsedTime) {
+            handlePowerDone();
+        }
+        if (getCharacterName(playerNow) != "魔藥不然" && getCharacterName(playerNow) != "藥不然" && getCharacterName(playerNow) != "鄭國渠") {
             handlePowerDone();
         }
         if (getCharacterName(playerNow) === "老朝奉") {
@@ -270,11 +380,13 @@ function PlayerPower({ onPlayerPowerFinish }) {
         <div>
             <div>
                 {getCharacterName(playerNow) === "藥不然" && <PowerGank></PowerGank>}
+                {getCharacterName(playerNow) === "魔藥不然" && <PowerPoison></PowerPoison>}
                 {getCharacterName(playerNow) === "鄭國渠" && <PowerBlock></PowerBlock>}
                 {getCharacterName(playerNow) === "老朝奉" && <PowerAlter></PowerAlter>}
                 {getCharacterName(playerNow) !== "老朝奉" &&
                     getCharacterName(playerNow) !== "鄭國渠" &&
                     getCharacterName(playerNow) !== "藥不然" &&
+                    getCharacterName(playerNow) !== "魔藥不然" &&
                     <PowerNothing></PowerNothing>}
             </div>
             <div>

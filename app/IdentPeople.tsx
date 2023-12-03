@@ -128,6 +128,7 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         return (
             (characterName === "老朝奉" ||
                 characterName === "藥不然" ||
+                characterName === "魔藥不然" ||
                 characterName === "鄭國渠") ?
                 "老朝奉陣營" : "許願陣營"
         )

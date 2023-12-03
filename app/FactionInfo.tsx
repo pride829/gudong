@@ -35,7 +35,7 @@ function FactionInfo() {
 
     function findSecondBrother(): number {
         for (let i = 0; i < numberOfPlayers; i++) {
-            if (getCharacterName(i) === "藥不然") {
+            if (getCharacterName(i) === "藥不然" || getCharacterName(i) === "魔藥不然") {
                 return i
             }
         }
@@ -112,7 +112,7 @@ function FactionInfo() {
 
     return (
         <div>
-            {(getCharacterName(playerNow) === "老朝奉" || getCharacterName(playerNow) === "藥不然") &&
+            {(getCharacterName(playerNow) === "老朝奉" || getCharacterName(playerNow) === "藥不然" || getCharacterName(playerNow) === "魔藥不然") &&
                 <FactionBadInfo></FactionBadInfo>}
             {(getCharacterName(playerNow) === "鄭國渠") &&
                 "鄭國渠並不會和隊友相認。"
