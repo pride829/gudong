@@ -49,7 +49,7 @@ function VotePeople({ onVotePeopleEnd }) {
         return (
             <form onSubmit={handlePeopleVotingSubmit}>
                 {playerNames.map((c, characterIndex) => (
-                    <ul key={characterIndex}>
+                    <ul key={characterIndex} hidden={characterIndex >= numberOfPlayers}>
                         <label style={{ fontSize: "150%", ...getPlayerTextStyle(characterIndex), ...getPlayerTextBackground(characterIndex) }}>
                             <span hidden={characterIndex === playerIndex}>
                                 <input
