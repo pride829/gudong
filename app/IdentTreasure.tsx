@@ -28,6 +28,11 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         animalBlocked,
         animalRealAltered,
         addGameLog = () => { },
+        isLaiEffected,
+        beingPoisonedTime,
+        setBeingPoisonedTime,
+        beingConfusedPlayerIndex,
+        setBeingConfusedPlayerIndex,
     } = useGameContext() ?? {
 
         ANIMALS: [],
@@ -43,7 +48,12 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         civMuBlockedTurn: 0,
         animalBlocked: [],
         animalRealAltered: [],
-        addameLog: () => { }
+        addameLog: () => { },
+        isLaiEffected: false,
+        beingPoisonedTime: [],
+        setBeingPoisonedTime: () => { },
+        beingConfusedPlayerIndex: [],
+        setBeingConfusedPlayerIndex: () => { },
     }
 
     const [identTimeUse, setIdentTimeUse] = useState(0)
@@ -51,6 +61,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     const [identedAnimalsOrder, setIdentedAnimalOrder] = useState<number[]>([])
     const [failIdentedAnimals, setFailIdentedAnimals] = useState<number[]>([])
     const [beingGanked, setBeingGanked] = useState(false)
+    const [isConfused, setIsConfused] = useState(false)
 
     const getInitialIdentTime = (contextValue) => {
         if (contextValue === '許願') {
@@ -64,7 +75,8 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     )
 
     const getInitialIdentTruly = (contextValue) => {
-        if (contextValue === '姬雲浮' || contextValue === '老朝奉' || contextValue === '藥不然' || contextValue === '鄭國渠') {
+        if (contextValue === '藥來' || contextValue === '魔藥不然' ||
+            contextValue === '姬雲浮' || contextValue === '老朝奉' || contextValue === '藥不然' || contextValue === '鄭國渠') {
             return true;
         } else {
             return false;
@@ -78,6 +90,8 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     const ANIMAL_DISPLAY_IN_ONE_TURN = 4
 
     const handleIdentOneAnimal = (animalIndex: number) => {
+
+
         if (beingGankedTime[playerNow] > 0) {
             setBeingGanked(true)
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
@@ -96,7 +110,15 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
             addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被系統封了")
-        } else if (animalBlocked[animalOrders[animalIndex + gameTurn * ANIMAL_DISPLAY_IN_ONE_TURN]]) {
+        } else if (characterList[characters[playerNow]] === "劉局" && gameTurn > 0) {
+            setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
+            setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
+            setIdentTimeUse(identTimeUse + 1)
+            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被系統封了")
+        }
+
+        else if (animalBlocked[animalOrders[animalIndex + gameTurn * ANIMAL_DISPLAY_IN_ONE_TURN]]) {
+
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
@@ -105,8 +127,16 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             setIdentedAnimals([...identedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
-            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，結果為" + (getAnimalResult(animalIndex) ? "真" : "假")
-            )
+
+            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] +
+                "，結果為" + (getAnimalResult(animalIndex) ? "真" : "假"))
+            if (characterList[characters[playerNow]] === "藥來") {
+                if (isLaiEffected) {
+                    addGameLog("但是這個結果是錯的。")
+                } else {
+                    addGameLog("這個結果必定是對的。")
+                }
+            }
         }
     }
 
@@ -131,7 +161,14 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
 
     function getAnimalResult(index) {
         const realResult = animalReals[gameTurn][index]
-        return (animalRealAltered[gameTurn] && !identTruly ? !realResult : realResult)
+        if (characterList[characters[playerNow]] === '藥來') {
+            return isLaiEffected ? !realResult : realResult
+        }
+
+        let resultBeforePoison = animalRealAltered[gameTurn] && !identTruly ? !realResult : realResult
+
+        return beingConfusedPlayerIndex[gameTurn] === playerNow ? !resultBeforePoison : resultBeforePoison
+
     }
 
     function IdentResult() {
@@ -173,6 +210,20 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     useEffect(() => {
         //console.log(failIdentedAnimals)
         //console.log(identedAnimals)
+        if (beingPoisonedTime[playerNow] > 0) {
+            setBeingConfusedPlayerIndex((prevBeingConfusedPlayerIndex) => {
+                const tempBeingConfusedPlayerIndex = [...prevBeingConfusedPlayerIndex]
+                tempBeingConfusedPlayerIndex[gameTurn] = playerNow
+                return tempBeingConfusedPlayerIndex
+            })
+            setBeingPoisonedTime((prevBeingPoisonedTime) => {
+                const tempBeingPoisonedTime = [...prevBeingPoisonedTime]
+                tempBeingPoisonedTime[playerNow] -= 1
+                return tempBeingPoisonedTime
+            })
+            addGameLog(playerNames[playerNow] + "中了混亂之毒！")
+        }
+
         if (beingGanked) {
             onPlayerBeingSkip()
         }

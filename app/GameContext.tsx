@@ -85,13 +85,21 @@ interface GameContextProps {
     gameLog: string[],
     addGameLog: (s: string) => void,
     setGameLog: React.Dispatch<React.SetStateAction<string[]>>,
+    isLaiEffected: boolean,
+    isXuDisplayFirstDirectorFactionInfo: boolean
+    beingPoisonedTime: number[],
+    setBeingPoisonedTime: React.Dispatch<React.SetStateAction<number[]>>,
+    poisonUsedTime: number,
+    setPoisonUsedTime: React.Dispatch<React.SetStateAction<number>>,
+    beingConfusedPlayerIndex: number[],
+    setBeingConfusedPlayerIndex: React.Dispatch<React.SetStateAction<number[]>>,
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
 
 export const GameProvider = ({ children }) => {
     const ANIMALS = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
-    const CHINESE = ['甲', '乙', '丙', '丁', '戊', '已', '庚', '辛', '申', '酉', '戌', '亥'];
+    const CHINESE = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
     const [animalOrders, setAnimalOrders] = useState<number[]>([]);
     const initialBooleanArray = [
         [true, true, false, false],
@@ -103,6 +111,9 @@ export const GameProvider = ({ children }) => {
     //const [characters, setCharacters] = useState<number[]>([1, 2, 7, 3, 4, 5, 6, 0]); // characterList[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
     const [characters, setCharacters] = useState<number[]>([])
     const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
+    const [beingPoisonedTime, setBeingPoisonedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]);
+    const [beingConfusedPlayerIndex, setBeingConfusedPlayerIndex] = useState([-1, -1, -1])
+    const [poisonUsedTime, setPoisonUsedTime] = useState(0)
     const [dummy, setDummy] = useState<number>(0)
     const [identedPeople, setIdentedPeople] = useState<number[]>([])
 
@@ -118,8 +129,12 @@ export const GameProvider = ({ children }) => {
     const [funVoted, setFunVoted] = useState(-1)
     const [gameLog, setGameLog] = useState<string[]>([])
 
+    const [isXuDisplayFirstDirectorFactionInfo, setIsXuDisplayFirstDirectorFactionInfo] = useState(Math.random() < 0.5)
+
+    const [isLaiEffected, setIsLaiEffected] = useState(Math.random() < 0.5)
     function addGameLog(s: string) {
-        //console.log(s)
+        console.log(s)
+        console.log(gameLog)
         setGameLog((prevLog) => { return ([...prevLog, s]) })
     }
 
@@ -159,6 +174,14 @@ export const GameProvider = ({ children }) => {
         addGameLog,
         setGameLog,
         CHINESE,
+        isLaiEffected,
+        isXuDisplayFirstDirectorFactionInfo,
+        beingPoisonedTime,
+        setBeingPoisonedTime,
+        poisonUsedTime,
+        setPoisonUsedTime,
+        beingConfusedPlayerIndex,
+        setBeingConfusedPlayerIndex,
     };
 
 

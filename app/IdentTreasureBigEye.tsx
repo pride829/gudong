@@ -34,6 +34,10 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
         animalRealAltered,
         addGameLog = () => { },
         CHINESE,
+        beingConfusedPlayerIndex,
+        setBeingConfusedPlayerIndex,
+        beingPoisonedTime,
+        setBeingPoisonedTime
     } = useGameContext() ?? {
 
         ANIMALS: [],
@@ -50,14 +54,21 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
         animalBlocked: [],
         animalRealAltered: [],
         addameLog: () => { },
-        CHINESE: []
+        CHINESE: [],
+        beingConfusedPlayerIndex: [],
+        beingPoisonedTime: [],
+        setBeingPoisonedTime: () => { },
+        setBeingConfusedPlayerIndex: () => { }
     }
 
     function getChineseResult(chineseIndex) {
         let turn = Math.floor(chineseIndex / 4)
         let index = chineseIndex % 4
         const realResult = animalReals[turn][index]
-        return (animalRealAltered[turn] ? !realResult : realResult)
+        //let resultBeforePoison = (animalRealAltered[turn] ? !realResult : realResult)
+        let resultBeforePoison = realResult
+
+        return beingConfusedPlayerIndex[gameTurn] === playerNow ? !resultBeforePoison : resultBeforePoison
     }
 
     function handleIdentOneChinese(index, turn) {
@@ -166,6 +177,20 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
     useEffect(() => {
         //console.log(failIdentedAnimals)
         //console.log(identedAnimals)
+        if (beingPoisonedTime[playerNow] > 0) {
+            setBeingConfusedPlayerIndex((prevBeingConfusedPlayerIndex) => {
+                const tempBeingConfusedPlayerIndex = [...prevBeingConfusedPlayerIndex]
+                tempBeingConfusedPlayerIndex[gameTurn] = playerNow
+                return tempBeingConfusedPlayerIndex
+            })
+            setBeingPoisonedTime((prevBeingPoisonedTime) => {
+                const tempBeingPoisonedTime = [...prevBeingPoisonedTime]
+                tempBeingPoisonedTime[playerNow] -= 1
+                return tempBeingPoisonedTime
+            })
+            addGameLog(playerNames[playerNow] + "中了混亂之毒！")
+        }
+
         if (beingGanked) {
             onPlayerBeingSkip()
         }

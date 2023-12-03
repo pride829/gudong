@@ -49,7 +49,7 @@ function VotePeople({ onVotePeopleEnd }) {
         return (
             <form onSubmit={handlePeopleVotingSubmit}>
                 {playerNames.map((c, characterIndex) => (
-                    <ul key={characterIndex}>
+                    <ul key={characterIndex} hidden={characterIndex >= numberOfPlayers}>
                         <label style={{ fontSize: "150%", ...getPlayerTextStyle(characterIndex), ...getPlayerTextBackground(characterIndex) }}>
                             <span hidden={characterIndex === playerIndex}>
                                 <input
@@ -79,8 +79,21 @@ function VotePeople({ onVotePeopleEnd }) {
         //console.log("index", playerIndex)
         //console.log("peopleChose", peopleChose)
 
+        alert("您已經投票！請將裝置給下一位玩家")
+
         if (characterList[characters[playerIndex]] === "老朝奉" && characterList[characters[peopleChose]] === "藥不然" ||
-            characterList[characters[playerIndex]] === "藥不然" && characterList[characters[peopleChose]] === "老朝奉") {
+            characterList[characters[playerIndex]] === "藥不然" && characterList[characters[peopleChose]] === "老朝奉" ||
+            characterList[characters[playerIndex]] === "魔藥不然" && characterList[characters[peopleChose]] === "老朝奉" ||
+            characterList[characters[playerIndex]] === "老朝奉" && characterList[characters[peopleChose]] === "魔藥不然"
+        ) {
+            setIsVottingTeammate(true);
+            setTriedVottingTeammate(true)
+            return;
+        }
+        if (characterList[characters[playerIndex]] === "劉局" &&
+            (characterList[characters[peopleChose]] === "許願" || characterList[characters[peopleChose]] === "方震")
+
+        ) {
             setIsVottingTeammate(true);
             setTriedVottingTeammate(true)
             return;
@@ -91,7 +104,7 @@ function VotePeople({ onVotePeopleEnd }) {
         if (characterList[characters[playerIndex]] === "老朝奉") {
             addGameLog(playerNames[playerIndex] + "將心目中的許願人選投給了" + playerNames[peopleChose])
             setXuVoted(peopleChose)
-        } else if (characterList[characters[playerIndex]] === "藥不然") {
+        } else if (characterList[characters[playerIndex]] === "藥不然" || characterList[characters[playerIndex]] === "魔藥不然") {
             addGameLog(playerNames[playerIndex] + "將心目中的方震人選投給了" + playerNames[peopleChose])
             setFunVoted(peopleChose)
         } else if (characterList[characters[playerIndex]] === "鄭國渠") {
