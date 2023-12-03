@@ -65,7 +65,8 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
         let turn = Math.floor(chineseIndex / 4)
         let index = chineseIndex % 4
         const realResult = animalReals[turn][index]
-        let resultBeforePoison = (animalRealAltered[turn] ? !realResult : realResult)
+        //let resultBeforePoison = (animalRealAltered[turn] ? !realResult : realResult)
+        let resultBeforePoison = realResult
 
         return beingConfusedPlayerIndex[gameTurn] === playerNow ? !resultBeforePoison : resultBeforePoison
     }
