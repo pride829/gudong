@@ -218,7 +218,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
     const PowerAlter = () => {
         return (
             <div>
-                老朝奉，是否改變除了姬雲浮以外的許願陣營玩家之後的鑑定結果？
+                老朝奉，是否改變除了姬雲浮和藥來以外的許願陣營玩家之後的鑑定結果？
                 <label className="toggle-switch">
                     <input type="checkbox" onChange={handlePowerAlterChange} checked={alterSwitch}></input>
                     <div className="switch-track">

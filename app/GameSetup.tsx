@@ -49,9 +49,16 @@ function GameSetup({ onSubmit }) {
             if (isBigEyeOn) {
                 onBigEyeIsIn()
             } else if (isLaiOn) {
-
                 setCharacterList(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '藥來'])
             }
+            if (isDirectorOn) {
+                setCharacterList((prevCharacterList) => {
+                    const tempCharacterList = [...prevCharacterList]
+                    tempCharacterList[2] = "劉局"
+                    return tempCharacterList
+                })
+            }
+
             if (selectedFirstPlayer === -1) {
                 let randomNumber = Math.floor(Math.random() * (numberOfPlayers - 0))
                 setPlayerNow(randomNumber)
@@ -70,6 +77,7 @@ function GameSetup({ onSubmit }) {
     const playerOptions = Array.from({ length: MAX_PLAYERS - MIN_PLAYERS + 1 }, (_, index) => MIN_PLAYERS + index);
     const [isBigEyeOn, setIsBigEyeOn] = useState(false)
     const [isLaiOn, setIsLaiOn] = useState(false)
+    const [isDirectorOn, setIsDirectorOn] = useState(false)
 
     const handleIsBigEyeOnChange = () => {
         setIsBigEyeOn(!isBigEyeOn)
@@ -79,8 +87,12 @@ function GameSetup({ onSubmit }) {
         setIsLaiOn(!isLaiOn)
     }
 
+    const handleIsDirectorOnChange = () => {
+        setIsDirectorOn(!isDirectorOn)
+    }
     const [isBigEyeRuleDisplay, setIsBigEyeRuleDisplay] = useState(false)
     const [isLaiRuleDisplay, setIsLaiRuleDisplay] = useState(false)
+    const [isDirectorRuleDisplay, setIsDirectorRuleDisplay] = useState(false)
 
     useEffect(() => {
 
@@ -159,6 +171,27 @@ function GameSetup({ onSubmit }) {
                             <p>無論如何，藥來的查驗結果都不會受到老朝奉的影響</p>
                             <p>出處：小說《古董局中局1》</p>
                             <p>角色概念提供：彥瑋@那間桌遊店</p>
+                        </div>
+                    )}
+                </li>
+            </div>
+            <div>
+                <li>
+                    啟用粉絲角色：劉局
+                    <label className="toggle-switch">
+                        <input type="checkbox" disabled={isDirectorOn} onChange={handleIsDirectorOnChange} checked={isDirectorOn}></input>
+                        <div className="switch-track">
+                            <div className="switch-thumb"></div>
+                        </div>
+                    </label>
+                    <button onClick={() => { setIsDirectorRuleDisplay(!isDirectorRuleDisplay) }}>查看規則</button>
+                    {isDirectorRuleDisplay && (
+                        <div style={{ backgroundColor: "gray", height: '500px', overflow: 'auto' }}>
+                            <p>劉局屬於許願方陣營</p>
+                            <p>劉局會取代黃煙煙的角色</p>
+                            <p>劉局在第二和第三回合無法鑒定寶物。</p>
+                            <p>劉局可以得知許願和方震的身份，但無從分辨兩者。</p>
+                            <p>出處：小說《古董局中局1》</p>
                         </div>
                     )}
                 </li>

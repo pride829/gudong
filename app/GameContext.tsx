@@ -85,7 +85,8 @@ interface GameContextProps {
     gameLog: string[],
     addGameLog: (s: string) => void,
     setGameLog: React.Dispatch<React.SetStateAction<string[]>>,
-    isLaiEffected: boolean
+    isLaiEffected: boolean,
+    isXuDisplayFirstDirectorFactionInfo: boolean
 }
 
 export const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -119,7 +120,9 @@ export const GameProvider = ({ children }) => {
     const [funVoted, setFunVoted] = useState(-1)
     const [gameLog, setGameLog] = useState<string[]>([])
 
-    const [isLaiEffected, _] = useState(Math.random() < 0.5)
+    const [isXuDisplayFirstDirectorFactionInfo, setIsXuDisplayFirstDirectorFactionInfo] = useState(Math.random() < 0.5)
+
+    const [isLaiEffected, setIsLaiEffected] = useState(Math.random() < 0.5)
     function addGameLog(s: string) {
         //console.log(s)
         //console.log(gameLog)
@@ -163,6 +166,7 @@ export const GameProvider = ({ children }) => {
         setGameLog,
         CHINESE,
         isLaiEffected,
+        isXuDisplayFirstDirectorFactionInfo
     };
 
 
