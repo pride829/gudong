@@ -125,6 +125,7 @@ function GameSetup({ onSubmit }) {
         <div>
             <div>
                 <div>建議使用Firefox進行遊戲</div>
+
                 <h2>遊戲設置</h2>
                 <form onSubmit={handleFormSubmit}>
                     請輸入玩家數量：
