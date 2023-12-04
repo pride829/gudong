@@ -219,11 +219,10 @@ function GameEnd() {
     function ShowGameLog() {
         return (
             <div>
-                <div><button onClick={handleDisplayGameLogButtonClicked}>查看紀錄</button></div>
                 <div style={{ backgroundColor: "lightgray" }}>
                     {displayGameLog && (
-                        <div style={{ fontSize: '150%', height: '200px', overflow: 'auto' }}>
-                            {Array.from(gameLog, (log, i) => { return <div key={i}>{log}</div> })}
+                        <div style={{ fontSize: '200%', height: '500px', overflow: 'auto' }}>
+                            {Array.from(gameLog, (log, i) => { return <div><div key={i}>({(i + 1) + ")" + log}</div><div>--</div></div> })}
                         </div>
                     )}
                 </div>
@@ -248,6 +247,8 @@ function GameEnd() {
             <div>
                 <FileDownloadButton fileContent={gameLog} fileName="古董局中局遊戲紀錄.txt" /><ShowGameLog></ShowGameLog>
             </div>
+            <button onClick={() => { window.location.reload() }} >
+                新的一場(離開頁面)</button>
         </div>
     )
 }
