@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import PlayerMoving from './PlayerMoving';
 import PlayerPass from './PlayerPass';
+import { useGameContext } from './GameContext';
 
 function Player({ onPlayerFinish }) {
     const { playerNow, playerNames, setPlayerNow, playerPlayed, setPlayerPlayed } =
@@ -13,6 +14,21 @@ function Player({ onPlayerFinish }) {
             setPlayerPlayed: () => { },
 
         }
+    const { numberOfPlayers } =
+        useGameMetaContext() ?? {
+            numberOfPlayers: 0,
+        };
+    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, setGameLog = () => { } } =
+        useGameContext() ?? {
+            ANIMALS: [],
+            animalOrders: [],
+            setAnimalOrders: undefined,
+            characters: [],
+            setCharacters: undefined,
+            characterList: [],
+            setGameLog: () => { }
+        };
+
     const { getPlayerTextBackground, getPlayerTextStyle } =
         useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object };
 
@@ -36,7 +52,6 @@ function Player({ onPlayerFinish }) {
 
     useEffect(() => {
 
-        //console.log(playerPlayed)
     })
 
     return (
