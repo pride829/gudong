@@ -138,7 +138,7 @@ function GameSetup({ onSubmit }) {
                     </select>
                     <PlayerList numberOfPlayers={numberOfPlayers} selectedFirstPlayer={selectedFirstPlayer} onFirstPlayerSelection={handleFirstPlayerSelection} />
                     <button type="submit">確定</button>
-                    <div style={{ color: "gray" }}><i>不論首家是誰，都是由第一家先選角色</i></div>
+                    <div style={{ color: "gray" }}><i>由首家先選角色</i></div>
                 </form>
             </div>
             <div>

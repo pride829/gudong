@@ -133,8 +133,8 @@ export const GameProvider = ({ children }) => {
 
     const [isLaiEffected, setIsLaiEffected] = useState(Math.random() < 0.5)
     function addGameLog(s: string) {
-        console.log(s)
-        console.log(gameLog)
+        //console.log(s)
+        //console.log(gameLog)
         setGameLog((prevLog) => { return ([...prevLog, s]) })
     }
 

@@ -213,7 +213,7 @@ function GameEnd() {
         setDisplayGameLog(!displayGameLog)
     }
 
-    const [displayGameLog, setDisplayGameLog] = useState(false)
+    const [displayGameLog, setDisplayGameLog] = useState(true)
 
     //console.log(animalReals)
     function ShowGameLog() {
@@ -222,7 +222,7 @@ function GameEnd() {
                 <div style={{ backgroundColor: "lightgray" }}>
                     {displayGameLog && (
                         <div style={{ fontSize: '200%', height: '500px', overflow: 'auto' }}>
-                            {Array.from(gameLog, (log, i) => { return <div><div key={i}>({(i + 1) + ")" + log}</div><div>--</div></div> })}
+                            {Array.from(gameLog, (log, i) => { return <div key={i}><p>{(i + 1) + ")" + log}</p><p>--</p></div> })}
                         </div>
                     )}
                 </div>

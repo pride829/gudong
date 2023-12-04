@@ -177,6 +177,7 @@ function VotePeople({ onVotePeopleEnd }) {
         <PeopleVotingMsg></PeopleVotingMsg>
         <PeopleVoting ></PeopleVoting>
         {isVottingTeammate && <h2>你不能投給{playerNames[peopleChose]}，因為他是你隊友！</h2>}
+        <PeopleVotingMsg></PeopleVotingMsg>
     </div>)
 }
 export default VotePeople

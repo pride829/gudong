@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 
@@ -55,6 +55,8 @@ function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharact
                 </ul>
             ))}
             <button type="submit">確認</button>
+            <div>首家是 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span></div>
+
         </form>
     );
 }
@@ -78,29 +80,46 @@ function GameStart({ onGameStartFinish }) {
             setGameLog: () => { }
         };
 
-    const [playerIndex, setPlayerIndex] = useState(0);
+    const [playerIndex, setPlayerIndex] = useState(playerNow);
+
+    const [lastPlayerIndex, setLastPlayerIndex] = useState((playerNow + numberOfPlayers - 1) % numberOfPlayers);
+
+    function rightRotateArr(arr: number[], n): number[] {
+        if (arr.length < n) {
+            return [-1]
+        }
+
+        const tempArr = arr.splice(arr.length - n)
+        return [...tempArr, ...arr]
+
+    }
 
     const handleCharacterSubmit = (playerIndex, characterIndex) => {
         // Update the characters array with the selected character
         setCharacters((prevCharacters) => [...prevCharacters, characterIndex]);
-        setPlayerIndex(playerIndex + 1);
+        setPlayerIndex((playerIndex + 1) % numberOfPlayers);
+
+    }
+
+    useEffect(() => {
 
         function hasDuplicates(array) {
             return new Set(array).size !== array.length;
         }
 
-        if (playerIndex >= numberOfPlayers - 1) { // playerIndex start with 0
+        if (playerIndex === (lastPlayerIndex + 1) % numberOfPlayers && characters.length > 0) {
             // TODO: Check if duplicated character exists
             if (hasDuplicates(characters)) {
                 alert("有人選了重複的角色！將重新開始選擇角色");
                 setGameLog([])
-                setPlayerIndex(0);
+                setPlayerIndex(playerNow);
                 setCharacters([])
             } else {
+                setCharacters(rightRotateArr(characters, playerNow))
                 onGameStartFinish();
             }
         }
-    }
+    })
 
     return (
         <div>
