@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
 import IdentTreasure from './IdentTreasure';
+import PlayerPass from './PlayerPass';
 
 function PlayerPower({ onPlayerPowerFinish }) {
 
@@ -13,13 +14,15 @@ function PlayerPower({ onPlayerPowerFinish }) {
     const [plyaerPowerConfirm, setPlayerPowerConfirm] = useState(false)
     const [alterSwitch, setAlterSwitch] = useState(false);
     const [preAlterSwitch, setPrevAlterSwitch] = useState(false);
+    const [isEasterEggDisplayed, _] = useState(Math.random() < 0.1)
 
-    const { playerNow, playerNames, numberOfPlayers, gameTurn } =
+    const { playerNow, playerNames, numberOfPlayers, gameTurn, playerPlayed } =
         useGameMetaContext() ?? {
             playerNow: 0,
             playerNames: [],
             numberOfPlayers: 0,
-            gameTurn: 0
+            gameTurn: 0,
+            playerPlayed: [0]
         }
 
     const { beingPoisonedTime, setBeingPoisonedTime, poisonUsedTime, setPoisonUsedTime, addGameLog, characters, characterList, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
@@ -141,23 +144,42 @@ function PlayerPower({ onPlayerPowerFinish }) {
             handlePowerDone()
         }
 
-        const renderedGankingButttons = Array.from(
-            playerNames.slice(0, numberOfPlayers)
-            , (name, index) => (
-                <button
-                    key={index}
-                    onClick={() => handleGankingButtonClick(index)}
-                    disabled={
-                        (clickedGankingButton !== -1) ||
-                        index === playerNow
+        const renderedGankingButttons = (isBefore) => {
 
-                    }>
-                    {clickedGankingButton === -1 || clickedGankingButton != index ? name : ("已經偷襲 " + name)}
-                </button>
-            ));
+            return Array.from(
+                playerNames.slice(0, numberOfPlayers)
+                , (name, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handleGankingButtonClick(index)}
+                        disabled={
+                            (clickedGankingButton !== -1) ||
+                            index === playerNow
+                        }
+                        hidden={isBefore ? !playerPlayed.includes(index) : playerPlayed.includes(index)}
+                    >
+                        {clickedGankingButton === -1 || clickedGankingButton != index ? name : ("已經偷襲 " + name)}
+                    </button>
+                ));
+        }
+
         return (
             <div>
-                {renderedGankingButttons}
+                <hr></hr>
+                <div>
+                    {renderedGankingButttons(true)}
+                    <span>
+                        <i>（前面玩家）</i>
+                    </span>
+                </div>
+                <hr></hr>
+                <div>
+                    {renderedGankingButttons(false)}
+                    <span>
+                        <i>（後面玩家）</i>
+                    </span>
+                </div>
+                <hr></hr>
             </div>
         )
     }
@@ -179,23 +201,41 @@ function PlayerPower({ onPlayerPowerFinish }) {
             handlePowerDone()
         }
 
-        const renderedPoisoningButttons = Array.from(
-            playerNames.slice(0, numberOfPlayers)
-            , (name, index) => (
-                <button
-                    key={index}
-                    onClick={() => handlePoisoningButtonClick(index)}
-                    disabled={
-                        (clickedPoisoningButton !== -1) ||
-                        index === playerNow ||
-                        poisonUsedTime >= 2
-                    }>
-                    {clickedPoisoningButton === -1 || clickedPoisoningButton != index ? name : ("已經對 " + name + " 下藥")}
-                </button>
-            ));
+        const renderedPoisoningButttons = (isBefore) => {
+            return Array.from(
+                playerNames.slice(0, numberOfPlayers)
+                , (name, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handlePoisoningButtonClick(index)}
+                        disabled={
+                            (clickedPoisoningButton !== -1) ||
+                            index === playerNow ||
+                            poisonUsedTime >= 2
+                        }
+                        hidden={isBefore ? !playerPlayed.includes(index) : playerPlayed.includes(index)}
+                    >
+                        {clickedPoisoningButton === -1 || clickedPoisoningButton != index ? name : ("已經對 " + name + " 下藥")}
+                    </button>
+                ))
+        }
         return (
             <div>
-                {renderedPoisoningButttons}
+                <hr></hr>
+                <div>
+                    {renderedPoisoningButttons(true)}
+                    <span>
+                        <i>（前面玩家）</i>
+                    </span>
+                </div>
+                <hr></hr>
+                <div>
+                    {renderedPoisoningButttons(false)}
+                    <span>
+                        <i>（後面玩家）</i>
+                    </span>
+                </div>
+                <hr></hr>
                 {poisonUsedTime >= 2 &&
                     <div>
                         您的毒藥已用盡！
@@ -222,7 +262,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
         return (
             <div>
                 <div>
-                    請選擇要偷襲的對象：
+                    請選擇要偷襲的對象{isEasterEggDisplayed ? "，雙生毒牙！" : "："}
                     <GankedButtonList onPlayerGanked={handlePlayerGanked}></GankedButtonList>
                     <button
                         key={99}
