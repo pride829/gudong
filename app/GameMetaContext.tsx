@@ -22,7 +22,7 @@ export const GameMetaContext = createContext<GameMetaContextProps | undefined>(u
 export const GameMetaProvider = ({ children }) => {
     const MIN_PLAYERS = 6;
     const MAX_PLAYERS = 8;
-    const [playerNames, setPlayerNames] = useState(["黑", "紅", "橙", "黃", "綠", "藍", "紫", "白"]);
+    const [playerNames, setPlayerNames] = useState(["黑包", "紅", "橘", "黃", "綠", "藍", "紫", "白"]);
     const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
     const [playerNow, setPlayerNow] = useState(0);
     const [gameTurn, setGameTurn] = useState(0);
