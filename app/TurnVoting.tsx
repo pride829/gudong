@@ -75,22 +75,26 @@ function TurnVoting({ onTurnVotingEnd }) {
             return <div></div>
         }
         if (isHidden) {
-            return <div>隱藏</div>
+            return <div><h3>隱藏</h3></div>
         }
         if (isReal) {
-            return <div>真品</div>
+            return <div><h3>真品</h3></div>
         }
-        return <div>贗品</div>
+        return <div><h3>贗品</h3></div>
     }
 
-    function VoteOneAnimal({ index }) { // 這裡要加{}!!!
+    function VoteOneAnimal({ index }) { // 這裡要加{ }!!!
         return (
             <div>
                 <div>
-                    {ANIMALS[animalOrders[index + gameTurn * 4]]}
+                    <h2>
+                        {ANIMALS[animalOrders[index + gameTurn * 4]]}
+                    </h2>
                 </div>
+
                 <DisplayAnimalReal isDisplayed={voteFinished && (largestVoteIndex === index || secondLargestVoteIndex === index)} isHidden={largestVoteIndex === index}
                     isReal={animalReals[gameTurn][index]}></DisplayAnimalReal>
+
                 <div>
                     <input placeholder="請投票"
                         disabled={voteFinished}
