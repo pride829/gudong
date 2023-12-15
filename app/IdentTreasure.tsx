@@ -62,7 +62,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     const [failIdentedAnimals, setFailIdentedAnimals] = useState<number[]>([])
     const [beingGanked, setBeingGanked] = useState(false)
     const [isConfused, setIsConfused] = useState(false)
-const [isEgg, setIsEgg] = useState(Math.random() < 0.2)
+    const [isEgg, setIsEgg] = useState(Math.random() < 0.2)
 
     const getInitialIdentTime = (contextValue) => {
         if (contextValue === '許願') {
@@ -102,7 +102,7 @@ const [isEgg, setIsEgg] = useState(Math.random() < 0.2)
                 tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
                 return tempBeingGankedTime
             })
-            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被偷襲了" ))
+            addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被偷襲了")
 
         } else if (characterList[characters[playerNow]] === "黃煙煙" && civHuangBlockedTurn === gameTurn ||
             characterList[characters[playerNow]] === "木戶加奈" && civMuBlockedTurn === gameTurn
@@ -157,7 +157,7 @@ const [isEgg, setIsEgg] = useState(Math.random() < 0.2)
     }
 
     function BeingGankedResult() {
-        return (beingGanked ? + ((isEgg ? "可憐哪，" : "") + "你被藥不然偷襲了，所以" : "")
+        return (beingGanked ? ((isEgg ? "哈哈！" : "") + "你被藥不然偷襲了，所以") : "")
     }
 
     function getAnimalResult(index) {
