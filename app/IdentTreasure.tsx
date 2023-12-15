@@ -62,6 +62,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     const [failIdentedAnimals, setFailIdentedAnimals] = useState<number[]>([])
     const [beingGanked, setBeingGanked] = useState(false)
     const [isConfused, setIsConfused] = useState(false)
+    const [isEgg, setIsEgg] = useState(Math.random() < 0.2)
 
     const getInitialIdentTime = (contextValue) => {
         if (contextValue === '許願') {
@@ -156,7 +157,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     }
 
     function BeingGankedResult() {
-        return (beingGanked ? "你被藥不然偷襲了，所以" : "")
+        return (beingGanked ? ((isEgg ? "哈哈！" : "") + "你被藥不然偷襲了，所以") : "")
     }
 
     function getAnimalResult(index) {
