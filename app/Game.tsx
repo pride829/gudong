@@ -6,9 +6,16 @@ import GameSetup from './GameSetup';
 import GameInProgress from './GameInProgress';
 import { useGameContext } from './GameContext';
 import { useGameMetaContext } from './GameMetaContext';
+import { useLocalStorage } from 'react-use';
+
+enum GameMetaPhase {
+    setup = 'setup',
+    inProgress = 'inprogress',
+
+}
 
 function Game() {
-    const [phase, setPhase] = useState('setup');
+    const [phase, setPhase] = useLocalStorage('gameMetaPhase', GameMetaPhase.setup);
     const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, playerNow, setPlayerNow = () => { }, playerPlayed, setPlayerPlayed } =
         useGameMetaContext() ?? {
             MIN_PLAYERS: 0,
@@ -34,7 +41,7 @@ function Game() {
 
 
     const handlePlayerSetupSubmit = () => {
-        setPhase('inprogress');
+        setPhase(GameMetaPhase.inProgress);
     };
 
 
@@ -56,12 +63,13 @@ function Game() {
         <div>
             <GameMetaProvider>
                 <GameProvider>
-                    {phase === 'setup' && (
+                    {phase === GameMetaPhase.setup && (
                         <GameSetup onSubmit={handlePlayerSetupSubmit} />
                     )}
-                    {phase === 'inprogress' && (
+                    {phase === GameMetaPhase.inProgress && (
                         <GameInProgress />
                     )}
+                    
                 </GameProvider>
             </GameMetaProvider>
         </div>

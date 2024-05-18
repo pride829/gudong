@@ -36,11 +36,11 @@ function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharact
 
     return (
         <form onSubmit={handleCharacterSubmit}>
-            <div>首家是 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span></div>
+            {(playerNow && <div>首家是 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span></div>)}
             <div><h2>
                 請 <span style={{ ...getPlayerTextStyle(playerIndex), ...getPlayerTextBackground(playerIndex) }}>{playerNames[playerIndex]}</span> 玩家選擇角色
             </h2></div>
-            {characterList.map((c, characterIndex) => (
+            {characterList && characterList.map((c, characterIndex) => (
                 <ul key={characterIndex} hidden={characterIndex >= playerNumbers}>
                     <label>
                         <input
@@ -95,9 +95,14 @@ function GameStart({ onGameStartFinish }) {
     }
 
     const handleCharacterSubmit = (playerIndex, characterIndex) => {
-        // Update the characters array with the selected character
-        setCharacters((prevCharacters) => [...prevCharacters, characterIndex]);
-        setPlayerIndex((playerIndex + 1) % numberOfPlayers);
+            // Update the characters array with the selected character
+            setCharacters(() => {
+                    return [...(characters ?? []), characterIndex];
+                });
+            setPlayerIndex((playerIndex + 1) % numberOfPlayers);
+            console.log("playerIndex: " + playerIndex)
+            console.log("lastPlayerIndex: " + lastPlayerIndex)
+            console.log("characters: " + characters)
 
     }
 
@@ -121,7 +126,7 @@ function GameStart({ onGameStartFinish }) {
         }
     })
 
-    return (
+    return ( 
         <div>
             <CharacterSelecting
                 playerIndex={playerIndex}

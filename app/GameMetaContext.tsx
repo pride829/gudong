@@ -1,18 +1,19 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useLocalStorage } from 'react-use';
 
 interface GameMetaContextProps {
     MIN_PLAYERS: number;
     MAX_PLAYERS: number;
-    playerNames: string[];
-    setPlayerNames: React.Dispatch<React.SetStateAction<string[]>>;
-    numberOfPlayers: number;
-    setNumberOfPlayers: React.Dispatch<React.SetStateAction<number>>;
-    playerNow: number;
-    setPlayerNow: React.Dispatch<React.SetStateAction<number>>;
-    gameTurn: number;
-    setGameTurn: React.Dispatch<React.SetStateAction<number>>;
-    playerPlayed: number[],
-    setPlayerPlayed: React.Dispatch<React.SetStateAction<number[]>>,
+    playerNames: string[] | undefined;
+    setPlayerNames: React.Dispatch<React.SetStateAction<string[]| undefined>>;
+    numberOfPlayers: number | undefined;
+    setNumberOfPlayers: React.Dispatch<React.SetStateAction<number | undefined>>;
+    playerNow: number | undefined;
+    setPlayerNow: React.Dispatch<React.SetStateAction<number | undefined>>;
+    gameTurn: number | undefined;
+    setGameTurn: React.Dispatch<React.SetStateAction<number | undefined>>;
+    playerPlayed: number[] | undefined,
+    setPlayerPlayed: React.Dispatch<React.SetStateAction<number[] | undefined>>,
     getPlayerTextStyle: (index: number) => object
     getPlayerTextBackground: (index: number) => object
 }
@@ -22,13 +23,16 @@ export const GameMetaContext = createContext<GameMetaContextProps | undefined>(u
 export const GameMetaProvider = ({ children }) => {
     const MIN_PLAYERS = 6;
     const MAX_PLAYERS = 8;
-    const [playerNames, setPlayerNames] = useState([(Math.random() < 0.05 ? "黑包" : "黑"), "紅", "橘", "黃", "綠", "藍", "紫", (Math.random() < 0.05 ? "白虎" : "白")]);
-    const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
-    const [playerNow, setPlayerNow] = useState(0);
-    const [gameTurn, setGameTurn] = useState(0);
-
-    const [playerPlayed, setPlayerPlayed] = useState<number[]>([])
-
+    //const [playerNames, setPlayerNames] = useState([(Math.random() < 0.05 ? "黑包" : "黑"), "紅", "橘", "黃", "綠", "藍", "紫", (Math.random() < 0.05 ? "白虎" : "白")]);
+    const [playerNames, setPlayerNames, removePlayerNames] = useLocalStorage<string[]>("playerNames", [(Math.random() < 0.05 ? "黑包" : "黑"), "紅", "橘", "黃", "綠", "藍", "紫", (Math.random() < 0.05 ? "白虎" : "白")]);
+    //const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
+    const [numberOfPlayers, setNumberOfPlayers, removeNumberOfPlayers] = useLocalStorage<number>("numberOfPlayers", MAX_PLAYERS);
+    //const [playerNow, setPlayerNow] = useState(0);
+    const [playerNow, setPlayerNow, removePlayerNow] = useLocalStorage<number>("playerNow", 0);
+    //const [gameTurn, setGameTurn] = useState(0);
+    const [gameTurn, setGameTurn, removeGameTurn] = useLocalStorage<number>("gameTurn", 0);
+    //const [playerPlayed, setPlayerPlayed] = useState<number[]>([])
+    const [playerPlayed, setPlayerPlayed, removePlayerPlayed] = useLocalStorage<number[]>("playerPlayed", [])
     const getPlayerTextStyle = (abs_index: number) => {
         if (abs_index == 0) {
             return { color: "white" }

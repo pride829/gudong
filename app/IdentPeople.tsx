@@ -64,8 +64,8 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         // TODO: 增加被偷襲和封鎖等
         if (beingGankedTime[playerNow] > 0) {
             setBeingGanked(true)
-            setBeingGankedTime((prevBeingGankedTime) => {
-                const tempBeingGankedTime = [...prevBeingGankedTime]
+            setBeingGankedTime(() => {
+                const tempBeingGankedTime = [...beingGankedTime]
                 tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
                 return tempBeingGankedTime
             })
@@ -75,8 +75,8 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
             addGameLog(playerNames[playerNow] + "鑒定了" + playerNames[peopleIndex] + "，並發現其為" +
                 IdentPeopleResult(peopleIndex))
             if (characterList[characters[peopleIndex]] === "大眼賊") {
-                setBeingGankedTime((prevBeingGankedTime) => {
-                    const tempBeingGankedTime = [...prevBeingGankedTime]
+                setBeingGankedTime(() => {
+                    const tempBeingGankedTime = [...beingGankedTime]
                     tempBeingGankedTime[peopleIndex] += 1
                     return tempBeingGankedTime
                 })

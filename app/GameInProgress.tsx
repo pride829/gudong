@@ -4,36 +4,45 @@ import GameStart from './GameStart';
 import GameEnd from './GameEnd';
 import TurnVoting from './TurnVoting';
 import VotePeople from './VotePeople';
+import { useLocalStorage } from 'react-use';
+
+enum GameProgressPhase {
+    gameStart = 'gameStart',
+    turnStart = 'turnStart',
+    votePeople = 'votePeople',
+    gameEnd = 'gameEnd'
+
+}
 
 function GameInProgress() {
 
-    const [phase, setPhase] = useState('gameStart');
+    const [phase, setPhase] = useLocalStorage('gameProgressPhase', GameProgressPhase.gameStart);
 
 
     const handleGameStartFinish = () => {
-        setPhase('turnStart')
+        setPhase(GameProgressPhase.turnStart)
     };
 
     const handleGameInTurnFinish = () => {
-        setPhase('votePeople')
+        setPhase(GameProgressPhase.votePeople)
     };
 
     const handleVotePeopleFinish = () => {
-        setPhase('gameEnd')
+        setPhase(GameProgressPhase.gameEnd)
     }
 
     return (
         <div>
-            {phase === 'gameStart' && (
+            {phase === GameProgressPhase.gameStart && (
                 <GameStart onGameStartFinish={handleGameStartFinish} />
             )}
-            {phase === 'turnStart' && (
+            {phase === GameProgressPhase.turnStart && (
                 <GameInTurn onGameInTurnFinish={handleGameInTurnFinish} />
             )}
-            {phase === 'votePeople' && (
+            {phase === GameProgressPhase.votePeople && (
                 <VotePeople onVotePeopleEnd={handleVotePeopleFinish} />
             )}
-            {phase === 'gameEnd' && (
+            {phase === GameProgressPhase.gameEnd && (
                 <GameEnd></GameEnd>
             )}
         </div >

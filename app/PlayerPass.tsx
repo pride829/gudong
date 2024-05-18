@@ -30,10 +30,7 @@ function PlayerPass({ onPlayerPassFinish }) {
         }
 
     const handleChooseNextPlayerButtonClick = (index) => {
-        setPlayerPlayed((prevPlayerPlayed) => {
-            prevPlayerPlayed = [...prevPlayerPlayed, index]
-            return prevPlayerPlayed
-        })
+        setPlayerPlayed(() => [...playerPlayed, index] )
 
         onPlayerPassFinish(index)
     }

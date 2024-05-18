@@ -88,8 +88,8 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
             setBeingGanked(true)
             setFailIdentedChinese([...failIdentedChinese, chineseIndex])
             setIdentedChineseOrder([...identedChineseOrder, chineseIndex])
-            setBeingGankedTime((prevBeingGankedTime) => {
-                const tempBeingGankedTime = [...prevBeingGankedTime]
+            setBeingGankedTime(() => {
+                const tempBeingGankedTime = [...beingGankedTime]
                 tempBeingGankedTime[playerNow] -= 1
                 return tempBeingGankedTime
             })
@@ -178,13 +178,13 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
         //console.log(failIdentedAnimals)
         //console.log(identedAnimals)
         if (beingPoisonedTime[playerNow] > 0) {
-            setBeingConfusedPlayerIndex((prevBeingConfusedPlayerIndex) => {
-                const tempBeingConfusedPlayerIndex = [...prevBeingConfusedPlayerIndex]
+            setBeingConfusedPlayerIndex(() => {
+                const tempBeingConfusedPlayerIndex = [...beingConfusedPlayerIndex]
                 tempBeingConfusedPlayerIndex[gameTurn] = playerNow
                 return tempBeingConfusedPlayerIndex
             })
-            setBeingPoisonedTime((prevBeingPoisonedTime) => {
-                const tempBeingPoisonedTime = [...prevBeingPoisonedTime]
+            setBeingPoisonedTime(() => {
+                const tempBeingPoisonedTime = [...beingPoisonedTime]
                 tempBeingPoisonedTime[playerNow] -= 1
                 return tempBeingPoisonedTime
             })

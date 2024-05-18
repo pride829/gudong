@@ -141,7 +141,8 @@ function TurnVoting({ onTurnVotingEnd }) {
             }
             setLargestVoteIndex(largestIndex)
             setSecondLargestVoteIndex(secondLargestIndex)
-            setVotedAnimals((prevVotedAnimals) => {
+            setVotedAnimals(() => {
+                let prevVotedAnimals = [...votedAnimals]
                 prevVotedAnimals[animalOrders[largestIndex + gameTurn * 4]] = true
                 prevVotedAnimals[animalOrders[secondLargestIndex + gameTurn * 4]] = true
                 return prevVotedAnimals

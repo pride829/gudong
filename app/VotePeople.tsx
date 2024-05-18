@@ -113,8 +113,8 @@ function VotePeople({ onVotePeopleEnd }) {
             //console.log("Added!")
             addGameLog(playerNames[playerIndex] + "將心目中的老朝奉人選投給了" + playerNames[peopleChose])
             setBossVoted(
-                (prevBossVoted) => {
-                    const tempBossVoted = [...prevBossVoted]
+                () => {
+                    const tempBossVoted = [...bossVoted]
                     tempBossVoted[peopleChose] += 1
                     return tempBossVoted
                 })

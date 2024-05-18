@@ -97,8 +97,8 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             setBeingGanked(true)
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
-            setBeingGankedTime((prevBeingGankedTime) => {
-                const tempBeingGankedTime = [...prevBeingGankedTime]
+            setBeingGankedTime(() => {
+                const tempBeingGankedTime = [...beingGankedTime]
                 tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
                 return tempBeingGankedTime
             })
@@ -212,13 +212,13 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         //console.log(failIdentedAnimals)
         //console.log(identedAnimals)
         if (beingPoisonedTime[playerNow] > 0) {
-            setBeingConfusedPlayerIndex((prevBeingConfusedPlayerIndex) => {
-                const tempBeingConfusedPlayerIndex = [...prevBeingConfusedPlayerIndex]
+            setBeingConfusedPlayerIndex(() => {
+                const tempBeingConfusedPlayerIndex = [...beingConfusedPlayerIndex]
                 tempBeingConfusedPlayerIndex[gameTurn] = playerNow
                 return tempBeingConfusedPlayerIndex
             })
-            setBeingPoisonedTime((prevBeingPoisonedTime) => {
-                const tempBeingPoisonedTime = [...prevBeingPoisonedTime]
+            setBeingPoisonedTime(() => {
+                const tempBeingPoisonedTime = [...beingPoisonedTime]
                 tempBeingPoisonedTime[playerNow] -= 1
                 return tempBeingPoisonedTime
             })

@@ -296,7 +296,8 @@ function PlayerPower({ onPlayerPowerFinish }) {
 
     const handleAnimalBlocked = (index) => {
 
-        setAnimalBlocked((prevAnimalBlocked) => {
+        setAnimalBlocked(() => {
+            let prevAnimalBlocked = [...animalBlocked]
             prevAnimalBlocked[animalOrders[index + gameTurn * 4]] = true
             return prevAnimalBlocked
         })
@@ -395,7 +396,8 @@ function PlayerPower({ onPlayerPowerFinish }) {
             handlePowerDone();
         }
         if (getCharacterName(playerNow) === "老朝奉") {
-            setAnimalRealAltered((prevAnimalReals) => {
+            setAnimalRealAltered(() => {
+                let prevAnimalReals = [...AnimalReals]
                 prevAnimalReals[gameTurn] = alterSwitch
                 return prevAnimalReals
             })

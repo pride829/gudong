@@ -24,7 +24,7 @@ function GameInTurn({ onGameInTurnFinish }) {
     const handleTurnVotingFinish = () => {
         if (gameTurn != 2) {
             setPhase("turnStart")
-            const prevGameTurn = gameTurn
+            const prevGameTurn = gameTurn ?? 0
             setGameTurn(prevGameTurn + 1)
         } else {
             onGameInTurnFinish()
