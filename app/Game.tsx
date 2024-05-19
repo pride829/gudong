@@ -6,7 +6,7 @@ import GameSetup from './GameSetup';
 import GameInProgress from './GameInProgress';
 import { useGameContext } from './GameContext';
 import { useGameMetaContext } from './GameMetaContext';
-import { useLocalStorage } from 'react-use';
+import { useSsrLocalStorage } from './util/useSsrLocalStorage';
 
 enum GameMetaPhase {
     setup = 'setup',
@@ -15,7 +15,7 @@ enum GameMetaPhase {
 }
 
 function Game() {
-    const [phase, setPhase] = useLocalStorage('gameMetaPhase', GameMetaPhase.setup);
+    const [phase, setPhase] = useSsrLocalStorage('gameMetaPhase', GameMetaPhase.setup);
     const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, playerNow, setPlayerNow = () => { }, playerPlayed, setPlayerPlayed } =
         useGameMetaContext() ?? {
             MIN_PLAYERS: 0,

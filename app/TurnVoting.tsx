@@ -141,12 +141,10 @@ function TurnVoting({ onTurnVotingEnd }) {
             }
             setLargestVoteIndex(largestIndex)
             setSecondLargestVoteIndex(secondLargestIndex)
-            setVotedAnimals(() => {
-                let prevVotedAnimals = [...votedAnimals]
-                prevVotedAnimals[animalOrders[largestIndex + gameTurn * 4]] = true
-                prevVotedAnimals[animalOrders[secondLargestIndex + gameTurn * 4]] = true
-                return prevVotedAnimals
-            })
+            let prevVotedAnimals = [...votedAnimals]
+            prevVotedAnimals[animalOrders[largestIndex + gameTurn * 4]] = true
+            prevVotedAnimals[animalOrders[secondLargestIndex + gameTurn * 4]] = true
+            setVotedAnimals(prevVotedAnimals)
 
             addGameLog("第" + (gameTurn + 1) + "回合投票")
             for (let i = 0; i < 4; i++) {

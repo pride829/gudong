@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
-import { resourceUsage } from 'process';
-import { fail } from 'assert';
 
 function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
     const { playerNow, playerNames, gameTurn } =
@@ -97,11 +95,9 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             setBeingGanked(true)
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
-            setBeingGankedTime(() => {
-                const tempBeingGankedTime = [...beingGankedTime]
-                tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
-                return tempBeingGankedTime
-            })
+            const tempBeingGankedTime = [...beingGankedTime]
+            tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
+            setBeingGankedTime(tempBeingGankedTime)
             addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被偷襲了")
 
         } else if (characterList[characters[playerNow]] === "黃煙煙" && civHuangBlockedTurn === gameTurn ||
@@ -212,16 +208,13 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         //console.log(failIdentedAnimals)
         //console.log(identedAnimals)
         if (beingPoisonedTime[playerNow] > 0) {
-            setBeingConfusedPlayerIndex(() => {
-                const tempBeingConfusedPlayerIndex = [...beingConfusedPlayerIndex]
-                tempBeingConfusedPlayerIndex[gameTurn] = playerNow
-                return tempBeingConfusedPlayerIndex
-            })
-            setBeingPoisonedTime(() => {
-                const tempBeingPoisonedTime = [...beingPoisonedTime]
-                tempBeingPoisonedTime[playerNow] -= 1
-                return tempBeingPoisonedTime
-            })
+
+            const tempBeingConfusedPlayerIndex = [...beingConfusedPlayerIndex]
+            tempBeingConfusedPlayerIndex[gameTurn] = playerNow
+            setBeingConfusedPlayerIndex(tempBeingConfusedPlayerIndex)
+            const tempBeingPoisonedTime = [...beingPoisonedTime]
+            tempBeingPoisonedTime[playerNow] -= 1
+            setBeingPoisonedTime(tempBeingPoisonedTime)
             addGameLog(playerNames[playerNow] + "中了混亂之毒！")
         }
 

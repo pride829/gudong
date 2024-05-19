@@ -4,7 +4,7 @@ import GameStart from './GameStart';
 import GameEnd from './GameEnd';
 import TurnVoting from './TurnVoting';
 import VotePeople from './VotePeople';
-import { useLocalStorage } from 'react-use';
+import { useSsrLocalStorage } from './util/useSsrLocalStorage';
 
 enum GameProgressPhase {
     gameStart = 'gameStart',
@@ -16,7 +16,7 @@ enum GameProgressPhase {
 
 function GameInProgress() {
 
-    const [phase, setPhase] = useLocalStorage('gameProgressPhase', GameProgressPhase.gameStart);
+    const [phase, setPhase] = useSsrLocalStorage('gameProgressPhase', GameProgressPhase.gameStart);
 
 
     const handleGameStartFinish = () => {

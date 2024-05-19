@@ -18,7 +18,7 @@ function GameSetup({ onSubmit }) {
             getPlayerTextStyle: () => { }
         };
 
-    const { setCharacterList } = useGameContext() ?? {
+    const { setCharacterList, characterList } = useGameContext() ?? {
         setCharacterList: () => { },
     }
     const { gameLog } = useGameContext() ?? { gameLog: "" }
@@ -52,18 +52,15 @@ function GameSetup({ onSubmit }) {
                 setCharacterList(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '藥來'])
             }
             if (isDirectorOn) {
-                setCharacterList((prevCharacterList) => {
-                    const tempCharacterList = [...prevCharacterList]
-                    tempCharacterList[2] = "劉局"
-                    return tempCharacterList
-                })
+                const tempCharacterList = [...characterList]
+                tempCharacterList[2] = "劉局"
+                setCharacterList(tempCharacterList)
             }
             if (isDevilSecondBrotherOn) {
-                setCharacterList((prevCharacterList) => {
-                    const tempCharacterList = [...prevCharacterList]
-                    tempCharacterList[5] = "魔藥不然"
-                    return tempCharacterList
-                })
+                const tempCharacterList = [...characterList]
+                tempCharacterList[5] = "魔藥不然"
+
+                setCharacterList(tempCharacterList)
             }
 
             if (selectedFirstPlayer === -1) {
