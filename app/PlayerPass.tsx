@@ -29,11 +29,8 @@ function PlayerPass({ onPlayerPassFinish }) {
             setAnimalRealAltered: () => { },
         }
 
-    const handleChooseNextPlayerButtonClick = (index) => {
-        setPlayerPlayed((prevPlayerPlayed) => {
-            prevPlayerPlayed = [...prevPlayerPlayed, index]
-            return prevPlayerPlayed
-        })
+    const handleChooseNextPlayerButtonClick = (index: number) => {
+        setPlayerPlayed( [...playerPlayed, index] )
 
         onPlayerPassFinish(index)
     }

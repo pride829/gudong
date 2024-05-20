@@ -5,15 +5,23 @@ import Game from "./Game"
 import TestGame from './TestGame';
 import PlayerIdent from './PlayerIdent';
 
+const handleResetGame = () => {
+    window.localStorage.clear();
+    window.location.reload();
+}
+
 function App() {
     return (
-        <div>
+        <div style={{ display: 'flex', height: '100vh', justifyContent:'space-between', flexDirection: 'column'}}>
             <link rel="icon" href="/favicon.ico" sizes="any" />
-            <div>
+            <main style={{flexGrow: 1}}>
                 <Game />
-            </div>
-
+            </main>
+            <footer style={{ padding: '20px'}}>
+                <button style={{backgroundColor: 'pink', color:'white'}}onClick={handleResetGame}>重置遊戲</button>
+            </footer>
         </div>
+        
     )
 }
 

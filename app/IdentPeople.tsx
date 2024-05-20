@@ -63,23 +63,20 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
 
         // TODO: 增加被偷襲和封鎖等
         if (beingGankedTime[playerNow] > 0) {
+            const tempBeingGankedTime = [...beingGankedTime]
+            tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
+
             setBeingGanked(true)
-            setBeingGankedTime((prevBeingGankedTime) => {
-                const tempBeingGankedTime = [...prevBeingGankedTime]
-                tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
-                return tempBeingGankedTime
-            })
+            setBeingGankedTime(tempBeingGankedTime)
             addGameLog(playerNames[playerNow] + "試著鑒定" + playerNames[peopleIndex] + "，但是被偷襲了")
         } else if (identTimeUse < 1) {
             //console.log(beingGankedTime)
             addGameLog(playerNames[playerNow] + "鑒定了" + playerNames[peopleIndex] + "，並發現其為" +
                 IdentPeopleResult(peopleIndex))
             if (characterList[characters[peopleIndex]] === "大眼賊") {
-                setBeingGankedTime((prevBeingGankedTime) => {
-                    const tempBeingGankedTime = [...prevBeingGankedTime]
-                    tempBeingGankedTime[peopleIndex] += 1
-                    return tempBeingGankedTime
-                })
+                const tempBeingGankedTime = [...beingGankedTime]
+                tempBeingGankedTime[peopleIndex] += 1
+                setBeingGankedTime(tempBeingGankedTime)
                 addGameLog(playerNames[playerNow] + "的鑒定間接導致了" + playerNames[peopleIndex] + "被偷襲！")
             }
             setIdentedPeople([...identedPeople, peopleIndex])
