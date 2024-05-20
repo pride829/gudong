@@ -1,5 +1,5 @@
-import { init } from 'next/dist/compiled/webpack/webpack';
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useSsrLocalStorage } from './util/useSsrLocalStorage';
 
 function generateNumbersUpToN(n: number) {
     const numbers: number[] = [];
@@ -56,91 +56,89 @@ interface GameContextProps {
     ANIMALS: string[];
     CHINESE: string[];
     animalOrders: number[],
-    setAnimalOrders: React.Dispatch<React.SetStateAction<number[]>>,
+    setAnimalOrders: React.Dispatch<number[] > ,
     animalReals: boolean[][],
     characters: number[],
-    setCharacters: React.Dispatch<React.SetStateAction<number[]>>,
+    setCharacters: React.Dispatch<number[] >,
     characterList: string[],
-    setCharacterList: React.Dispatch<React.SetStateAction<string[]>>,
+    setCharacterList: React.Dispatch<string[] >,
     beingGankedTime: number[],
-    setBeingGankedTime: React.Dispatch<React.SetStateAction<number[]>>,
+    setBeingGankedTime: React.Dispatch<number[] >,
     dummy: number,
-    setDummy: React.Dispatch<React.SetStateAction<number>>,
+    setDummy: React.Dispatch<number >,
     civHuangBlockedTurn: number,
     civMuBlockedTurn: number,
     animalBlocked: boolean[],
-    setAnimalBlocked: React.Dispatch<React.SetStateAction<boolean[]>>,
+    setAnimalBlocked: React.Dispatch<boolean[] >,
     animalRealAltered: boolean[],
-    setAnimalRealAltered: React.Dispatch<React.SetStateAction<boolean[]>>,
+    setAnimalRealAltered: React.Dispatch<boolean[] >,
     identedPeople: number[],
-    setIdentedPeople: React.Dispatch<React.SetStateAction<number[]>>,
+    setIdentedPeople: React.Dispatch<number[] >,
     votedAnimals: boolean[],
-    setVotedAnimals: React.Dispatch<React.SetStateAction<boolean[]>>,
+    setVotedAnimals: React.Dispatch<boolean[] >,
     bossVoted: number[],
-    setBossVoted: React.Dispatch<React.SetStateAction<number[]>>,
+    setBossVoted: React.Dispatch<number[] >,
     xuVoted: number,
-    setXuVoted: React.Dispatch<React.SetStateAction<number>>,
+    setXuVoted: React.Dispatch<number >,
     funVoted: number,
-    setFunVoted: React.Dispatch<React.SetStateAction<number>>,
+    setFunVoted: React.Dispatch<number >,
     gameLog: string[],
     addGameLog: (s: string) => void,
-    setGameLog: React.Dispatch<React.SetStateAction<string[]>>,
+    setGameLog: React.Dispatch<string[] >,
     isLaiEffected: boolean,
-    isXuDisplayFirstDirectorFactionInfo: boolean
+    isXuDisplayFirstDirectorFactionInfo: boolean,
     beingPoisonedTime: number[],
-    setBeingPoisonedTime: React.Dispatch<React.SetStateAction<number[]>>,
+    setBeingPoisonedTime: React.Dispatch<number[] >,
     poisonUsedTime: number,
-    setPoisonUsedTime: React.Dispatch<React.SetStateAction<number>>,
+    setPoisonUsedTime: React.Dispatch<number >,
     beingConfusedPlayerIndex: number[],
-    setBeingConfusedPlayerIndex: React.Dispatch<React.SetStateAction<number[]>>,
+    setBeingConfusedPlayerIndex: React.Dispatch<number[] >,
 }
 
-export const GameContext = createContext<GameContextProps | undefined>(undefined);
+export const GameContext = createContext<GameContextProps>({} as GameContextProps);
 
 export const GameProvider = ({ children }) => {
     const ANIMALS = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
     const CHINESE = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-    const [animalOrders, setAnimalOrders] = useState<number[]>([]);
+    const [animalOrders, setAnimalOrders] = useSsrLocalStorage<number[]>('animalOrders', [])
     const initialBooleanArray = [
         [true, true, false, false],
         [false, true, true, false],
         [false, false, true, true],
     ];
-    const [animalReals, setAnimalReals] = useState(initialBooleanArray);
-    const [animalRealAltered, setAnimalRealAltered] = useState([false, false, false])
-    //const [characters, setCharacters] = useState<number[]>([1, 2, 7, 3, 4, 5, 6, 0]); // characterList[character[0]] === '黃煙煙' 代表玩家0的角色是黃煙煙
-    const [characters, setCharacters] = useState<number[]>([])
-    const [beingGankedTime, setBeingGankedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]); // 被偷襲的次數
-    const [beingPoisonedTime, setBeingPoisonedTime] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]);
-    const [beingConfusedPlayerIndex, setBeingConfusedPlayerIndex] = useState([-1, -1, -1])
-    const [poisonUsedTime, setPoisonUsedTime] = useState(0)
-    const [dummy, setDummy] = useState<number>(0)
-    const [identedPeople, setIdentedPeople] = useState<number[]>([])
-
+    const [animalReals, setAnimalReals] = useSsrLocalStorage<boolean[][]>('animalReals', initialBooleanArray)
+    const [animalRealAltered, setAnimalRealAltered] = useSsrLocalStorage<boolean[]>('animalRealAltered', [false, false, false])
+    const [characters, setCharacters] = useSsrLocalStorage<number[]>('characters', [])
+    const [beingGankedTime, setBeingGankedTime] = useSsrLocalStorage<number[]>('beingGankedTime', [0, 0, 0, 0, 0, 0, 0, 0])   // 被偷襲的次數
+    const [beingPoisonedTime, setBeingPoisonedTime] = useSsrLocalStorage<number[]>('beingPoisonedTime', [0, 0, 0, 0, 0, 0, 0, 0])
+    const [beingConfusedPlayerIndex, setBeingConfusedPlayerIndex] = useSsrLocalStorage<number[]>('beingConfusedPlayerIndex', [-1, -1, -1])
+    const [poisonUsedTime, setPoisonUsedTime] = useSsrLocalStorage<number>('poisonUsedTime', 0)
+    const [dummy, setDummy] = useSsrLocalStorage<number>('dummy', 0)
+    const [identedPeople, setIdentedPeople] = useSsrLocalStorage<number[]>('identedPeople', [])
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
-    const [civHuangBlockedTurn, setCivHuangBlockedTurn] = useState(getRandomInt(0, 3))
-    const [civMuBlockedTurn, setCivMuBlockedTurn] = useState(getRandomInt(0, 3))
-    const [animalBlocked, setAnimalBlocked] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
-    const [votedAnimals, setVotedAnimals] = useState([false, false, false, false, false, false, false, false, false, false, false, false])
-    const [bossVoted, setBossVoted] = useState([0, 0, 0, 0, 0, 0, 0, 0])
-    const [xuVoted, setXuVoted] = useState(-1)
-    const [funVoted, setFunVoted] = useState(-1)
-    const [gameLog, setGameLog] = useState<string[]>([])
-
-    const [isXuDisplayFirstDirectorFactionInfo, setIsXuDisplayFirstDirectorFactionInfo] = useState(Math.random() < 0.5)
-
-    const [isLaiEffected, setIsLaiEffected] = useState(Math.random() < 0.5)
+    const [civHuangBlockedTurn, setCivHuangBlockedTurn] = useSsrLocalStorage<number>('civHuangBlockedTurn', getRandomInt(0, 3))
+    const [civMuBlockedTurn, setCivMuBlockedTurn] = useSsrLocalStorage<number>('civMuBlockedTurn', getRandomInt(0, 3))
+    const [animalBlocked, setAnimalBlocked] = useSsrLocalStorage<boolean[]>('animalBlocked', [false, false, false, false, false, false, false, false, false, false, false, false])
+    const [votedAnimals, setVotedAnimals] = useSsrLocalStorage<boolean[]>('votedAnimals', [false, false, false, false, false, false, false, false, false, false, false, false])
+    const [bossVoted, setBossVoted] = useSsrLocalStorage<number[]>('bossVoted', [0, 0, 0, 0, 0, 0, 0, 0])
+    
+    const [xuVoted, setXuVoted] = useSsrLocalStorage<number>('xuVoted', -1) 
+    
+    const [funVoted, setFunVoted] = useSsrLocalStorage<number>('funVoted', -1)
+    
+    const [gameLog, setGameLog] = useSsrLocalStorage<string[]>('gameLog', [])
+    
+    const [isXuDisplayFirstDirectorFactionInfo, setIsXuDisplayFirstDirectorFactionInfo] = useSsrLocalStorage<boolean>('isXuDisplayFirstDirectorFactionInfo', Math.random() < 0.5)
+    
+    const [isLaiEffected, setIsLaiEffected] = useSsrLocalStorage<boolean>('isLaiEffected', Math.random() < 0.5)
     function addGameLog(s: string) {
-        //console.log(s)
-        //console.log(gameLog)
-        setGameLog((prevLog) => { return ([...prevLog, s]) })
+        setGameLog([...gameLog, s])
     }
 
     // static character list
-    //const [characterList, setCharacterList] = useState(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '大眼賊'])
-    const [characterList, setCharacterList] = useState(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '姬雲浮'])
+    const [characterList, setCharacterList] = useSsrLocalStorage<string[]>('characterList', ['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '姬雲浮'])
     const contextValue: GameContextProps = {
         ANIMALS,
         animalOrders,

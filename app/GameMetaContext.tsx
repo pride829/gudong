@@ -1,34 +1,33 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useSsrLocalStorage } from './util/useSsrLocalStorage';
 
 interface GameMetaContextProps {
     MIN_PLAYERS: number;
     MAX_PLAYERS: number;
     playerNames: string[];
-    setPlayerNames: React.Dispatch<React.SetStateAction<string[]>>;
+    setPlayerNames: React.Dispatch<string[]>;
     numberOfPlayers: number;
-    setNumberOfPlayers: React.Dispatch<React.SetStateAction<number>>;
+    setNumberOfPlayers: React.Dispatch<number>;
     playerNow: number;
-    setPlayerNow: React.Dispatch<React.SetStateAction<number>>;
-    gameTurn: number;
-    setGameTurn: React.Dispatch<React.SetStateAction<number>>;
+    setPlayerNow: React.Dispatch<number>;
+    gameTurn: number;  
+    setGameTurn: React.Dispatch<number>;
     playerPlayed: number[],
-    setPlayerPlayed: React.Dispatch<React.SetStateAction<number[]>>,
+    setPlayerPlayed: React.Dispatch<number[]>,
     getPlayerTextStyle: (index: number) => object
     getPlayerTextBackground: (index: number) => object
 }
 
-export const GameMetaContext = createContext<GameMetaContextProps | undefined>(undefined);
+export const GameMetaContext = createContext<GameMetaContextProps | undefined>(undefined); 
 
 export const GameMetaProvider = ({ children }) => {
     const MIN_PLAYERS = 6;
     const MAX_PLAYERS = 8;
-    const [playerNames, setPlayerNames] = useState([(Math.random() < 0.05 ? "黑包" : "黑"), "紅", "橘", "黃", "綠", "藍", "紫", (Math.random() < 0.05 ? "白虎" : "白")]);
-    const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
-    const [playerNow, setPlayerNow] = useState(0);
-    const [gameTurn, setGameTurn] = useState(0);
-
-    const [playerPlayed, setPlayerPlayed] = useState<number[]>([])
-
+    const [playerNames, setPlayerNames] = useSsrLocalStorage<string[]>("playerNames", [(Math.random() < 0.05 ? "黑包" : "黑"), "紅", "橘", "黃", "綠", "藍", "紫", (Math.random() < 0.05 ? "白虎" : "白")]);
+    const [numberOfPlayers, setNumberOfPlayers] = useSsrLocalStorage<number>("numberOfPlayers", MAX_PLAYERS);
+    const [playerNow, setPlayerNow] = useSsrLocalStorage<number>("playerNow", 0);
+    const [gameTurn, setGameTurn] = useSsrLocalStorage<number>("gameTurn", 0);
+    const [playerPlayed, setPlayerPlayed] = useSsrLocalStorage<number[]>("playerPlayed", [])
     const getPlayerTextStyle = (abs_index: number) => {
         if (abs_index == 0) {
             return { color: "white" }

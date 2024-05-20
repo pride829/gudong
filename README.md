@@ -5,6 +5,13 @@ I know that the code is a mess so any pull request is welcome.
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
+Node 18+
+Yarn 4.2.2
+
+First run 
+```
+yarn install
+```
 
 First, run the development server:
 

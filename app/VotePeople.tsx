@@ -112,12 +112,10 @@ function VotePeople({ onVotePeopleEnd }) {
         } else {
             //console.log("Added!")
             addGameLog(playerNames[playerIndex] + "將心目中的老朝奉人選投給了" + playerNames[peopleChose])
-            setBossVoted(
-                (prevBossVoted) => {
-                    const tempBossVoted = [...prevBossVoted]
-                    tempBossVoted[peopleChose] += 1
-                    return tempBossVoted
-                })
+            const tempBossVoted = [...bossVoted]
+            tempBossVoted[peopleChose] += 1
+
+            setBossVoted(tempBossVoted)
         }
 
         setPlayerIndex(playerIndex + 1)
