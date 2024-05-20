@@ -23,15 +23,10 @@ export const GameMetaContext = createContext<GameMetaContextProps | undefined>(u
 export const GameMetaProvider = ({ children }) => {
     const MIN_PLAYERS = 6;
     const MAX_PLAYERS = 8;
-    //const [playerNames, setPlayerNames] = useState([(Math.random() < 0.05 ? "黑包" : "黑"), "紅", "橘", "黃", "綠", "藍", "紫", (Math.random() < 0.05 ? "白虎" : "白")]);
     const [playerNames, setPlayerNames] = useSsrLocalStorage<string[]>("playerNames", [(Math.random() < 0.05 ? "黑包" : "黑"), "紅", "橘", "黃", "綠", "藍", "紫", (Math.random() < 0.05 ? "白虎" : "白")]);
-    //const [numberOfPlayers, setNumberOfPlayers] = useState(MAX_PLAYERS);
     const [numberOfPlayers, setNumberOfPlayers] = useSsrLocalStorage<number>("numberOfPlayers", MAX_PLAYERS);
-    //const [playerNow, setPlayerNow] = useState(0);
     const [playerNow, setPlayerNow] = useSsrLocalStorage<number>("playerNow", 0);
-    //const [gameTurn, setGameTurn] = useState(0);
     const [gameTurn, setGameTurn] = useSsrLocalStorage<number>("gameTurn", 0);
-    //const [playerPlayed, setPlayerPlayed] = useState<number[]>([])
     const [playerPlayed, setPlayerPlayed] = useSsrLocalStorage<number[]>("playerPlayed", [])
     const getPlayerTextStyle = (abs_index: number) => {
         if (abs_index == 0) {

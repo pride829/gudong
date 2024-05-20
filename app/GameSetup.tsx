@@ -108,12 +108,13 @@ function GameSetup({ onSubmit }) {
 
 
     })
+    
 
-    const GithubLink = () => {
+
+
+    const GithubLink =({url}: {url: string}) => {
         return (
-            <div>
-                <a href="https://github.com/pride829/gudong">Github</a>
-            </div>
+                <a href={url}>Github</a>
         );
     };
 
@@ -232,10 +233,12 @@ function GameSetup({ onSubmit }) {
                 </li>
             </div>
             <div>
-                <div><i>該程式為粉絲製作的古董局中局桌遊輔助程式，不代表官方立場！</i></div>
-                <div><i>重新整理會導致該場遊戲資料消失，請小心！</i></div>
-                <div><i>程式仍然處於早期測試階段，可能會出現導致遊戲錯誤的Bug！</i></div>
-                <div><GithubLink /></div>
+                <div><p>該程式為粉絲製作的古董局中局桌遊輔助程式，不代表官方立場！</p></div>
+                <div><i>如果要重開遊戲請點擊下方重置遊戲按鈕，單純重新整理沒有用</i></div>
+                <div><i>程式仍然處於早期測試階段，如果發現，請聯絡作者 magiclazerlotus@gmail.com</i></div>
+                <div><i>可重新整理版本：作者 LazerLotus </i><GithubLink url="https://github.com/LazerLotus/gudong"/></div>
+                <div><i>Fork 自 pride829 </i><GithubLink url="https://github.com/pride829/gudong"/></div>
+
             </div>
         </div >
     );
