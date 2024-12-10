@@ -6,21 +6,9 @@ import { useGameContext } from './GameContext';
 function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharacterSubmit }) {
     const [characterChose, setCharacterChose] = useState(0);
 
-    const { playerNow, getPlayerTextBackground, getPlayerTextStyle } =
-        useGameMetaContext() ?? { getPlayerTextBackground: () => Object, getPlayerTextStyle: () => Object, playerNow: 0 };
+    const { playerNow, getPlayerTextBackground, getPlayerTextStyle } = useGameMetaContext() 
 
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, gameLog, addGameLog, setGameLog } =
-        useGameContext() ?? {
-            ANIMALS: [],
-            animalOrders: [],
-            setAnimalOrders: undefined,
-            characters: [],
-            setCharacters: undefined,
-            characterList: [],
-            gameLog: "",
-            addGameLog: () => { },
-            setGameLog: () => { }
-        };
+    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, gameLog, addGameLog, setGameLog } = useGameContext()
 
 
     const handleCharacterChoosing = (characterIndex) => {
@@ -36,11 +24,11 @@ function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharact
 
     return (
         <form onSubmit={handleCharacterSubmit}>
-            <div>首家是 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span></div>
+            {(playerNow && <div>首家是 <span style={{ ...getPlayerTextStyle(playerNow), ...getPlayerTextBackground(playerNow) }}>{playerNames[playerNow]}</span></div>)}
             <div><h2>
                 請 <span style={{ ...getPlayerTextStyle(playerIndex), ...getPlayerTextBackground(playerIndex) }}>{playerNames[playerIndex]}</span> 玩家選擇角色
             </h2></div>
-            {characterList.map((c, characterIndex) => (
+            {characterList && characterList.map((c, characterIndex) => (
                 <ul key={characterIndex} hidden={characterIndex >= playerNumbers}>
                     <label>
                         <input
@@ -62,23 +50,8 @@ function CharacterSelecting({ playerIndex, playerNames, playerNumbers, onCharact
 }
 
 function GameStart({ onGameStartFinish }) {
-    const { numberOfPlayers, playerNames, playerNow, setPlayerNow = () => { } } =
-        useGameMetaContext() ?? {
-            numberOfPlayers: 0,
-            playerNames: [],
-            playerNow: 0,
-            setPlayerNow: undefined,
-        };
-    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, setGameLog = () => { } } =
-        useGameContext() ?? {
-            ANIMALS: [],
-            animalOrders: [],
-            setAnimalOrders: undefined,
-            characters: [],
-            setCharacters: undefined,
-            characterList: [],
-            setGameLog: () => { }
-        };
+    const { numberOfPlayers, playerNames, playerNow, setPlayerNow = () => { } } = useGameMetaContext()
+    const { ANIMALS, animalOrders, setAnimalOrders = () => { }, characters, setCharacters = () => { }, characterList, setGameLog = () => { }} = useGameContext() 
 
     const [playerIndex, setPlayerIndex] = useState(playerNow);
 
@@ -95,9 +68,9 @@ function GameStart({ onGameStartFinish }) {
     }
 
     const handleCharacterSubmit = (playerIndex, characterIndex) => {
-        // Update the characters array with the selected character
-        setCharacters((prevCharacters) => [...prevCharacters, characterIndex]);
-        setPlayerIndex((playerIndex + 1) % numberOfPlayers);
+            // Update the characters array with the selected character
+            setCharacters([...(characters ?? []), characterIndex]);
+            setPlayerIndex((playerIndex + 1) % numberOfPlayers);
 
     }
 
@@ -121,7 +94,7 @@ function GameStart({ onGameStartFinish }) {
         }
     })
 
-    return (
+    return ( 
         <div>
             <CharacterSelecting
                 playerIndex={playerIndex}

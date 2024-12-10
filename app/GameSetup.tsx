@@ -2,26 +2,11 @@ import React, { useEffect, useState } from 'react';
 import PlayerList from './PlayerList';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
+import { generateNumbersUpToN, shuffleArray, shuffleArray2DnTimes, sortGroups } from './util/shuffleArray'
 
 function GameSetup({ onSubmit }) {
-    const { getPlayerTextStyle, MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers = () => { }, playerNames, playerNow, setPlayerNow = () => { }, playerPlayed, setPlayerPlayed } =
-        useGameMetaContext() ?? {
-            MIN_PLAYERS: 0,
-            MAX_PLAYERS: 0,
-            numberOfPlayers: 0,
-            setNumberOfPlayers: undefined,
-            playerNames: [],
-            playerNow: 0,
-            setPlayerNow: undefined,
-            playerPlayed: [],
-            setPlayerPlayed: () => { },
-            getPlayerTextStyle: () => { }
-        };
-
-    const { setCharacterList } = useGameContext() ?? {
-        setCharacterList: () => { },
-    }
-    const { gameLog } = useGameContext() ?? { gameLog: "" }
+    const { MIN_PLAYERS, MAX_PLAYERS, numberOfPlayers, setNumberOfPlayers , playerNames, playerNow, setPlayerNow, playerPlayed, setPlayerPlayed } = useGameMetaContext()
+    const { setAnimalOrders,setAnimalReals, setCharacterList, characterList } = useGameContext()
 
     const [selectedFirstPlayer, setSelectedFirstPlayer] = useState(-1);
 
@@ -37,12 +22,26 @@ function GameSetup({ onSubmit }) {
     const onBigEyeIsIn = () => {
         setCharacterList(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '大眼賊'])
     }
+    
+    const initialBooleanArray = [
+        [true, true, false, false],
+        [false, true, true, false],
+        [false, false, true, true],
+    ]
+
+    const shuffleAnimalOrders = () => {
+        const tempAnimalOrders = shuffleArray(shuffleArray(shuffleArray(generateNumbersUpToN(12 - 1))))
+        setAnimalOrders(sortGroups(tempAnimalOrders, 4))
+        const tempAnimalReals = shuffleArray2DnTimes(initialBooleanArray, 100)
+        setAnimalReals(tempAnimalReals)
+    }
 
     const handleFormSubmit = event => {
         event.preventDefault();
         // Check if the first numberOfPlayers elements are filled.
         const isFormValid = Object.values(playerNames).slice(0, numberOfPlayers).every((value) => value !== '');
-
+        //shuffle only in the beginning
+        shuffleAnimalOrders()
         if (!isFormValid) {
             alert("請填入所有玩家名稱");
         } else {
@@ -52,18 +51,15 @@ function GameSetup({ onSubmit }) {
                 setCharacterList(['許願', '方震', '黃煙煙', '木戶加奈', '老朝奉', '藥不然', '鄭國渠', '藥來'])
             }
             if (isDirectorOn) {
-                setCharacterList((prevCharacterList) => {
-                    const tempCharacterList = [...prevCharacterList]
-                    tempCharacterList[2] = "劉局"
-                    return tempCharacterList
-                })
+                const tempCharacterList = [...characterList]
+                tempCharacterList[2] = "劉局"
+                setCharacterList(tempCharacterList)
             }
             if (isDevilSecondBrotherOn) {
-                setCharacterList((prevCharacterList) => {
-                    const tempCharacterList = [...prevCharacterList]
-                    tempCharacterList[5] = "魔藥不然"
-                    return tempCharacterList
-                })
+                const tempCharacterList = [...characterList]
+                tempCharacterList[5] = "魔藥不然"
+
+                setCharacterList(tempCharacterList)
             }
 
             if (selectedFirstPlayer === -1) {
@@ -107,16 +103,10 @@ function GameSetup({ onSubmit }) {
     const [isDirectorRuleDisplay, setIsDirectorRuleDisplay] = useState(false)
     const [isDevilSecondBrotherRuleDisplay, setIsDevilSecondBrotherRuleDisplay] = useState(false)
 
-    useEffect(() => {
 
-
-    })
-
-    const GithubLink = () => {
+    const GithubLink =({url}: {url: string}) => {
         return (
-            <div>
-                <a href="https://github.com/pride829/gudong">Github</a>
-            </div>
+                <a href={url}>Github</a>
         );
     };
 
@@ -235,10 +225,12 @@ function GameSetup({ onSubmit }) {
                 </li>
             </div>
             <div>
-                <div><i>該程式為粉絲製作的古董局中局桌遊輔助程式，不代表官方立場！</i></div>
-                <div><i>重新整理會導致該場遊戲資料消失，請小心！</i></div>
-                <div><i>程式仍然處於早期測試階段，可能會出現導致遊戲錯誤的Bug！</i></div>
-                <div><GithubLink /></div>
+                <div><p>該程式為粉絲製作的古董局中局桌遊輔助程式，不代表官方立場！</p></div>
+                <div><i>如果要重開遊戲請點擊下方重置遊戲按鈕，單純重新整理沒有用</i></div>
+                <div><i>程式仍然處於早期測試階段，如果發現，請聯絡作者 magiclazerlotus@gmail.com</i></div>
+                <div><i>可重新整理版本：作者 LazerLotus </i><GithubLink url="https://github.com/LazerLotus/gudong"/></div>
+                <div><i>Fork 自 pride829 </i><GithubLink url="https://github.com/pride829/gudong"/></div>
+
             </div>
         </div >
     );

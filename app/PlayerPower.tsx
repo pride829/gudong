@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
-import IdentTreasure from './IdentTreasure';
-import PlayerPass from './PlayerPass';
+
 
 function PlayerPower({ onPlayerPowerFinish }) {
 
-    const getCharacterName = (index) => { return characterList[characters[index]] }
 
     const [clickedGankingButton, setClickedGankingButton] = useState(-1);
     const [clickedPoisoningButton, setClickedPoisoningButton] = useState(-1);
@@ -16,32 +14,12 @@ function PlayerPower({ onPlayerPowerFinish }) {
     const [preAlterSwitch, setPrevAlterSwitch] = useState(false);
     const [isEasterEggDisplayed, _] = useState(Math.random() < 0.1)
 
-    const { playerNow, playerNames, numberOfPlayers, gameTurn, playerPlayed } =
-        useGameMetaContext() ?? {
-            playerNow: 0,
-            playerNames: [],
-            numberOfPlayers: 0,
-            gameTurn: 0,
-            playerPlayed: [0]
-        }
+    const { playerNow, playerNames, numberOfPlayers, gameTurn, playerPlayed } =useGameMetaContext()
 
     const { beingPoisonedTime, setBeingPoisonedTime, poisonUsedTime, setPoisonUsedTime, addGameLog, characters, characterList, beingGankedTime, setBeingGankedTime, setAnimalOrders, ANIMALS, animalBlocked, setAnimalBlocked, animalOrders, animalRealAltered, setAnimalRealAltered } =
-        useGameContext() ?? {
-            characters: [],
-            characterList: [],
-            beingGankedTime: [],
-            setBeingGankedTime: () => { },
-            ANIMALS: [],
-            animalOrders: [],
-            animalBlocked: [],
-            setAnimalBlocked: () => { },
-            animalRealAltered: [],
-            setAnimalRealAltered: () => { },
-            addGameLog: () => { },
-            setBeingPoisonedTime: () => { },
-            setPoisonUsedTime: () => { },
-            poisonUsedTime: 0
-        }
+        useGameContext()
+
+    const getCharacterName = useCallback((index) => { return characterList[characters[index]] }, [characterList, characters])    
 
     function findXu(): number {
         for (let i = 0; i < numberOfPlayers; i++) {
@@ -67,61 +45,41 @@ function PlayerPower({ onPlayerPowerFinish }) {
         if (characterList[characters[index]] === "姬雲浮") {
             numberOfBeingGanked = 99
         }
-
-        setBeingGankedTime(
-            (beingGankedTime) => {
-                const tempBeingGankedTime: number[] = [...beingGankedTime]
-                tempBeingGankedTime[index] += numberOfBeingGanked
-                return tempBeingGankedTime;
-            }
-        )
+        
+        const tempBeingGankedTime: number[] = [...beingGankedTime]
+        tempBeingGankedTime[index] += numberOfBeingGanked
+        setBeingGankedTime(tempBeingGankedTime)
 
         if (characterList[characters[index]] != "方震") {
             return
         }
-
-        setBeingGankedTime(
-            (beingGankedTime) => {
-                const tempBeingGankedTime: number[] = [...beingGankedTime]
-                tempBeingGankedTime[findXu()] += numberOfBeingGanked
-                return tempBeingGankedTime;
-            }
-        )
+        
+        const tempXuBeingGankedTime: number[] = [...beingGankedTime]
+        tempXuBeingGankedTime[findXu()] += numberOfBeingGanked
+        setBeingGankedTime(tempXuBeingGankedTime)
 
     }
 
     const handlePlayerPoisoned = (index) => {
 
         if (characterList[characters[index]] === "姬雲浮") {
-            setBeingGankedTime(
-                (beingGankedTime) => {
-                    const tempBeingGankedTime: number[] = [...beingGankedTime]
-                    tempBeingGankedTime[index] += 99
-                    return tempBeingGankedTime;
-                }
-            )
+            const tempBeingGankedTime: number[] = [...beingGankedTime]
+            tempBeingGankedTime[index] += 99
+            setBeingGankedTime(tempBeingGankedTime)
             return
         }
-
-        setBeingPoisonedTime(
-            (beingPoisonedTime) => {
-                const tempBeingPoisonedTime: number[] = [...beingPoisonedTime]
-                tempBeingPoisonedTime[index] += 1
-                return tempBeingPoisonedTime;
-            }
-        )
+       
+        const tempBeingPoisonedTime: number[] = [...beingPoisonedTime]
+        tempBeingPoisonedTime[index] += 1
+        setBeingPoisonedTime(tempBeingPoisonedTime)
 
         if (characterList[characters[index]] != "方震") {
             return
         }
-
-        setBeingPoisonedTime(
-            (beingPoisonedTime) => {
-                const tempBeingPoisonedTime: number[] = [...beingPoisonedTime]
-                tempBeingPoisonedTime[findXu()] += 1
-                return tempBeingPoisonedTime;
-            }
-        )
+        
+        const tempXuBeingPoisonedTime: number[] = [...beingPoisonedTime]
+        tempXuBeingPoisonedTime[findXu()] += 1
+        setBeingPoisonedTime(tempXuBeingPoisonedTime)
 
     }
 
@@ -296,10 +254,9 @@ function PlayerPower({ onPlayerPowerFinish }) {
 
     const handleAnimalBlocked = (index) => {
 
-        setAnimalBlocked((prevAnimalBlocked) => {
-            prevAnimalBlocked[animalOrders[index + gameTurn * 4]] = true
-            return prevAnimalBlocked
-        })
+        let prevAnimalBlocked = [...animalBlocked]
+        prevAnimalBlocked[animalOrders[index + gameTurn * 4]] = true
+        setAnimalBlocked(prevAnimalBlocked)
 
         addGameLog(playerNames[playerNow] + "封鎖了" + ANIMALS[animalOrders[index + gameTurn * 4]] + "！")
     }
@@ -388,6 +345,7 @@ function PlayerPower({ onPlayerPowerFinish }) {
     }
 
     useEffect(() => {
+
         if (getCharacterName(playerNow) === "魔藥不然" && poisonUsedTime) {
             handlePowerDone();
         }
@@ -395,14 +353,12 @@ function PlayerPower({ onPlayerPowerFinish }) {
             handlePowerDone();
         }
         if (getCharacterName(playerNow) === "老朝奉") {
-            setAnimalRealAltered((prevAnimalReals) => {
-                prevAnimalReals[gameTurn] = alterSwitch
-                return prevAnimalReals
-            })
+            let prevAnimalRealAltered = [...animalRealAltered]
+            prevAnimalRealAltered[gameTurn] = alterSwitch
+            setAnimalRealAltered(prevAnimalRealAltered)
         }
-        //console.log("封鎖", animalBlocked)
-        //console.log("animalOrders", animalOrders)
-    })
+
+    }, [])
 
     const handlePlayerPowerFinish = () => {
         if (preAlterSwitch === false && alterSwitch === true && characterList[characters[playerNow]] === "老朝奉") {

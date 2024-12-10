@@ -11,11 +11,7 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
     const [beingGanked, setBeingGanked] = useState<boolean>(false)
 
     const { playerNow, playerNames, gameTurn } =
-        useGameMetaContext() ?? {
-            playerNow: 0,
-            playerNames: [],
-            gameTurn: 0
-        }
+        useGameMetaContext()
 
     const { ANIMALS,
         animalOrders,
@@ -38,28 +34,7 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
         setBeingConfusedPlayerIndex,
         beingPoisonedTime,
         setBeingPoisonedTime
-    } = useGameContext() ?? {
-
-        ANIMALS: [],
-        animalOrders: [],
-        animalReals: [],
-        setAnimalOrders: undefined,
-        characters: [],
-        setCharacters: undefined,
-        characterList: [],
-        beingGankedTime: [],
-        setBeingGankedTime: undefined,
-        civHuangBlockedTurn: 0,
-        civMuBlockedTurn: 0,
-        animalBlocked: [],
-        animalRealAltered: [],
-        addameLog: () => { },
-        CHINESE: [],
-        beingConfusedPlayerIndex: [],
-        beingPoisonedTime: [],
-        setBeingPoisonedTime: () => { },
-        setBeingConfusedPlayerIndex: () => { }
-    }
+    } = useGameContext()
 
     function getChineseResult(chineseIndex) {
         let turn = Math.floor(chineseIndex / 4)
@@ -85,14 +60,12 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
             })
 
         if (beingGankedTime[playerNow] > 0) {
+            const tempBeingGankedTime = [...beingGankedTime]
+            tempBeingGankedTime[playerNow] -= 1
             setBeingGanked(true)
             setFailIdentedChinese([...failIdentedChinese, chineseIndex])
             setIdentedChineseOrder([...identedChineseOrder, chineseIndex])
-            setBeingGankedTime((prevBeingGankedTime) => {
-                const tempBeingGankedTime = [...prevBeingGankedTime]
-                tempBeingGankedTime[playerNow] -= 1
-                return tempBeingGankedTime
-            })
+            setBeingGankedTime(tempBeingGankedTime)
             addGameLog(playerNames[playerNow] + "鑒定了" + CHINESE[index + turn * 4] + "，但是被偷襲了")
         } else if (animalBlocked[animalOrders[index + turn * 4]]) {
             setFailIdentedChinese([...failIdentedChinese, chineseIndex])
@@ -178,16 +151,12 @@ function IdentTreasureBigEye({ onFinished, onPlayerBeingSkip }) {
         //console.log(failIdentedAnimals)
         //console.log(identedAnimals)
         if (beingPoisonedTime[playerNow] > 0) {
-            setBeingConfusedPlayerIndex((prevBeingConfusedPlayerIndex) => {
-                const tempBeingConfusedPlayerIndex = [...prevBeingConfusedPlayerIndex]
-                tempBeingConfusedPlayerIndex[gameTurn] = playerNow
-                return tempBeingConfusedPlayerIndex
-            })
-            setBeingPoisonedTime((prevBeingPoisonedTime) => {
-                const tempBeingPoisonedTime = [...prevBeingPoisonedTime]
-                tempBeingPoisonedTime[playerNow] -= 1
-                return tempBeingPoisonedTime
-            })
+            const tempBeingConfusedPlayerIndex = [...beingConfusedPlayerIndex]
+            tempBeingConfusedPlayerIndex[gameTurn] = playerNow
+            setBeingConfusedPlayerIndex(tempBeingConfusedPlayerIndex)
+            const tempBeingPoisonedTime = [...beingPoisonedTime]
+            tempBeingPoisonedTime[playerNow] -= 1
+            setBeingPoisonedTime(tempBeingPoisonedTime)
             addGameLog(playerNames[playerNow] + "中了混亂之毒！")
         }
 

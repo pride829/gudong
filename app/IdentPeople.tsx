@@ -1,89 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { useGameMetaContext } from './GameMetaContext';
 import { useGameContext } from './GameContext';
-import { resourceUsage } from 'process';
-import { fail } from 'assert';
+
 
 function IdentPeople({ onFinished, onPlayerBeingSkip }) {
-    const { playerNow, playerNames, gameTurn, numberOfPlayers } =
-        useGameMetaContext() ?? {
-            playerNow: 0,
-            playerNames: [],
-            gameTurn: 0,
-            numberOfPlayers: 0,
-        }
+    const { playerNow, playerNames, gameTurn, numberOfPlayers } = useGameMetaContext()
 
-    const { ANIMALS,
-        animalOrders,
-        animalReals,
-        setAnimalOrders = () => { },
+    const { 
         characters,
-        setCharacters = () => { },
         characterList,
         beingGankedTime,
         setBeingGankedTime = () => { },
-        dummy,
-        setDummy,
-        civHuangBlockedTurn,
-        civMuBlockedTurn,
-        animalBlocked,
-        animalRealAltered,
         identedPeople,
         setIdentedPeople,
         addGameLog,
-    } = useGameContext() ?? {
+        identPeopleTimeUsed,
+        setIdentPeopleTimeUsed
+    } = useGameContext()
 
-        ANIMALS: [],
-        animalOrders: [],
-        animalReals: [],
-        setAnimalOrders: undefined,
-        characters: [],
-        setCharacters: undefined,
-        characterList: [],
-        beingGankedTime: [],
-        setBeingGankedTime: undefined,
-        civHuangBlockedTurn: 0,
-        civMuBlockedTurn: 0,
-        animalBlocked: [],
-        animalRealAltered: [],
-        identedPeople: [0],
-        setIdentedPeople: () => { },
-        addGameLog: () => { }
-    }
-        ;
-
-    const [identTimeUse, setIdentTimeUse] = useState(0)
-    const [identedAnimals, setIdentedAnimals] = useState<number[]>([])
-    const [identedAnimalsOrder, setIdentedAnimalOrder] = useState<number[]>([])
-    const [failIdentedAnimals, setFailIdentedAnimals] = useState<number[]>([])
     const [beingGanked, setBeingGanked] = useState(false)
 
 
     const handleIdentOnePeople = (peopleIndex: number) => {
 
+        const handleIdentTimeUsed = () =>{
+            const tempIdentPeopleTimeUsed= [...identPeopleTimeUsed]
+            tempIdentPeopleTimeUsed[gameTurn] = true
+            setIdentPeopleTimeUsed(tempIdentPeopleTimeUsed)  
+        }
+
         // TODO: 增加被偷襲和封鎖等
         if (beingGankedTime[playerNow] > 0) {
+            const tempBeingGankedTime = [...beingGankedTime]
+            tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
+
             setBeingGanked(true)
-            setBeingGankedTime((prevBeingGankedTime) => {
-                const tempBeingGankedTime = [...prevBeingGankedTime]
-                tempBeingGankedTime[playerNow] -= 1 // 姑且當作這個是對的
-                return tempBeingGankedTime
-            })
+            setBeingGankedTime(tempBeingGankedTime)
             addGameLog(playerNames[playerNow] + "試著鑒定" + playerNames[peopleIndex] + "，但是被偷襲了")
-        } else if (identTimeUse < 1) {
+        } else if (!identPeopleTimeUsed[gameTurn]) {
             //console.log(beingGankedTime)
             addGameLog(playerNames[playerNow] + "鑒定了" + playerNames[peopleIndex] + "，並發現其為" +
                 IdentPeopleResult(peopleIndex))
             if (characterList[characters[peopleIndex]] === "大眼賊") {
-                setBeingGankedTime((prevBeingGankedTime) => {
-                    const tempBeingGankedTime = [...prevBeingGankedTime]
-                    tempBeingGankedTime[peopleIndex] += 1
-                    return tempBeingGankedTime
-                })
+                const tempBeingGankedTime = [...beingGankedTime]
+                tempBeingGankedTime[peopleIndex] += 1
+                setBeingGankedTime(tempBeingGankedTime)
                 addGameLog(playerNames[playerNow] + "的鑒定間接導致了" + playerNames[peopleIndex] + "被偷襲！")
             }
             setIdentedPeople([...identedPeople, peopleIndex])
-            setIdentTimeUse(identTimeUse + 1)
+            handleIdentTimeUsed()
         }
     }
 
@@ -101,17 +66,16 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
     }
 
     function IdentOnePoeple({ index }) { // 這裡要加{}!!!
+       const isDisabled =  identedPeople.includes(index) || identPeopleTimeUsed[gameTurn] || beingGanked || index === playerNow
+
+
         return (
             <p key={index}>
                 {playerNames[index] + "："}
                 <button
                     key={index}
                     onClick={() => handleIdentOnePeople(index)}
-                    disabled={
-                        identedPeople.includes(index) ||
-                        identTimeUse >= 1 ||
-                        beingGanked ||
-                        index === playerNow}
+                    disabled={isDisabled}
                 >
                     {
                         identedPeople.includes(index) || index === playerNow ?
@@ -142,10 +106,10 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
         if (beingGanked) {
             onPlayerBeingSkip()
         }
-        if (beingGanked || identTimeUse >= 1) {
+        if (beingGanked || identPeopleTimeUsed[gameTurn]) {
             onFinished()
         }
-    }, [beingGanked, identTimeUse, onFinished]);
+    }, [beingGanked, identPeopleTimeUsed, onFinished]);
 
     return (
         <div>
@@ -153,7 +117,7 @@ function IdentPeople({ onFinished, onPlayerBeingSkip }) {
                 <div>請選擇想鑑定的玩家</div>
                 <IdentOnePeopleList buttonCount={numberOfPlayers}></IdentOnePeopleList>
             </div>
-            <BeingGankedResult></BeingGankedResult>
+            <BeingGankedResult />
         </div>
     )
 }
