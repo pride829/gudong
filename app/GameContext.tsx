@@ -68,7 +68,6 @@ interface GameContextProps {
     setDummy: React.Dispatch<React.SetStateAction<number>>,
     civHuangBlockedTurn: number,
     civMuBlockedTurn: number,
-    civLiuBLockedTurn: number,
     animalBlocked: boolean[],
     setAnimalBlocked: React.Dispatch<React.SetStateAction<boolean[]>>,
     animalRealAltered: boolean[],
