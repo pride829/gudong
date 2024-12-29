@@ -111,7 +111,7 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
             addGameLog(playerNames[playerNow] + "鑒定了" + ANIMALS[animalOrders[animalIndex + gameTurn * 4]] + "，但是被系統封了")
-        } else if (characterList[characters[playerNow]] === "劉局" && gameTurn == 2) {
+        } else if (characterList[characters[playerNow]] === "劉局" && gameTurn > 0) {
             setFailIdentedAnimals([...failIdentedAnimals, animalIndex])
             setIdentedAnimalOrder([...identedAnimalsOrder, animalIndex])
             setIdentTimeUse(identTimeUse + 1)
