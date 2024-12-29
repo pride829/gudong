@@ -85,11 +85,11 @@ function FactionInfo() {
                             {playerNames[findXu()]}: (許願或方震)
                         </span>
                     </div>
-                    <div>
+                    {/* <div>
                         <span style={{ fontSize: "150%", ...getPlayerTextStyle(findFun()), ...getPlayerTextBackground(findFun()) }}>
                             {playerNames[findFun()]}: (方震或許願)
                         </span>
-                    </div>
+                    </div> */}
                 </div>
             )
         } else {

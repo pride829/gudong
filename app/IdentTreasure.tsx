@@ -169,7 +169,6 @@ function IdentTreasure({ onFinished, onPlayerBeingSkip }) {
         let resultBeforePoison = animalRealAltered[gameTurn] && !identTruly ? !realResult : realResult
 
         return beingConfusedPlayerIndex[gameTurn] === playerNow ? !resultBeforePoison : resultBeforePoison
-
     }
 
     function IdentResult() {
