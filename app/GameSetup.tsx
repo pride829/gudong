@@ -235,6 +235,7 @@ function GameSetup({ onSubmit }) {
                 </li>
             </div>
             <div>
+                <div><i>版本: 1.0.0</i></div>
                 <div><i>該程式為粉絲製作的古董局中局桌遊輔助程式，不代表官方立場！</i></div>
                 <div><i>重新整理會導致該場遊戲資料消失，請小心！</i></div>
                 <div><i>程式仍然處於早期測試階段，可能會出現導致遊戲錯誤的Bug！</i></div>
